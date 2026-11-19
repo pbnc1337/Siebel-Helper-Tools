@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Workflow comparison regression tests</title>
+<style>
+body { font: 15px system-ui; margin: 24px; background: #101728; color: #eee; }
+.pass { color: #77e6aa; } .fail { color: #ff9696; }
+iframe { width: 100%; height: 350px; border: 1px solid #777; }
+</style>
+</head>
+<body>
+<h1>Workflow comparison regression tests</h1>
+<p id="summary">Running…</p>
+<ol id="results"></ol>
+<iframe id="app" title="Application under test" src="index.html"></iframe>
+<script>
+const results = document.getElementById("results");
+let passed = 0, failed = 0;
+function test(name, fn) {
+  const li = document.createElement("li");
+  try { fn(); passed++; li.className = "pass"; li.textContent = "PASS: " + name; }
+  catch (error) { failed++; li.className = "fail"; li.textContent = "FAIL: " + name + " — " + error.message; }
+  results.appendChild(li);
+}
+function assert(condition, message) { if (!condition) throw new Error(message); }
+async function load(path) {
+  const response = await fetch(path);
+  if (!response.ok) throw new Error(path + ": HTTP " + response.status);
+  return response.text();
+}
+document.getElementById("app").addEventListener("load", async () => {
+  try {
+    const w = document.getElementById("app").contentWindow;
+    const names = ["identical", "functional", "added-removed", "audit-layout", "duplicate-names", "broken-reference", "conflicting-endpoint", "invalid-xml"];
+    const baseline = await load("fixtures/sample.sif");
+    const files = {};
+    for (const name of names) files[name] = await load("fixtures/variations/" + name + ".sif");
+    const base = w.parseSif(baseline).workflows[0];
+    const parse = name => w.parseSif(files[name]).workflows[0];
+    const diff = (name, options) => w.diffWorkflows(base, parse(name), options || {});
+    test("sample has five steps, five branches, seven properties", () => {
+      assert(base.steps.length === 5 && base.branches.length === 5 && base.props.length === 7, "incorrect sample counts");
+    });
+    test("identical SIF has no changes", () => assert(diff("identical").changes.length === 0, "unexpected changes"));
+    test("functional variation compares workflow, property, service, argument, expression and criterion value", () => {
+      const d = diff("functional");
+      const paths = d.changes.flatMap(c => c.fields.map(f => f.path));
+      for (const field of ["WORKFLOW.STATUS", "PROPERTY.DATA_TYPE", "STEP.BUSINESS_SERVICE_METHOD", "VALUE_SEARCH_SPECIFICATION", "BRANCH.EXPRESSION", "LO_CHAR1"])
+        assert(paths.some(p => p.includes(field)), "missing " + field);
+      const arg = d.changes.flatMap(c => c.fields).find(f => f.path.includes("VALUE_SEARCH_SPECIFICATION"));
+      assert(arg.old === "Y" && arg.new === "N", "incorrect argument values");
+    });
+    test("addition and removals are classified", () => {
+      const s = diff("added-removed").summary;
+      assert(s.steps.added === 1 && s.props.removed === 1 && s.branches.removed === 1, "incorrect summary");
+    });
+    test("audit and layout excluded by default and included separately", () => {
+      assert(diff("audit-layout").changes.length === 0, "metadata counted by default");
+      const audit = diff("audit-layout",{includeAudit:true}).changes.flatMap(c=>c.fields);
+      const layout = diff("audit-layout",{includeLayout:true}).changes.flatMap(c=>c.fields);
+      assert(audit.some(f=>f.path.endsWith("UPDATED_BY")) && !audit.some(f=>f.path.endsWith("LAYOUT")), "audit filter failed");
+      assert(layout.some(f=>f.path.endsWith("LAYOUT")) && !layout.some(f=>f.path.endsWith("UPDATED_BY")), "layout filter failed");
+    });
+    test("duplicate names are ambiguous, not additions or removals", () => {
+      const d = diff("duplicate-names");
+      assert(d.warnings.some(x=>x.code === "AMBIGUOUS_MATCH"), "no ambiguity warning");
+      assert(!d.changes.some(x=>x.category === "steps" && x.name === "Start"), "ambiguous step classified");
+    });
+    test("broken target is reported", () => assert(parse("broken-reference").warnings.some(x=>x.code === "MISSING_STEP"), "missing warning"));
+    test("conflicting endpoint is reported", () => assert(parse("conflicting-endpoint").warnings.some(x=>x.code === "ENDPOINT_MISMATCH"), "missing warning"));
+    test("invalid XML rejected", () => { let threw = false; try { parse("invalid-xml"); } catch(e) { threw = true; } assert(threw, "accepted invalid XML"); });
+    test("DTD rejected", () => { let threw = false; try { w.parseSif("<!DOCTYPE REPOSITORY><REPOSITORY/>"); } catch(e) { threw = true; } assert(threw, "accepted DTD"); });
+    w.setMode("compare");
+    await w.loadCompareFile("base", new w.File([baseline],"baseline.sif"));
+    await w.loadCompareFile("upd", new w.File([files.functional],"functional.sif"));
+    test("comparison graph marks modified node and branch", () => {
+      assert(w.document.querySelectorAll(".node.modified").length >= 1, "node not highlighted");
+      assert(w.document.querySelectorAll(".edge.modified").length >= 1, "branch not highlighted");
+      assert(w.document.querySelector(".status-text"), "non-colour marker missing");
+    });
+    test("change list selection displays old and new values", () => {
+      const button = w.document.querySelector(".change-card");
+      assert(button, "no change cards");
+      button.click();
+      assert(w.document.getElementById("detailsContent").textContent.includes("Old") && w.document.getElementById("detailsContent").textContent.includes("New"), "diff details missing");
+    });
+    await w.loadCompareFile("upd", new w.File([files["added-removed"]],"added-removed.sif"));
+    test("removed connection remains visible", () => assert(w.document.querySelector(".edge.removed"), "removed branch not visible"));
+  } catch(error) {
+    failed++;
+    const li = document.createElement("li"); li.className = "fail"; li.textContent = "Harness error: " + error.stack; results.appendChild(li);
+  }
+  document.getElementById("summary").textContent = `${passed} passed, ${failed} failed`;
+  document.title = `${failed ? "FAIL" : "PASS"} — ${passed} passed, ${failed} failed`;
+});
+</script>
+</body>
+</html>
