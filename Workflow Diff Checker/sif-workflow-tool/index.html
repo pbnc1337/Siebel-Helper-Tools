@@ -142,6 +142,10 @@
         border-radius:10px;
         cursor:pointer;
       }
+      #toolbar button[aria-pressed="true"]{
+        background: rgba(74,163,255,.25);
+        border-color: #76aaff;
+      }
 
       #viewport{
         position:absolute;
@@ -174,8 +178,23 @@
         cursor: pointer;
       }
 
+      .xray-card {
+        fill: #1c2a4c;
+        stroke: #526ca6;
+        stroke-width: 1;
+        rx: 6;
+      }
+      .xray-label {
+        font-size: 11px;
+        fill: #e7ecff;
+        paint-order: stroke;
+        stroke: #0b1020;
+        stroke-width: 3px;
+        stroke-linejoin: round;
+        cursor: pointer;
+      }
       .node{ cursor:pointer; }
-      .node :is(rect, polygon){
+      .node :is(rect, polygon):not(.xray-card){
         fill: rgba(17,26,51,.85);
         stroke: rgba(170,180,230,.55);
         stroke-width:1.2;
@@ -183,14 +202,14 @@
       }
       .node .title{ font-size: 13px; font-weight: 700; fill: var(--text); }
       .node .subtitle{ font-size: 12px; fill: var(--muted); }
-      .node.start :is(rect, polygon){ stroke: color-mix(in oklab, var(--step-start) 85%, white 15%); }
-      .node.end :is(rect, polygon){ stroke: color-mix(in oklab, var(--step-end) 85%, white 15%); }
-      .node.task :is(rect, polygon){ stroke: color-mix(in oklab, var(--step-task) 85%, white 15%); }
-      .node.decision :is(rect, polygon){ stroke: color-mix(in oklab, var(--step-decision) 85%, white 15%); }
-      .node.selected :is(rect, polygon){ stroke:#fff; stroke-width:2.4; }
-      .node.added :is(rect, polygon){ stroke: var(--added); stroke-width:2.6; }
-      .node.removed :is(rect, polygon){ stroke: var(--removed); stroke-width:2.6; stroke-dasharray: 6 4; }
-      .node.modified :is(rect, polygon){ stroke: var(--modified); stroke-width:2.6; stroke-dasharray: 3 3; }
+      .node.start :is(rect, polygon):not(.xray-card){ stroke: color-mix(in oklab, var(--step-start) 85%, white 15%); }
+      .node.end :is(rect, polygon):not(.xray-card){ stroke: color-mix(in oklab, var(--step-end) 85%, white 15%); }
+      .node.task :is(rect, polygon):not(.xray-card){ stroke: color-mix(in oklab, var(--step-task) 85%, white 15%); }
+      .node.decision :is(rect, polygon):not(.xray-card){ stroke: color-mix(in oklab, var(--step-decision) 85%, white 15%); }
+      .node.selected :is(rect, polygon):not(.xray-card){ stroke:#fff; stroke-width:2.4; }
+      .node.added :is(rect, polygon):not(.xray-card){ stroke: var(--added); stroke-width:2.6; }
+      .node.removed :is(rect, polygon):not(.xray-card){ stroke: var(--removed); stroke-width:2.6; stroke-dasharray: 6 4; }
+      .node.modified :is(rect, polygon):not(.xray-card){ stroke: var(--modified); stroke-width:2.6; stroke-dasharray: 3 3; }
 
       aside{
         display:flex;
@@ -348,6 +367,7 @@
           <button id="btnZoomOut" title="Zoom out">−</button>
           <button id="btnReset" title="Reset view">Reset</button>
           <button id="btnDiamonds" aria-pressed="false" title="Display decision points as diamonds">Decision diamonds</button>
+          <button id="btnXray" aria-pressed="false" title="Show field previews; zoom in and select a step for full details">X-ray</button>
         </div>
 
         <div id="viewport">
@@ -694,8 +714,8 @@
           const arr = layers.get(l);
           for (let i=0;i<arr.length;i++){
             positions.set(arr[i].id, vertical
-              ? { x: 35 + i*(NODE_W+80), y: 35 + l*(NODE_H+95) }
-              : { x: 60 + l*(NODE_W+COL_GAP), y: 60 + i*(NODE_H+ROW_GAP) });
+              ? { x: 35 + i*(NODE_W+(state.xray ? 380 : 80)), y: 35 + l*(NODE_H+(state.xray ? 140 : 95)) }
+              : { x: 60 + l*(NODE_W+(state.xray ? 430 : COL_GAP)), y: 60 + i*(NODE_H+(state.xray ? 120 : ROW_GAP)) });
           }
         }
         return positions;
@@ -704,6 +724,21 @@
       function cubicAt(p0,p1,p2,p3,t){
         const mt = 1-t;
         return mt*mt*mt*p0 + 3*mt*mt*t*p1 + 3*mt*t*t*p2 + t*t*t*p3;
+      }
+
+      function xrayFields(step){
+        const entries = [];
+        const add = (path, attrs, isArgument) => {
+          for (const [key, value] of Object.entries(attrs || {})) {
+            if (value !== "" && (/(SEARCH_SPEC|BUSINESS_(COMPONENT|SERVICE|OBJECT)|OPERATION|METHOD|INPUT_FLAG|INPUT_OUTPUT|PROPERTY_NAME|VALUE)/i.test(key) || (isArgument && key === "TYPE"))) {
+              const priority = /SEARCH_SPEC/i.test(key) ? 0 : /BUSINESS_|OPERATION|METHOD/i.test(key) ? 1 : 2;
+              entries.push({ priority, text:`${path}${key}: ${value}` });
+            }
+          }
+        };
+        add("", step.attrs, false);
+        for (const arg of step.ioArgs) add(`${arg.attrs.NAME || "(unnamed argument)"}.`, arg.attrs, true);
+        return entries.sort((a,b)=>a.priority-b.priority).map(entry=>entry.text);
       }
 
       function renderWorkflow(wf, diffStyling){
@@ -820,6 +855,32 @@
             sub.setAttribute("x", p.x + NODE_W/2); sub.setAttribute("text-anchor", "middle");
           }
 
+          if (state.xray) {
+            const fields = xrayFields(s);
+            const lines = fields.slice(0, 5);
+            if (fields.length > 5) lines.push(`+${fields.length - 5} more (select step)`);
+            if (lines.length) {
+              const card = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+              card.classList.add("xray-card");
+              card.setAttribute("x", p.x + NODE_W + 16);
+              card.setAttribute("y", p.y);
+              card.setAttribute("width", 350);
+              card.setAttribute("height", Math.max(NODE_H, lines.length * 15 + 12));
+              grp.appendChild(card);
+            }
+            lines.forEach((line, index) => {
+              const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+              text.classList.add("xray-label");
+              text.setAttribute("x", p.x + NODE_W + 24);
+              text.setAttribute("y", p.y + 17 + index * 15);
+              const preview = line.replace(/^(.{18}).*?(\.[A-Z_]+: )/, "$1…$2");
+              text.textContent = preview.length > 52 ? preview.slice(0, 49) + "…" : preview;
+              const tooltip = document.createElementNS("http://www.w3.org/2000/svg", "title");
+              tooltip.textContent = line;
+              text.appendChild(tooltip);
+              grp.appendChild(text);
+            });
+          }
           grp.appendChild(rect); grp.appendChild(title); grp.appendChild(sub);
           if (st) {
             const badge = document.createElementNS("http://www.w3.org/2000/svg","text");
@@ -1159,6 +1220,7 @@
       const state = {
         mode: "visual",
         decisionDiamonds: false,
+        xray: false,
         single: { parsed:null, workflow:null },
         compare: { base:null, upd:null, baseWf:null, updWf:null, merged:null, diff:null, options:{ includeAudit:false, includeLayout:false } },
         selected: null,
@@ -1274,6 +1336,11 @@
       document.getElementById("btnDiamonds").addEventListener("click", (event)=>{
         state.decisionDiamonds = !state.decisionDiamonds;
         event.currentTarget.setAttribute("aria-pressed", String(state.decisionDiamonds));
+        renderCurrent(false);
+      });
+      document.getElementById("btnXray").addEventListener("click", (event)=>{
+        state.xray = !state.xray;
+        event.currentTarget.setAttribute("aria-pressed", String(state.xray));
         renderCurrent(false);
       });
 

@@ -83,6 +83,25 @@ document.getElementById("app").addEventListener("load", async () => {
       input.value = "";
       input.dispatchEvent(new w.Event("input", {bubbles:true}));
     });
+    test("X-ray shows existing query, operation and business fields without inventing values", () => {
+      const fields = w.xrayFields({
+        attrs: { SEARCH_SPECIFICATION: "[Id]='1'", OPERATION_TYPE: "Query", BUSINESS_COMPONENT: "Account", BUSINESS_SERVICE_NAME: "Service", BUSINESS_SERVICE_METHOD: "Run" },
+        ioArgs: [{attrs: {NAME:"Input", TYPE:"Literal", VALUE:"abc"}}]
+      });
+      assert(fields[0].includes("SEARCH_SPECIFICATION"), "search specification not prioritized");
+      for (const value of ["OPERATION_TYPE: Query", "BUSINESS_COMPONENT: Account", "BUSINESS_SERVICE_NAME: Service", "BUSINESS_SERVICE_METHOD: Run", "TYPE: Literal", "VALUE: abc"]) {
+        assert(fields.some(field => field.includes(value)), "missing " + value);
+      }
+      assert(w.xrayFields({attrs:{TYPE:"TASK"}, ioArgs:[]}).length === 0, "invented fields");
+    });
+    test("X-ray toggle displays workflow fields and switches off", () => {
+      const doc = w.document, toggle = doc.getElementById("btnXray");
+      toggle.click();
+      assert(toggle.getAttribute("aria-pressed") === "true", "X-ray did not turn on");
+      assert(Array.from(doc.querySelectorAll(".xray-label title")).some(t => t.textContent.includes("BUSINESS_SERVICE_NAME: Workflow Utilities")), "service not shown");
+      toggle.click();
+      assert(toggle.getAttribute("aria-pressed") === "false" && !doc.querySelector(".xray-label"), "X-ray did not turn off");
+    });
     test("decision diamond toggle preserves selection and connections", () => {
       const doc = w.document;
       const toggle = doc.getElementById("btnDiamonds");
@@ -228,6 +247,12 @@ document.getElementById("app").addEventListener("load", async () => {
       assert(doc.getElementById("detailsContent").textContent.includes("old"), "task argument not displayed");
       input.value = "";
       input.dispatchEvent(new w.Event("input", {bubbles:true}));
+    });
+    test("X-ray shows task argument value", () => {
+      const doc = w.document, toggle = doc.getElementById("btnXray");
+      toggle.click();
+      assert(Array.from(doc.querySelectorAll(".xray-label title")).some(t => t.textContent.includes("VALUE: old")), "task argument value missing");
+      toggle.click();
     });
     w.setMode("compare");
     await w.loadCompareFile("base", new w.File([taskXml],"task-baseline.sif"));
