@@ -83,6 +83,19 @@ document.getElementById("app").addEventListener("load", async () => {
       input.value = "";
       input.dispatchEvent(new w.Event("input", {bubbles:true}));
     });
+    test("decision diamond toggle preserves selection and connections", () => {
+      const doc = w.document;
+      const toggle = doc.getElementById("btnDiamonds");
+      const decision = doc.querySelector(".node.decision");
+      decision.dispatchEvent(new w.MouseEvent("click", {bubbles:true}));
+      const edgeCount = doc.querySelectorAll(".edge").length;
+      toggle.click();
+      assert(toggle.getAttribute("aria-pressed") === "true", "toggle state not set");
+      assert(doc.querySelector(".node.decision.selected polygon"), "selected decision is not a diamond");
+      assert(doc.querySelectorAll(".edge").length === edgeCount, "connections changed");
+      toggle.click();
+      assert(toggle.getAttribute("aria-pressed") === "false" && doc.querySelector(".node.decision.selected rect"), "rectangular display not restored");
+    });
     test("zoom supports large diagrams and anchors the chosen point", () => {
       const viewport = w.document.getElementById("viewport");
       w.fitToScreen();

@@ -166,7 +166,7 @@
       }
 
       .node{ cursor:pointer; }
-      .node rect{
+      .node :is(rect, polygon){
         fill: rgba(17,26,51,.85);
         stroke: rgba(170,180,230,.55);
         stroke-width:1.2;
@@ -174,14 +174,14 @@
       }
       .node .title{ font-size: 13px; font-weight: 700; fill: var(--text); }
       .node .subtitle{ font-size: 12px; fill: var(--muted); }
-      .node.start rect{ stroke: color-mix(in oklab, var(--step-start) 85%, white 15%); }
-      .node.end rect{ stroke: color-mix(in oklab, var(--step-end) 85%, white 15%); }
-      .node.task rect{ stroke: color-mix(in oklab, var(--step-task) 85%, white 15%); }
-      .node.decision rect{ stroke: color-mix(in oklab, var(--step-decision) 85%, white 15%); }
-      .node.selected rect{ stroke:#fff; stroke-width:2.4; }
-      .node.added rect{ stroke: var(--added); stroke-width:2.6; }
-      .node.removed rect{ stroke: var(--removed); stroke-width:2.6; stroke-dasharray: 6 4; }
-      .node.modified rect{ stroke: var(--modified); stroke-width:2.6; stroke-dasharray: 3 3; }
+      .node.start :is(rect, polygon){ stroke: color-mix(in oklab, var(--step-start) 85%, white 15%); }
+      .node.end :is(rect, polygon){ stroke: color-mix(in oklab, var(--step-end) 85%, white 15%); }
+      .node.task :is(rect, polygon){ stroke: color-mix(in oklab, var(--step-task) 85%, white 15%); }
+      .node.decision :is(rect, polygon){ stroke: color-mix(in oklab, var(--step-decision) 85%, white 15%); }
+      .node.selected :is(rect, polygon){ stroke:#fff; stroke-width:2.4; }
+      .node.added :is(rect, polygon){ stroke: var(--added); stroke-width:2.6; }
+      .node.removed :is(rect, polygon){ stroke: var(--removed); stroke-width:2.6; stroke-dasharray: 6 4; }
+      .node.modified :is(rect, polygon){ stroke: var(--modified); stroke-width:2.6; stroke-dasharray: 3 3; }
 
       aside{
         display:flex;
@@ -338,6 +338,7 @@
           <button id="btnZoomIn" title="Zoom in">+</button>
           <button id="btnZoomOut" title="Zoom out">−</button>
           <button id="btnReset" title="Reset view">Reset</button>
+          <button id="btnDiamonds" aria-pressed="false" title="Display decision points as diamonds">Decision diamonds</button>
         </div>
 
         <div id="viewport">
@@ -750,19 +751,30 @@
           const st = diffStyling?.nodeStatus?.get(s.id);
           if (st) grp.classList.add(st);
 
-          const rect = document.createElementNS("http://www.w3.org/2000/svg","rect");
-          rect.setAttribute("x", p.x); rect.setAttribute("y", p.y);
-          rect.setAttribute("width", NODE_W); rect.setAttribute("height", NODE_H);
+          const diamond = state.decisionDiamonds && stepClass(s.attrs.TYPE) === "decision";
+          const rect = document.createElementNS("http://www.w3.org/2000/svg", diamond ? "polygon" : "rect");
+          if (diamond) {
+            rect.setAttribute("points", `${p.x+NODE_W/2},${p.y} ${p.x+NODE_W},${p.y+NODE_H/2} ${p.x+NODE_W/2},${p.y+NODE_H} ${p.x},${p.y+NODE_H/2}`);
+          } else {
+            rect.setAttribute("x", p.x); rect.setAttribute("y", p.y);
+            rect.setAttribute("width", NODE_W); rect.setAttribute("height", NODE_H);
+          }
 
           const title = document.createElementNS("http://www.w3.org/2000/svg","text");
           title.classList.add("title");
           title.setAttribute("x", p.x+12); title.setAttribute("y", p.y+23);
           title.textContent = s.attrs.NAME || "(unnamed step)";
+          if (diamond) {
+            title.setAttribute("x", p.x + NODE_W/2); title.setAttribute("text-anchor", "middle");
+          }
 
           const sub = document.createElementNS("http://www.w3.org/2000/svg","text");
           sub.classList.add("subtitle");
           sub.setAttribute("x", p.x+12); sub.setAttribute("y", p.y+43);
           sub.textContent = s.attrs.TYPE || "(unknown TYPE)";
+          if (diamond) {
+            sub.setAttribute("x", p.x + NODE_W/2); sub.setAttribute("text-anchor", "middle");
+          }
 
           grp.appendChild(rect); grp.appendChild(title); grp.appendChild(sub);
           if (st) {
@@ -774,6 +786,14 @@
             grp.appendChild(badge);
           }
           gNodes.appendChild(grp);
+          if (diamond) {
+            for (const [text, limit] of [[title, 100], [sub, 95]]) {
+              if (text.getComputedTextLength() > limit) {
+                text.setAttribute("textLength", String(limit));
+                text.setAttribute("lengthAdjust", "spacingAndGlyphs");
+              }
+            }
+          }
         }
       }
 
@@ -1084,6 +1104,7 @@
        **********************/
       const state = {
         mode: "visual",
+        decisionDiamonds: false,
         single: { parsed:null, workflow:null },
         compare: { base:null, upd:null, baseWf:null, updWf:null, merged:null, diff:null, options:{ includeAudit:false, includeLayout:false } },
         selected: null,
@@ -1196,6 +1217,11 @@
       document.getElementById("btnZoomOut").addEventListener("click", ()=>setScale(state.view.scale/1.15));
       document.getElementById("btnReset").addEventListener("click", ()=>{ state.view={...state.view, scale:1, tx:0, ty:0}; applyTransform(); });
       document.getElementById("btnFit").addEventListener("click", ()=>fitToScreen());
+      document.getElementById("btnDiamonds").addEventListener("click", (event)=>{
+        state.decisionDiamonds = !state.decisionDiamonds;
+        event.currentTarget.setAttribute("aria-pressed", String(state.decisionDiamonds));
+        renderCurrent(false);
+      });
 
       function setScale(s, anchorX, anchorY){
         if (!Number.isFinite(s) || s <= 0) return;
@@ -1664,6 +1690,7 @@
           ]);
           renderWarningsAndProps(w, null);
           renderWorkflow(w, null);
+          updateSelectionStyling();
           if (fit) fitToScreen();
           renderDetails();
           applySearch();
@@ -1719,6 +1746,7 @@
 
         renderWarningsAndProps(merged, diff);
         renderWorkflow(merged, { nodeStatus, edgeStatus });
+        updateSelectionStyling();
         if (fit) fitToScreen();
         renderDetails();
         applySearch();
