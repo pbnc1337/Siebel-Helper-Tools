@@ -193,6 +193,10 @@
         stroke-linejoin: round;
         cursor: pointer;
       }
+      .search-halo { fill:none; stroke:#66e6ff; stroke-width:9; opacity:.65; pointer-events:none; }
+      .node.search-hit { filter:drop-shadow(0 0 6px #66e6ff); }
+      .search-hit-badge { fill:#071629; stroke:#66e6ff; stroke-width:1.5; }
+      .search-hit-symbol { fill:#fff; font-size:12px; font-weight:bold; text-anchor:middle; pointer-events:none; }
       .node{ cursor:pointer; }
       .node :is(rect, polygon):not(.xray-card){
         fill: rgba(17,26,51,.85);
@@ -1752,6 +1756,8 @@
         const query = (state.mode==="visual" ? document.getElementById("searchSingle").value : document.getElementById("searchCompare").value).trim().toLowerCase();
         const results = document.getElementById("searchResults");
         results.replaceChildren();
+        document.querySelectorAll(".search-halo, .search-hit-badge, .search-hit-symbol").forEach(el => el.remove());
+        document.querySelectorAll(".node.search-hit").forEach(el => el.classList.remove("search-hit"));
         const wf = getCurrentWorkflow();
         if (!query || !wf) {
           results.appendChild(rowBox("Search", query ? "Load a workflow to search." : "Enter text to search node data."));
@@ -1795,7 +1801,34 @@
             }
           }
         }
-        results.appendChild(rowBox("Matches", `${matches.length}`));
+        const nodeIds = new Set(matches.filter(match => !match.branch).map(match => match.step.id));
+        const edgeIds = new Set(matches.filter(match => match.branch).map(match => match.branch.id));
+        for (const node of document.querySelectorAll("#nodes .node")) {
+          if (!nodeIds.has(node.dataset.id)) continue;
+          node.classList.add("search-hit");
+          const shape = node.querySelector("rect:not(.xray-card), polygon");
+          if (!shape) continue;
+          const box = shape.getBBox();
+          const badge = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+          badge.classList.add("search-hit-badge");
+          badge.setAttribute("cx", box.x + box.width);
+          badge.setAttribute("cy", box.y);
+          badge.setAttribute("r", "9");
+          const symbol = document.createElementNS("http://www.w3.org/2000/svg", "text");
+          symbol.classList.add("search-hit-symbol");
+          symbol.setAttribute("x", box.x + box.width);
+          symbol.setAttribute("y", box.y + 4);
+          symbol.textContent = "•";
+          node.append(badge, symbol);
+        }
+        for (const edge of document.querySelectorAll("#edges .edge")) {
+          if (!edgeIds.has(edge.dataset.id)) continue;
+          const halo = document.createElementNS("http://www.w3.org/2000/svg", "path");
+          halo.classList.add("search-halo");
+          halo.setAttribute("d", edge.getAttribute("d"));
+          edge.before(halo);
+        }
+        results.appendChild(rowBox("Matches", `${matches.length} fields · cyan halo and • mark graph matches`));
         for (const match of matches) {
           const button = document.createElement("button");
           button.type = "button";

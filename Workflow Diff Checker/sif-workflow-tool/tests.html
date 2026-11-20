@@ -114,12 +114,22 @@ document.getElementById("app").addEventListener("load", async () => {
       assert(w.document.getElementById("paneSearch").open, "matches drawer not opened");
       assert(matches.some(m => m.textContent.includes("I/O argument") && m.textContent.includes("PROPERTY_NAME")), "argument reference missing");
       assert(matches.some(m => m.textContent.includes("Criteria") && m.textContent.includes("PROPERTY_NAME")), "criterion reference missing");
-      const argumentMatch = matches.find(m => m.textContent.includes("I/O argument"));
+      const wf = w.getCurrentWorkflow();
+      const first = wf.steps.find(s => s.attrs.NAME === "Set Test Properties");
+      const second = wf.steps.find(s => s.attrs.NAME === "Set Test Property 2 to N");
+      const branch = wf.branches.find(b => b.parentStepName === "Is Test?" && b.attrs.NAME === "N");
+      assert([first, second].every(s => w.document.querySelector(`.node.search-hit[data-id="${s.id}"]`)), "not all matching nodes highlighted");
+      const edge = w.document.querySelector(`.edge[data-id="${branch.id}"]`);
+      assert(edge && edge.previousElementSibling.classList.contains("search-halo"), "matching branch not highlighted");
+      w.renderCurrent(false);
+      assert(w.document.querySelectorAll(".node.search-hit").length >= 2 && w.document.querySelector(".search-halo"), "highlights lost on rerender");
+      const argumentMatch = Array.from(w.document.querySelectorAll("#searchResults .search-match")).find(m => m.textContent.includes("I/O argument"));
       argumentMatch.click();
       assert(w.document.querySelector(".node.selected") && w.document.getElementById("detailsContent").textContent.includes("Set Test Properties"), "match did not select its node");
       input.value = "no-such-reference-xyz";
       input.dispatchEvent(new w.Event("input", {bubbles:true}));
       assert(w.document.querySelectorAll("#searchResults .search-match").length === 0, "stale matches remained");
+      assert(!w.document.querySelector(".search-hit, .search-halo, .search-hit-badge"), "stale graph highlights remained");
       assert(w.document.getElementById("searchResults").textContent.includes("0"), "zero count missing");
       input.value = "";
       input.dispatchEvent(new w.Event("input", {bubbles:true}));
@@ -313,6 +323,16 @@ document.getElementById("app").addEventListener("load", async () => {
       assert(w.document.querySelectorAll(".node.modified").length >= 1, "node not highlighted");
       assert(w.document.querySelectorAll(".edge.modified").length >= 1, "branch not highlighted");
       assert(w.document.querySelector(".status-text"), "non-colour marker missing");
+    });
+    test("search highlights coexist with comparison status and clear", () => {
+      const doc = w.document, input = doc.getElementById("searchCompare");
+      input.value = "Changed expression";
+      input.dispatchEvent(new w.Event("input", {bubbles:true}));
+      const edge = doc.querySelector(".edge.modified");
+      assert(edge && edge.previousElementSibling.classList.contains("search-halo"), "modified branch search highlight missing");
+      input.value = "";
+      input.dispatchEvent(new w.Event("input", {bubbles:true}));
+      assert(!doc.querySelector(".search-halo") && doc.querySelector(".edge.modified"), "clearing search removed comparison status");
     });
     test("change list selection displays old and new values", () => {
       const button = w.document.querySelector(".change-card");
