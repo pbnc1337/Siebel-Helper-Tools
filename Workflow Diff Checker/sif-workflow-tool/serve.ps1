@@ -14,6 +14,8 @@ try {
             "/sif-workflow-tool/index.html" { Join-Path $PSScriptRoot "index.html" }
             "/demo%20sif.xml" { Join-Path $root "demo sif.xml" }
             "/demo sif.xml" { Join-Path $root "demo sif.xml" }
+            "/demo%20task%20sif.xml" { Join-Path $root "demo task sif.xml" }
+            "/demo task sif.xml" { Join-Path $root "demo task sif.xml" }
             "/sif-workflow-tool/tests.html" { Join-Path $PSScriptRoot "tests.html" }
             "/sif-workflow-tool/fixtures/sample.sif" { Join-Path $PSScriptRoot "fixtures\sample.sif" }
             { $_ -match '^/sif-workflow-tool/fixtures/variations/(identical|functional|added-removed|audit-layout|duplicate-names|broken-reference|conflicting-endpoint|invalid-xml)\.sif$' } { Join-Path $PSScriptRoot ("fixtures\variations\" + [System.IO.Path]::GetFileName($path)) }

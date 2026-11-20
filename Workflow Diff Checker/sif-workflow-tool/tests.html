@@ -164,7 +164,83 @@ document.getElementById("app").addEventListener("load", async () => {
     test("conflicting endpoint is reported", () => assert(parse("conflicting-endpoint").warnings.some(x=>x.code === "ENDPOINT_MISMATCH"), "missing warning"));
     test("invalid XML rejected", () => { let threw = false; try { parse("invalid-xml"); } catch(e) { threw = true; } assert(threw, "accepted invalid XML"); });
     test("DTD rejected", () => { let threw = false; try { w.parseSif("<!DOCTYPE REPOSITORY><REPOSITORY/>"); } catch(e) { threw = true; } assert(threw, "accepted DTD"); });
+    const taskXml = `<REPOSITORY><PROJECT><TASK NAME="Example">
+      <TASK_BRANCH NAME="go" FROM_STEP_NAME="Start" TO_STEP_NAME="End" EXPRESSION="condition">
+        <TASK_BRANCH_CRITERIA NAME="criterion" PROPERTY_NAME="P" OPERATION="EQ"/>
+      </TASK_BRANCH>
+      <TASK_PROPERTY NAME="P" DATA_TYPE="VARCHAR"/>
+      <TASK_STEP NAME="Start" TYPE="START"><TASK_STEP_IO_ARGUMENT NAME="arg" PROPERTY_NAME="P" VALUE="old"/></TASK_STEP>
+      <TASK_STEP NAME="End" TYPE="END"/>
+    </TASK></PROJECT></REPOSITORY>`;
+    test("task parses branches, properties and arguments independently of element order", () => {
+      const t = w.parseSif(taskXml).workflows[0];
+      assert(t.kind === "TASK" && t.steps.length === 2 && t.branches.length === 1 && t.props.length === 1, "task counts");
+      assert(t.steps.find(s => s.attrs.NAME === "Start").branches[0].criteria[0].attrs.PROPERTY_NAME === "P", "criteria not parsed");
+      assert(t.steps.find(s => s.attrs.NAME === "Start").ioArgs[0].attrs.VALUE === "old", "argument missing");
+      w.renderWorkflow(t, null);
+      assert(w.document.querySelectorAll(".edge").length === 1, "task edge not rendered");
+    });
+    test("task comparison detects changed arguments and rejects mixed types", () => {
+      const a = w.parseSif(taskXml).workflows[0];
+      const b = w.parseSif(taskXml.replace('VALUE="old"', 'VALUE="new"')).workflows[0];
+      assert(w.diffWorkflows(a,b).changes.some(c => c.fields.some(f => f.old === "old" && f.new === "new")), "argument change missing");
+      let rejected = false;
+      try { w.diffWorkflows(base, a); } catch (_) { rejected = true; }
+      assert(rejected, "mixed definition types accepted");
+    });
+    test("unresolved task source is preserved and reported", () => {
+      const t = w.parseSif(taskXml.replace('FROM_STEP_NAME="Start"', 'FROM_STEP_NAME="Missing"')).workflows[0];
+      assert(t.warnings.some(x => x.code === "UNRESOLVED_TASK_SOURCE"), "warning missing");
+      assert(t.unknownChildrenXml.some(x => x.includes("TASK_BRANCH")), "source XML not preserved");
+      assert(t.branches.length === 0, "ambiguous edge was attached");
+    });
+    const taskResponse = await fetch("../demo%20task%20sif.xml");
+    if (taskResponse.ok) {
+      const taskReference = await taskResponse.text();
+      test("provided task fixture has five steps, five branches and nine properties", () => {
+        const t = w.parseSif(taskReference).workflows[0];
+        assert(t.attrs.NAME === "My Demo Task" && t.steps.length === 5 && t.branches.length === 5 && t.props.length === 9, "task fixture counts");
+        assert(t.steps.reduce((sum, step) => sum + step.ioArgs.length, 0) === 2, "I/O count");
+        assert(t.branches.find(b => b.attrs.NAME === "Y").criteria[0].attrs.PROPERTY_NAME === "Test Property", "criterion missing");
+      });
+    } else {
+      const li = document.createElement("li");
+      li.textContent = "SKIP: optional local demo task sif.xml not available";
+      results.appendChild(li);
+    }
+    test("duplicate task source is not resolved to an arbitrary step", () => {
+      const duplicate = taskXml.replace('<TASK_STEP NAME="End" TYPE="END"/>', '<TASK_STEP NAME="Start" TYPE="TASK"/><TASK_STEP NAME="End" TYPE="END"/>');
+      const t = w.parseSif(duplicate).workflows[0];
+      assert(t.warnings.some(x => x.code === "UNRESOLVED_TASK_SOURCE"), "ambiguous source warning missing");
+      assert(t.branches.length === 0 && t.unknownChildrenXml.some(x => x.includes("TASK_BRANCH")), "ambiguous branch was not preserved");
+    });
+    await w.loadSingleFile(new w.File([taskXml], "task.sif"));
+    test("task upload renders graph, details and argument search", () => {
+      const doc = w.document;
+      assert(doc.querySelectorAll(".node").length === 2 && doc.querySelectorAll(".edge").length === 1, "task graph incomplete");
+      assert(doc.getElementById("metaContent").textContent.includes("TASK"), "task type not shown");
+      const input = doc.getElementById("searchSingle");
+      input.value = "old";
+      input.dispatchEvent(new w.Event("input", {bubbles:true}));
+      const match = Array.from(doc.querySelectorAll(".search-match")).find(m => m.textContent.includes("I/O argument"));
+      assert(match, "task argument not searchable");
+      match.click();
+      assert(doc.getElementById("detailsContent").textContent.includes("old"), "task argument not displayed");
+      input.value = "";
+      input.dispatchEvent(new w.Event("input", {bubbles:true}));
+    });
     w.setMode("compare");
+    await w.loadCompareFile("base", new w.File([taskXml],"task-baseline.sif"));
+    await w.loadCompareFile("upd", new w.File([taskXml.replace('VALUE="old"', 'VALUE="new"')],"task-updated.sif"));
+    test("task comparison UI highlights the modified step and shows old/new values", () => {
+      const doc = w.document;
+      assert(doc.querySelector(".node.modified"), "changed task step not highlighted");
+      const change = Array.from(doc.querySelectorAll(".change-card")).find(c => c.textContent.includes("Start"));
+      assert(change, "task change not listed");
+      change.click();
+      const details = doc.getElementById("detailsContent").textContent;
+      assert(details.includes("old") && details.includes("new"), "task old/new values missing");
+    });
     await w.loadCompareFile("base", new w.File([baseline],"baseline.sif"));
     await w.loadCompareFile("upd", new w.File([files.functional],"functional.sif"));
     test("comparison graph marks modified node and branch", () => {
