@@ -1,0 +1,43 @@
+{
+  "files": {
+    "code": [
+      "Workflow Diff Checker/sif-workflow-tool/generate-variations.ps1",
+      "Workflow Diff Checker/sif-workflow-tool/serve.ps1"
+    ],
+    "document": [],
+    "paper": [],
+    "image": [],
+    "video": []
+  },
+  "total_files": 2,
+  "total_words": 309,
+  "needs_graph": false,
+  "warning": "Corpus is ~309 words - fits in a single context window. You may not need a graph.",
+  "skipped_sensitive": [],
+  "graphifyignore_patterns": 52,
+  "git": {
+    "source_owner": "git",
+    "source_hash": "89d4fa36fe86c7455946ac4e4fba67ca997275f9",
+    "branches": [
+      "main"
+    ],
+    "max_commits": 200,
+    "active_within_days": 30
+  },
+  "scope": {
+    "requested_mode": "all",
+    "resolved_mode": "all",
+    "source": "configured-default",
+    "root": ".",
+    "git_root": ".",
+    "head": "89d4fa36fe86c7455946ac4e4fba67ca997275f9",
+    "candidate_count": null,
+    "included_count": 2,
+    "excluded_untracked_count": 0,
+    "excluded_ignored_count": 0,
+    "excluded_sensitive_count": 0,
+    "missing_committed_count": 0,
+    "warnings": [],
+    "recommendation": null
+  }
+}
