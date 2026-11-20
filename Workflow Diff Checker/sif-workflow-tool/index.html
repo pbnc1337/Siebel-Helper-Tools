@@ -186,23 +186,36 @@
       aside{
         display:flex;
         flex-direction:column;
-        overflow:hidden;
+        gap:6px;
+        padding:8px;
+        overflow:auto;
         background: rgba(17,26,51,.90);
       }
       .pane{
-        padding:12px 12px 14px;
-        border-bottom:1px solid var(--border);
+        flex:none;
+        border:1px solid var(--border);
+        border-radius:8px;
+        background:rgba(0,0,0,.14);
+        overflow:hidden;
+      }
+      .pane > summary{
+        padding:10px;
+        color:var(--muted);
+        font-size:13px;
+        font-weight:700;
+        text-transform:uppercase;
+        cursor:pointer;
+      }
+      .drawer-content{
+        padding:0 10px 10px;
+        height:160px;
+        min-height:70px;
+        max-height:70vh;
+        resize:vertical;
         overflow:auto;
       }
-      #paneMeta, #paneSupport { flex: 0 1 30%; min-height: 70px; }
-      #paneDetails { min-height: 110px; }
-      .pane h2{
-        margin:0 0 10px;
-        font-size: 13px;
-        letter-spacing:.25px;
-        color: var(--muted);
-        text-transform: uppercase;
-      }
+      #detailsContent { height:220px; }
+      #supportContent { height:220px; }
       .kv{ display:grid; grid-template-columns: 1fr; gap:8px; }
       .kv .row{
         border:1px solid var(--border);
@@ -223,9 +236,6 @@
       .change-controls { display:flex; flex-wrap:wrap; gap:6px; margin:8px 0; }
       .change-controls input { max-width:100%; }
       .status-text { font-weight:bold; font-size:11px; fill:#fff; paint-order:stroke; stroke:#0b1020; stroke-width:3px; }
-      body.comparing #paneMeta { flex:0 1 16%; }
-      body.comparing #paneSupport { flex:1 1 45%; }
-      body.comparing #paneDetails { flex:1 1 39%; }
       .pill{
         display:inline-flex;
         align-items:center;
@@ -351,28 +361,33 @@
       </section>
 
       <aside>
-        <div class="pane" id="paneMeta">
-          <h2>Metadata</h2>
-          <div id="metaContent" class="kv">
+        <details class="pane" id="paneMeta" open>
+          <summary>Metadata</summary>
+          <div id="metaContent" class="kv drawer-content">
             <div class="row"><div class="k">Status</div><div class="v muted">Load a SIF file to begin.</div></div>
           </div>
-        </div>
+        </details>
 
-        <div class="pane" id="paneDetails" style="flex:1;">
-          <h2>Selection</h2>
-          <div id="detailsContent" class="kv">
+        <details class="pane" id="paneDetails" open>
+          <summary>Selection</summary>
+          <div id="detailsContent" class="kv drawer-content">
             <div class="row"><div class="k">Nothing selected</div><div class="v muted">Click a step or branch connection.</div></div>
           </div>
-        </div>
+        </details>
 
-        <div class="pane" id="paneSupport">
-          <h2>Properties / Warnings / Diff</h2>
-          <div id="supportContent" class="list">
+        <details class="pane" id="paneSupport" open>
+          <summary>Warnings / Diff</summary>
+          <div id="supportContent" class="list drawer-content">
             <div class="row muted" style="border:1px solid var(--border); border-radius:10px; padding:10px; background: rgba(0,0,0,.14);">
               Drag & drop is supported. No server calls are performed.
             </div>
           </div>
-        </div>
+        </details>
+
+        <details class="pane" id="paneProperties" open>
+          <summary>Workflow properties</summary>
+          <div id="propertiesContent" class="kv drawer-content"></div>
+        </details>
       </aside>
     </main>
 
@@ -1203,7 +1218,13 @@
         selectItem({ kind: t.dataset.kind, id: t.dataset.id });
       });
 
-      function selectItem(sel){ state.selected = sel; updateSelectionStyling(); renderDetails(); }
+      function selectItem(sel){
+        state.selected = sel;
+        document.getElementById("paneDetails").open = true;
+        updateSelectionStyling();
+        renderDetails();
+        document.getElementById("detailsContent").scrollTop = 0;
+      }
       function clearSelection(){ state.selected=null; updateSelectionStyling(); renderDetails(); }
       function updateSelectionStyling(){
         document.querySelectorAll(".node.selected").forEach(n=>n.classList.remove("selected"));
@@ -1350,7 +1371,8 @@
                 state.selected = {kind:"change", change, id:item?.id, graphKind:change.category === "steps" ? "node" : "edge"};
                 updateSelectionStyling();
                 renderDetails();
-                document.getElementById("paneDetails").scrollTop=0;
+                document.getElementById("paneDetails").open = true;
+                document.getElementById("detailsContent").scrollTop = 0;
               });
               list.appendChild(button);
             }
@@ -1358,12 +1380,13 @@
           search.addEventListener("input",updateChanges); filter.addEventListener("change",updateChanges); updateChanges();
         }
 
-        support.appendChild(rowBox("Workflow properties", `${wf.props.length} WF_PROCESS_PROP`));
-        if (wf.props.length){
-          const p = document.createElement("div");
-          p.className="row";
-          p.innerHTML = `<div class="k">Property names</div><div class="v">${wf.props.map(x=>escapeHtml(x.attrs.NAME ?? "(unnamed)")).join("<br/>")}</div>`;
-          support.appendChild(p);
+        const properties = document.getElementById("propertiesContent");
+        properties.replaceChildren(rowBox("Workflow properties", `${wf.props.length}`));
+        for (const property of wf.props) {
+          const box = document.createElement("div");
+          box.className = "row";
+          box.innerHTML = `<div class="k">${escapeHtml(property.attrs.NAME ?? "(unnamed)")}</div><div class="v">${renderAttrRows(property.attrs)}</div>`;
+          properties.appendChild(box);
         }
 
         const warnings = state.mode === "compare"
@@ -1590,6 +1613,7 @@
           document.getElementById("nodes").replaceChildren();
           document.getElementById("edges").replaceChildren();
           document.getElementById("supportContent").replaceChildren(rowBox("Compare", "Choose a baseline and an updated SIF file."));
+          document.getElementById("propertiesContent").replaceChildren();
           return;
         }
         const baseWf = state.compare.baseWf;

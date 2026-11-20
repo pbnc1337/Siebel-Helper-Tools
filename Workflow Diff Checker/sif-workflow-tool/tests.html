@@ -42,6 +42,29 @@ document.getElementById("app").addEventListener("load", async () => {
     test("sample has five steps, five branches, seven properties", () => {
       assert(base.steps.length === 5 && base.branches.length === 5 && base.props.length === 7, "incorrect sample counts");
     });
+    await w.loadSingleFile(new w.File([baseline], "baseline.sif"));
+    test("sidebar drawers collapse independently and have resizable content", () => {
+      for (const id of ["paneMeta", "paneDetails", "paneSupport", "paneProperties"]) {
+        const pane = w.document.getElementById(id);
+        const content = pane.querySelector(".drawer-content");
+        assert(pane.open && content && w.getComputedStyle(content).resize === "vertical", id + " is not resizable");
+        pane.querySelector("summary").click();
+        assert(!pane.open, id + " did not collapse");
+        pane.querySelector("summary").click();
+        assert(pane.open, id + " did not expand");
+      }
+    });
+    test("workflow properties show attributes", () => {
+      const text = w.document.getElementById("propertiesContent").textContent;
+      assert(text.includes("Test Property 1") && text.includes("DATA_TYPE") && text.includes("VARCHAR"), "property attributes missing");
+    });
+    test("selecting a node opens the selection drawer", () => {
+      const pane = w.document.getElementById("paneDetails");
+      pane.open = false;
+      const node = w.document.querySelector(".node");
+      node.dispatchEvent(new w.MouseEvent("click", { bubbles: true }));
+      assert(pane.open && w.document.getElementById("detailsContent").textContent.includes("Step"), "selection drawer did not open");
+    });
     test("zoom supports large diagrams and anchors the chosen point", () => {
       const viewport = w.document.getElementById("viewport");
       w.fitToScreen();
