@@ -1146,10 +1146,12 @@
 
       // pan/zoom
       const viewport = document.getElementById("viewport");
-      viewport.addEventListener("wheel", (e)=>{
+      canvasWrap.addEventListener("wheel", (e)=>{
         e.preventDefault();
+        if (!e.deltaY) return;
         const factor = Math.sign(e.deltaY) > 0 ? 0.92 : 1.08;
-        setScale(state.view.scale * factor, e.offsetX, e.offsetY);
+        const bounds = canvasWrap.getBoundingClientRect();
+        setScale(state.view.scale * factor, e.clientX - bounds.left, e.clientY - bounds.top);
       }, { passive:false });
       viewport.addEventListener("mousedown", (e)=>{
         if (e.button === 1 || e.shiftKey){
@@ -1173,12 +1175,15 @@
       document.getElementById("btnFit").addEventListener("click", ()=>fitToScreen());
 
       function setScale(s, anchorX, anchorY){
-        const newS = Math.min(3.2, Math.max(0.25, s));
-        if (anchorX !== undefined){
-          const prev = state.view.scale;
-          state.view.tx = anchorX - (newS/prev)*(anchorX - state.view.tx);
-          state.view.ty = anchorY - (newS/prev)*(anchorY - state.view.ty);
+        if (!Number.isFinite(s) || s <= 0) return;
+        const newS = Math.min(1000, Math.max(0.02, s));
+        if (anchorX === undefined || anchorY === undefined) {
+          anchorX = canvasWrap.clientWidth / 2;
+          anchorY = canvasWrap.clientHeight / 2;
         }
+        const prev = state.view.scale;
+        state.view.tx = anchorX - (newS/prev)*(anchorX - state.view.tx);
+        state.view.ty = anchorY - (newS/prev)*(anchorY - state.view.ty);
         state.view.scale = newS;
         applyTransform();
       }

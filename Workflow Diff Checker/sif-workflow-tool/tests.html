@@ -42,6 +42,26 @@ document.getElementById("app").addEventListener("load", async () => {
     test("sample has five steps, five branches, seven properties", () => {
       assert(base.steps.length === 5 && base.branches.length === 5 && base.props.length === 7, "incorrect sample counts");
     });
+    test("zoom supports large diagrams and anchors the chosen point", () => {
+      const viewport = w.document.getElementById("viewport");
+      w.fitToScreen();
+      w.setScale(100, 120, 80);
+      const m = new w.DOMMatrix(w.getComputedStyle(viewport).transform);
+      assert(m.a === 100, "zoom is capped below 100x");
+      assert(Math.abs(m.e + 11880) < 0.01 && Math.abs(m.f + 7920) < 0.01, "anchor moved");
+      w.setScale(NaN);
+      assert(new w.DOMMatrix(w.getComputedStyle(viewport).transform).a === 100, "invalid scale changed view");
+      w.document.getElementById("btnFit").click();
+      const fitted = new w.DOMMatrix(w.getComputedStyle(viewport).transform);
+      assert(fitted.a === 1 && fitted.e === 0 && fitted.f === 0, "fit did not reset viewport");
+    });
+    test("wheel zoom works on the fixed canvas after zooming out", () => {
+      const canvas = w.document.getElementById("canvasWrap");
+      w.setScale(0.02);
+      canvas.dispatchEvent(new w.WheelEvent("wheel", { deltaY:-1, bubbles:true, cancelable:true, clientX:100, clientY:100 }));
+      assert(new w.DOMMatrix(w.getComputedStyle(w.document.getElementById("viewport")).transform).a > 0.02, "wheel zoom failed");
+      w.fitToScreen();
+    });
     test("identical SIF has no changes", () => assert(diff("identical").changes.length === 0, "unexpected changes"));
     test("functional variation compares workflow, property, service, argument, expression and criterion value", () => {
       const d = diff("functional");
