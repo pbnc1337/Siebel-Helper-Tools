@@ -1,0 +1,3498 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<REPOSITORY
+   NAME="Siebel Repository"
+   UPDATED="10/08/2020 10:45:20"
+   UPDATED_BY="DEMO_ADMIN"
+   CREATED="10/08/2020 10:27:59"
+   CREATED_BY="DEMO_ADMIN"
+   FIO_PLACEHOLDER_FIO="TRUE">
+	<PROJECT
+	   ALLOW_OBJECT_LOCKING="Y"
+	   COMMENTS="DEMO JSC 16.09.09 Project for OM Workflows"
+	   INACTIVE="N"
+	   LOCKED="N"
+	   NAME="Demo Customer Management Workflows"
+	   UI_FREEZE="N"
+	   UPDATED="02/16/2022 10:15:24"
+	   UPDATED_BY="DEMO_USER_01"
+	   CREATED="09/16/2009 10:06:14"
+	   CREATED_BY="DEMO_ADMIN"
+	   FIO_PLACEHOLDER_FIO="TRUE">
+		<TASK
+		   ALLOW_PAUSE="Y"
+		   BUSINESS_OBJECT="Account"
+		   COMMENTS="DEMO DEMO_DEV_01 27.04.2012 v. 34 unverändert, musste nur nochmals auschecken und aktivieren"
+		   DISPLAY_NAME_-_STRING_REFERENCE="X_DEMO_PROFILE_MAINTAIN"
+		   INACTIVE="N"
+		   INBOX_DISPOSITION="DO_NOT_CARE_FASTEST"
+		   IS_SUBTASK="Y"
+		   NAME="Demo Billing Profile Subtask"
+		   OBJECT_LOCKED="N"
+		   ON_CONFLICT="Cancel Operation"
+		   STATUS="COMPLETED"
+		   TASK_NAME="Demo Billing Profile Subtask"
+		   TRANSACTIONAL="Y"
+		   TRANSIENT_BC="Demo Billing Profile BC"
+		   VERSION="50"
+		   UPDATED="06/01/2018 16:00:45"
+		   UPDATED_BY="DEMO_ADMIN"
+		   CREATED="06/01/2018 15:58:25"
+		   CREATED_BY="DEMO_ADMIN">
+			<TASK_BRANCH
+			   FROM_STEP_NAME="Start"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*7*0*0*0*9*LineWidth1*24*FrHS1*32*P16*75 2044*NPts1*22*P06*75 1684*ToHS1*18*ArrowEnd1*1"
+			   NAME="Connector 0"
+			   TO_STEP_NAME="Search Active Bill Profile"
+			   TYPE="CONNECTOR"
+			   UPDATED="06/01/2018 15:58:25"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:25"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_BRANCH>
+			<TASK_BRANCH
+			   FROM_STEP_NAME="TBC Update"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*7*0*0*0*9*LineWidth1*24*FrHS1*32*P17*471 3244*NPts1*22*P07*471 2704*ToHS1*18*ArrowEnd1*1"
+			   NAME="Connector 1"
+			   TO_STEP_NAME="Task View 2"
+			   TYPE="CONNECTOR"
+			   UPDATED="06/01/2018 15:58:25"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:25"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_BRANCH>
+			<TASK_BRANCH
+			   FROM_STEP_NAME="Neues Profil Update"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*7*0*0*0*9*LineWidth1*24*FrHS1*22*P18*1573 3394*NPts1*22*P08*1542 3394*ToHS1*08*ArrowEnd1*1"
+			   NAME="Connector 10"
+			   TO_STEP_NAME="Update Account"
+			   TYPE="CONNECTOR"
+			   UPDATED="06/01/2018 15:58:25"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:25"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_BRANCH>
+			<TASK_BRANCH
+			   FROM_STEP_NAME="Create dokumentation activity"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*7*0*0*0*9*LineWidth1*24*FrHS1*12*P18*1743 2824*NPts1*22*P08*1743 3124*ToHS1*38*ArrowEnd1*1"
+			   NAME="Connector 11"
+			   TO_STEP_NAME="End"
+			   TYPE="CONNECTOR"
+			   UPDATED="06/01/2018 15:58:25"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:25"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_BRANCH>
+			<TASK_BRANCH
+			   FROM_STEP_NAME="Update profile attribute"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*7*0*0*0*9*LineWidth1*24*FrHS1*22*P17*312 1354*NPts1*22*P07*270 1354*ToHS1*08*ArrowEnd1*1"
+			   NAME="Connector 14"
+			   TO_STEP_NAME="Neues RP anlegen"
+			   TYPE="CONNECTOR"
+			   UPDATED="06/01/2018 15:58:25"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:25"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_BRANCH>
+			<TASK_BRANCH
+			   FROM_STEP_NAME="Update Account"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*8*0*0*0*9*LineWidth1*22*P28*1644 4594*FrHS1*32*P18*1612 4594*NPts1*32*P08*1612 3664*ToHS1*08*ArrowEnd1*1"
+			   NAME="Connector 18"
+			   TO_STEP_NAME="Ipt-In-ACT"
+			   TYPE="CONNECTOR"
+			   UPDATED="06/01/2018 15:58:25"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:25"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_BRANCH>
+			<TASK_BRANCH
+			   FROM_STEP_NAME="Search Active Bill Profile"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*7*0*0*0*9*LineWidth1*24*FrHS1*32*P16*75 3004*NPts1*22*P06*75 2584*ToHS1*18*ArrowEnd1*1"
+			   NAME="Connector 19"
+			   TO_STEP_NAME="Create initial address"
+			   TYPE="CONNECTOR"
+			   UPDATED="06/01/2018 15:58:25"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:25"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_BRANCH>
+			<TASK_BRANCH
+			   FROM_STEP_NAME="Start Date &gt; Today()?"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*7*0*0*0*9*LineWidth1*24*FrHS1*22*P18*1241 3394*NPts1*22*P08*1217 3394*ToHS1*08*ArrowEnd1*1"
+			   NAME="Connector 2"
+			   TO_STEP_NAME="Effective ab heute?"
+			   TYPE="CONNECTOR"
+			   UPDATED="06/01/2018 15:58:25"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:25"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_BRANCH>
+			<TASK_BRANCH
+			   FROM_STEP_NAME="Create initial address"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*9*0*0*0*9*LineWidth1*22*P27*139 1354*FrHS1*22*P17*139 3274*NPts1*42*P07*114 3272*P37*192 1354*ToHS1*08*ArrowEnd1*1"
+			   NAME="Connector 20"
+			   TO_STEP_NAME="Update profile attribute"
+			   TYPE="CONNECTOR"
+			   UPDATED="06/01/2018 15:58:25"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:25"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_BRANCH>
+			<TASK_BRANCH
+			   EXPRESSION="(DEMO Date Property All Must Match (Ignore Case)(&apos;Y&apos;))"
+			   FROM_STEP_NAME="Effective ab heute?"
+			   INACTIVE="N"
+			   LABEL="Ja"
+			   LAYOUT="@0*0*7*0*0*0*9*LineWidth1*24*FrHS1*32*P18*1280 4194*NPts1*22*P08*1280 3664*ToHS1*18*ArrowEnd1*1"
+			   NAME="Connector 22"
+			   TO_STEP_NAME="Setze alte RP = ungültig"
+			   TYPE="DECISION"
+			   UPDATED="06/01/2018 15:58:25"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:25"
+			   CREATED_BY="DEMO_ADMIN">
+				<TASK_BRANCH_CRITERIA
+				   COMPARE_TO="TASK_PROPERTY"
+				   INACTIVE="N"
+				   NAME="Criteria_2"
+				   OPERATION="EQ_ALL_NC"
+				   PREFERRED_SEQUENCE="0"
+				   PROPERTY_NAME="DEMO Date Property"
+				   UPDATED="06/01/2018 15:58:25"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:25"
+				   CREATED_BY="DEMO_ADMIN">
+					<TASK_BRANCH_CRITERIA_VALUE
+					   INACTIVE="N"
+					   LO_CHAR1="Y"
+					   NAME="Criteria Value_1"
+					   PREFERRED_SEQUENCE="0"
+					   UPDATED="06/01/2018 15:58:25"
+					   UPDATED_BY="DEMO_ADMIN"
+					   CREATED="06/01/2018 15:58:25"
+					   CREATED_BY="DEMO_ADMIN">
+					</TASK_BRANCH_CRITERIA_VALUE>
+				</TASK_BRANCH_CRITERIA>
+			</TASK_BRANCH>
+			<TASK_BRANCH
+			   EXPRESSION="( All Must Match (Ignore Case)(&apos;[&amp;Payment Method] = &apos;Automatic Debit&apos; AND ([&amp;DirectDebit Consent Notice] = &apos;N&apos; AND [&amp;DirectDebit Authorization Form] = &apos;N&apos;)&apos;))"
+			   FROM_STEP_NAME="NoOpt-In"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*7*0*0*0*9*LineWidth1*24*FrHS1*02*P17*618 4594*NPts1*22*P07*684 4594*ToHS1*28*ArrowEnd1*1"
+			   NAME="Connector 28"
+			   TO_STEP_NAME="Error: Opt-In"
+			   TYPE="DECISION"
+			   UPDATED="06/01/2018 15:58:25"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:25"
+			   CREATED_BY="DEMO_ADMIN">
+				<TASK_BRANCH_CRITERIA
+				   COMPARE_TO="EXPRESSION"
+				   INACTIVE="N"
+				   NAME="Criteria_1"
+				   OPERATION="EQ_ALL_NC"
+				   PREFERRED_SEQUENCE="1"
+				   UPDATED="06/01/2018 15:58:25"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:25"
+				   CREATED_BY="DEMO_ADMIN">
+					<TASK_BRANCH_CRITERIA_VALUE
+					   INACTIVE="N"
+					   LO_CHAR5="[&amp;Payment Method] = &apos;Automatic Debit&apos; AND ([&amp;DirectDebit Consent Notice] = &apos;N&apos; AND [&amp;DirectDebit Authorization Form] = &apos;N&apos;)"
+					   NAME="Criteria Value_1"
+					   PREFERRED_SEQUENCE="1"
+					   UPDATED="06/01/2018 15:58:25"
+					   UPDATED_BY="DEMO_ADMIN"
+					   CREATED="06/01/2018 15:58:25"
+					   CREATED_BY="DEMO_ADMIN">
+					</TASK_BRANCH_CRITERIA_VALUE>
+				</TASK_BRANCH_CRITERIA>
+			</TASK_BRANCH>
+			<TASK_BRANCH
+			   FROM_STEP_NAME="Setze neues RP = gültig"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*7*0*0*0*9*LineWidth1*24*FrHS1*12*P18*1398 3664*NPts1*22*P08*1398 4194*ToHS1*38*ArrowEnd1*1"
+			   NAME="Connector 29"
+			   TO_STEP_NAME="Subtask 1"
+			   TYPE="CONNECTOR"
+			   UPDATED="06/01/2018 15:58:25"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:25"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_BRANCH>
+			<TASK_BRANCH
+			   FROM_STEP_NAME="Neues RP anlegen"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*7*0*0*0*9*LineWidth1*24*FrHS1*22*P17*432 1354*NPts1*22*P07*390 1354*ToHS1*08*ArrowEnd1*1"
+			   NAME="Connector 3"
+			   TO_STEP_NAME="Effectivees RP gefunden?"
+			   TYPE="CONNECTOR"
+			   UPDATED="06/01/2018 15:58:25"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:25"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_BRANCH>
+			<TASK_BRANCH
+			   EXPRESSION="(Demo Billing Profile BC..DEMO DirectDebit Text All Must Match (Ignore Case)(&apos;Y&apos;))"
+			   FROM_STEP_NAME="Validate input data"
+			   INACTIVE="N"
+			   LABEL="Ungleich Automatic Debit"
+			   LAYOUT="@0*0*7*0*0*0*9*LineWidth1*24*FrHS1*22*P18*1139 3394*NPts1*22*P08*1050 3394*ToHS1*08*ArrowEnd1*1"
+			   NAME="Connector 30"
+			   TO_STEP_NAME="Start Date &gt; Today()?"
+			   TYPE="DECISION"
+			   UPDATED="06/01/2018 15:58:25"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:25"
+			   CREATED_BY="DEMO_ADMIN">
+				<TASK_BRANCH_CRITERIA
+				   BUSINESS_COMPONENT="Demo Billing Profile BC"
+				   BUSINESS_COMPONENT_FIELD="DEMO DirectDebit Text"
+				   COMPARE_TO="BUSCOMP"
+				   INACTIVE="N"
+				   NAME="Criteria_1"
+				   OPERATION="EQ_ALL_NC"
+				   PREFERRED_SEQUENCE="1"
+				   UPDATED="06/01/2018 15:58:25"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:25"
+				   CREATED_BY="DEMO_ADMIN">
+					<TASK_BRANCH_CRITERIA_VALUE
+					   INACTIVE="N"
+					   LO_CHAR1="Y"
+					   NAME="Criteria Value_1"
+					   PREFERRED_SEQUENCE="1"
+					   UPDATED="06/01/2018 15:58:25"
+					   UPDATED_BY="DEMO_ADMIN"
+					   CREATED="06/01/2018 15:58:25"
+					   CREATED_BY="DEMO_ADMIN">
+					</TASK_BRANCH_CRITERIA_VALUE>
+				</TASK_BRANCH_CRITERIA>
+			</TASK_BRANCH>
+			<TASK_BRANCH
+			   FROM_STEP_NAME="Validate input data"
+			   INACTIVE="N"
+			   LABEL="not valid"
+			   LAYOUT="@0*0*7*0*0*0*9*LineWidth1*24*FrHS1*32*P18*1011 4924*NPts1*22*P08*1011 3664*ToHS1*18*ArrowEnd1*1"
+			   NAME="Connector 31"
+			   TO_STEP_NAME="Error: Not all data"
+			   TYPE="DEFAULT"
+			   UPDATED="06/01/2018 15:58:25"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:25"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_BRANCH>
+			<TASK_BRANCH
+			   FROM_STEP_NAME="Effective ab heute?"
+			   INACTIVE="N"
+			   LABEL="Nein"
+			   LAYOUT="@0*0*7*0*0*0*9*LineWidth1*24*FrHS1*22*P18*1369 3394*NPts1*22*P08*1319 3394*ToHS1*08*ArrowEnd1*1"
+			   NAME="Connector 32"
+			   TO_STEP_NAME="Subtask 1"
+			   TYPE="DEFAULT"
+			   UPDATED="06/01/2018 15:58:25"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:25"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_BRANCH>
+			<TASK_BRANCH
+			   FROM_STEP_NAME="Update Primary Account RP"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*8*0*0*0*9*LineWidth1*22*P28*1398 4734*FrHS1*22*P18*1398 5334*NPts1*32*P08*1319 5334*ToHS1*38*ArrowEnd1*1"
+			   NAME="Connector 33"
+			   TO_STEP_NAME="Setze neues RP = gültig"
+			   TYPE="CONNECTOR"
+			   UPDATED="06/01/2018 15:58:25"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:25"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_BRANCH>
+			<TASK_BRANCH
+			   FROM_STEP_NAME="Error: Not all data"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*8*0*0*0*9*LineWidth1*22*P27*471 3784*FrHS1*02*P17*471 5194*NPts1*32*P07*972 5194*ToHS1*38*ArrowEnd1*1"
+			   NAME="Connector 34"
+			   TO_STEP_NAME="Task View 2"
+			   TYPE="CONNECTOR"
+			   UPDATED="06/01/2018 15:58:25"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:25"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_BRANCH>
+			<TASK_BRANCH
+			   FROM_STEP_NAME="NoOpt-In"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*7*0*0*0*9*LineWidth1*24*FrHS1*22*P17*780 4594*NPts1*22*P07*762 4594*ToHS1*08*ArrowEnd1*1"
+			   NAME="Connector 35"
+			   TO_STEP_NAME="Beide ausgewählt?"
+			   TYPE="DEFAULT"
+			   UPDATED="06/01/2018 15:58:25"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:25"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_BRANCH>
+			<TASK_BRANCH
+			   FROM_STEP_NAME="Task View 0"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*7*0*0*0*9*LineWidth1*24*FrHS1*32*P17*634 1804*NPts1*22*P07*634 1624*ToHS1*18*ArrowEnd1*1"
+			   NAME="Connector 36"
+			   TO_STEP_NAME="DirectDebit OPT-IN Relevant"
+			   TYPE="CONNECTOR"
+			   UPDATED="06/01/2018 15:58:25"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:25"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_BRANCH>
+			<TASK_BRANCH
+			   FROM_STEP_NAME="Demo Skill Lookup"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*8*0*0*0*9*LineWidth1*22*P27*684 3394*FrHS1*32*P17*634 3394*NPts1*32*P07*634 3184*ToHS1*08*ArrowEnd1*1"
+			   NAME="Connector 37"
+			   TO_STEP_NAME="Besitzt Skill?"
+			   TYPE="CONNECTOR"
+			   UPDATED="06/01/2018 15:58:25"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:25"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_BRANCH>
+			<TASK_BRANCH
+			   FROM_STEP_NAME="Besitzt Skill?"
+			   INACTIVE="N"
+			   LABEL="Nein"
+			   LAYOUT="@0*0*7*0*0*0*9*LineWidth1*24*FrHS1*32*P17*723 4324*NPts1*22*P07*723 3664*ToHS1*18*ArrowEnd1*1"
+			   NAME="Connector 38"
+			   TO_STEP_NAME="NoOpt-In"
+			   TYPE="DEFAULT"
+			   UPDATED="06/01/2018 15:58:25"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:25"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_BRANCH>
+			<TASK_BRANCH
+			   EXPRESSION="(Skill found All Must Match (Ignore Case)(&apos;Ja&apos;))"
+			   FROM_STEP_NAME="Besitzt Skill?"
+			   INACTIVE="N"
+			   LABEL="Ja"
+			   LAYOUT="@0*0*8*0*0*0*9*LineWidth1*22*P27*819 4324*FrHS1*22*P17*819 3394*NPts1*32*P07*762 3394*ToHS1*18*ArrowEnd1*1"
+			   NAME="Connector 39"
+			   TO_STEP_NAME="Beide ausgewählt?"
+			   TYPE="DECISION"
+			   UPDATED="06/01/2018 15:58:25"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:25"
+			   CREATED_BY="DEMO_ADMIN">
+				<TASK_BRANCH_CRITERIA
+				   COMPARE_TO="TASK_PROPERTY"
+				   INACTIVE="N"
+				   NAME="Criteria_1"
+				   OPERATION="EQ_ALL_NC"
+				   PREFERRED_SEQUENCE="1"
+				   PROPERTY_NAME="Skill found"
+				   UPDATED="06/01/2018 15:58:25"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:25"
+				   CREATED_BY="DEMO_ADMIN">
+					<TASK_BRANCH_CRITERIA_VALUE
+					   INACTIVE="N"
+					   LO_CHAR1="Ja"
+					   NAME="Criteria Value_1"
+					   PREFERRED_SEQUENCE="1"
+					   UPDATED="06/01/2018 15:58:25"
+					   UPDATED_BY="DEMO_ADMIN"
+					   CREATED="06/01/2018 15:58:25"
+					   CREATED_BY="DEMO_ADMIN">
+					</TASK_BRANCH_CRITERIA_VALUE>
+				</TASK_BRANCH_CRITERIA>
+			</TASK_BRANCH>
+			<TASK_BRANCH
+			   EXPRESSION="(Demo Billing Profile BC..DEMO DirectDebit Text All Must Match (Ignore Case)(&apos;N&apos;))"
+			   FROM_STEP_NAME="DirectDebit OPT-IN Relevant"
+			   INACTIVE="N"
+			   LABEL="Ja"
+			   LAYOUT="@0*0*7*0*0*0*9*LineWidth1*24*FrHS1*32*P17*634 2644*NPts1*22*P07*634 2344*ToHS1*18*ArrowEnd1*1"
+			   NAME="Connector 4"
+			   TO_STEP_NAME="Demo Skill Lookup"
+			   TYPE="DECISION"
+			   UPDATED="06/01/2018 15:58:25"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:25"
+			   CREATED_BY="DEMO_ADMIN">
+				<TASK_BRANCH_CRITERIA
+				   BUSINESS_COMPONENT="Demo Billing Profile BC"
+				   BUSINESS_COMPONENT_FIELD="DEMO DirectDebit Text"
+				   COMPARE_TO="BUSCOMP"
+				   INACTIVE="N"
+				   NAME="Criteria_1"
+				   OPERATION="EQ_ALL_NC"
+				   PREFERRED_SEQUENCE="1"
+				   UPDATED="06/01/2018 15:58:25"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:25"
+				   CREATED_BY="DEMO_ADMIN">
+					<TASK_BRANCH_CRITERIA_VALUE
+					   INACTIVE="N"
+					   LO_CHAR1="N"
+					   NAME="Criteria Value_1"
+					   PREFERRED_SEQUENCE="1"
+					   UPDATED="06/01/2018 15:58:25"
+					   UPDATED_BY="DEMO_ADMIN"
+					   CREATED="06/01/2018 15:58:25"
+					   CREATED_BY="DEMO_ADMIN">
+					</TASK_BRANCH_CRITERIA_VALUE>
+				</TASK_BRANCH_CRITERIA>
+			</TASK_BRANCH>
+			<TASK_BRANCH
+			   EXPRESSION="( All Must Match (Ignore Case)(&apos;[&amp;Payment Method] = &apos;Automatic Debit&apos; AND ([&amp;DirectDebit Consent Notice] = &apos;Y&apos; AND [&amp;DirectDebit Authorization Form] = &apos;Y&apos;)&apos;))"
+			   FROM_STEP_NAME="Beide ausgewählt?"
+			   INACTIVE="N"
+			   LABEL="Ja"
+			   LAYOUT="@0*0*7*0*0*0*9*LineWidth1*24*FrHS1*22*P17*888 4594*NPts1*22*P07*858 4594*ToHS1*08*ArrowEnd1*1"
+			   NAME="Connector 40"
+			   TO_STEP_NAME="Error: Opt-In 2"
+			   TYPE="DECISION"
+			   UPDATED="06/01/2018 15:58:25"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:25"
+			   CREATED_BY="DEMO_ADMIN">
+				<TASK_BRANCH_CRITERIA
+				   COMPARE_TO="EXPRESSION"
+				   INACTIVE="N"
+				   NAME="Criteria_1"
+				   OPERATION="EQ_ALL_NC"
+				   PREFERRED_SEQUENCE="1"
+				   UPDATED="06/01/2018 15:58:25"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:25"
+				   CREATED_BY="DEMO_ADMIN">
+					<TASK_BRANCH_CRITERIA_VALUE
+					   INACTIVE="N"
+					   LO_CHAR5="[&amp;Payment Method] = &apos;Automatic Debit&apos; AND ([&amp;DirectDebit Consent Notice] = &apos;Y&apos; AND [&amp;DirectDebit Authorization Form] = &apos;Y&apos;)"
+					   NAME="Criteria Value_1"
+					   PREFERRED_SEQUENCE="1"
+					   UPDATED="06/01/2018 15:58:25"
+					   UPDATED_BY="DEMO_ADMIN"
+					   CREATED="06/01/2018 15:58:25"
+					   CREATED_BY="DEMO_ADMIN">
+					</TASK_BRANCH_CRITERIA_VALUE>
+				</TASK_BRANCH_CRITERIA>
+			</TASK_BRANCH>
+			<TASK_BRANCH
+			   FROM_STEP_NAME="Beide ausgewählt?"
+			   INACTIVE="N"
+			   LABEL="Nein"
+			   LAYOUT="@0*0*8*0*0*0*9*LineWidth1*22*P27*972 3394*FrHS1*12*P17*876 3964*NPts1*32*P07*819 4324*ToHS1*08*ArrowEnd1*1"
+			   NAME="Connector 41"
+			   TO_STEP_NAME="Validate input data"
+			   TYPE="DEFAULT"
+			   UPDATED="06/01/2018 15:58:25"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:25"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_BRANCH>
+			<TASK_BRANCH
+			   FROM_STEP_NAME="Error: Opt-In 2"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*9*0*0*0*9*LineWidth1*22*P27*471 5044*FrHS1*32*P17*933 5044*NPts1*42*P07*933 4862*P37*471 3784*ToHS1*38*ArrowEnd1*1"
+			   NAME="Connector 42"
+			   TO_STEP_NAME="Task View 2"
+			   TYPE="CONNECTOR"
+			   UPDATED="06/01/2018 15:58:25"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:25"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_BRANCH>
+			<TASK_BRANCH
+			   EXPRESSION="( All Must Match (Ignore Case)(&apos;[&amp;Payment Method] = &apos;Automatic Debit&apos; AND [&amp;DirectDebit Consent Notice] = &apos;Y&apos;&apos;))"
+			   FROM_STEP_NAME="Ipt-In-ACT"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*8*0*0*0*9*LineWidth1*22*P28*1743 3664*FrHS1*22*P18*1743 4594*NPts1*32*P08*1722 4594*ToHS1*38*ArrowEnd1*1"
+			   NAME="Connector 43"
+			   TO_STEP_NAME="Create dokumentation activity"
+			   TYPE="DECISION"
+			   UPDATED="06/01/2018 15:58:25"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:25"
+			   CREATED_BY="DEMO_ADMIN">
+				<TASK_BRANCH_CRITERIA
+				   COMPARE_TO="EXPRESSION"
+				   INACTIVE="N"
+				   NAME="Criteria_1"
+				   OPERATION="EQ_ALL_NC"
+				   PREFERRED_SEQUENCE="1"
+				   UPDATED="06/01/2018 15:58:25"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:25"
+				   CREATED_BY="DEMO_ADMIN">
+					<TASK_BRANCH_CRITERIA_VALUE
+					   INACTIVE="N"
+					   LO_CHAR5="[&amp;Payment Method] = &apos;Automatic Debit&apos; AND [&amp;DirectDebit Consent Notice] = &apos;Y&apos;"
+					   NAME="Criteria Value_1"
+					   PREFERRED_SEQUENCE="1"
+					   UPDATED="06/01/2018 15:58:25"
+					   UPDATED_BY="DEMO_ADMIN"
+					   CREATED="06/01/2018 15:58:25"
+					   CREATED_BY="DEMO_ADMIN">
+					</TASK_BRANCH_CRITERIA_VALUE>
+				</TASK_BRANCH_CRITERIA>
+			</TASK_BRANCH>
+			<TASK_BRANCH
+			   EXPRESSION="( All Must Match (Ignore Case)(&apos;[&amp;Payment Method] = &apos;Automatic Debit&apos; AND [&amp;DirectDebit Authorization Form] = &apos;Y&apos;&apos;))"
+			   FROM_STEP_NAME="Ipt-In-ACT"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*9*0*0*0*9*LineWidth1*22*P28*1851 5114*FrHS1*32*P18*1683 5114*NPts1*42*P08*1683 4862*P38*1851 3664*ToHS1*38*ArrowEnd1*1"
+			   NAME="Connector 44"
+			   TO_STEP_NAME="Create dokumentation activity-Mandat"
+			   TYPE="DECISION"
+			   UPDATED="06/01/2018 15:58:25"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:25"
+			   CREATED_BY="DEMO_ADMIN">
+				<TASK_BRANCH_CRITERIA
+				   COMPARE_TO="EXPRESSION"
+				   INACTIVE="N"
+				   NAME="Criteria_1"
+				   OPERATION="EQ_ALL_NC"
+				   PREFERRED_SEQUENCE="1"
+				   UPDATED="06/01/2018 15:58:25"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:25"
+				   CREATED_BY="DEMO_ADMIN">
+					<TASK_BRANCH_CRITERIA_VALUE
+					   INACTIVE="N"
+					   LO_CHAR5="[&amp;Payment Method] = &apos;Automatic Debit&apos; AND [&amp;DirectDebit Authorization Form] = &apos;Y&apos;"
+					   NAME="Criteria Value_1"
+					   PREFERRED_SEQUENCE="1"
+					   UPDATED="06/01/2018 15:58:25"
+					   UPDATED_BY="DEMO_ADMIN"
+					   CREATED="06/01/2018 15:58:25"
+					   CREATED_BY="DEMO_ADMIN">
+					</TASK_BRANCH_CRITERIA_VALUE>
+				</TASK_BRANCH_CRITERIA>
+			</TASK_BRANCH>
+			<TASK_BRANCH
+			   FROM_STEP_NAME="Create dokumentation activity-Mandat"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*8*0*0*0*9*LineWidth1*22*P28*1782 2554*FrHS1*12*P18*1851 2554*NPts1*32*P08*1851 3124*ToHS1*28*ArrowEnd1*1"
+			   NAME="Connector 45"
+			   TO_STEP_NAME="End"
+			   TYPE="CONNECTOR"
+			   UPDATED="06/01/2018 15:58:25"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:25"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_BRANCH>
+			<TASK_BRANCH
+			   FROM_STEP_NAME="Ipt-In-ACT"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*9*0*0*0*9*LineWidth1*22*P28*1635 2974*FrHS1*12*P18*1683 2974*NPts1*42*P08*1683 4322*P38*1635 2824*ToHS1*38*ArrowEnd1*1"
+			   NAME="Connector 46"
+			   TO_STEP_NAME="Create dokumentation activity Bank Transfer"
+			   TYPE="DEFAULT"
+			   UPDATED="06/01/2018 15:58:25"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:25"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_BRANCH>
+			<TASK_BRANCH
+			   FROM_STEP_NAME="Create dokumentation activity Bank Transfer"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*7*0*0*0*9*LineWidth1*24*FrHS1*22*P18*1704 2554*NPts1*22*P08*1674 2554*ToHS1*08*ArrowEnd1*1"
+			   NAME="Connector 47"
+			   TO_STEP_NAME="End"
+			   TYPE="CONNECTOR"
+			   UPDATED="06/01/2018 15:58:25"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:25"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_BRANCH>
+			<TASK_BRANCH
+			   FROM_STEP_NAME="Subtask 1"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*7*0*0*0*9*LineWidth1*24*FrHS1*22*P18*1464 3394*NPts1*22*P08*1427 3394*ToHS1*08*ArrowEnd1*1"
+			   NAME="Connector 5"
+			   TO_STEP_NAME="Neues Profil Update"
+			   TYPE="CONNECTOR"
+			   UPDATED="06/01/2018 15:58:25"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:25"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_BRANCH>
+			<TASK_BRANCH
+			   FROM_STEP_NAME="Setze alte RP = ungültig"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*7*0*0*0*9*LineWidth1*24*FrHS1*32*P18*1280 5064*NPts1*22*P08*1280 4734*ToHS1*18*ArrowEnd1*1"
+			   NAME="Connector 6"
+			   TO_STEP_NAME="Update Primary Account RP"
+			   TYPE="CONNECTOR"
+			   UPDATED="06/01/2018 15:58:25"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:25"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_BRANCH>
+			<TASK_BRANCH
+			   FROM_STEP_NAME="Error: Opt-In"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*8*0*0*0*9*LineWidth1*22*P27*471 3784*FrHS1*02*P17*471 4594*NPts1*32*P07*528 4594*ToHS1*38*ArrowEnd1*1"
+			   NAME="Connector 7"
+			   TO_STEP_NAME="Task View 2"
+			   TYPE="CONNECTOR"
+			   UPDATED="06/01/2018 15:58:25"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:25"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_BRANCH>
+			<TASK_BRANCH
+			   FROM_STEP_NAME="DirectDebit OPT-IN Relevant"
+			   INACTIVE="N"
+			   LABEL="Nein"
+			   LAYOUT="@0*0*9*0*0*0*9*LineWidth1*22*P27*804 2644*FrHS1*22*P17*678 2074*NPts1*42*P07*673 2072*P37*972 3394*ToHS1*08*ArrowEnd1*1"
+			   NAME="Connector 8"
+			   TO_STEP_NAME="Validate input data"
+			   TYPE="DEFAULT"
+			   UPDATED="06/01/2018 15:58:25"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:25"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_BRANCH>
+			<TASK_BRANCH
+			   FROM_STEP_NAME="Task View 2"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*9*0*0*0*9*LineWidth1*22*P27*525 2074*FrHS1*22*P17*525 3514*NPts1*42*P07*498 3512*P37*595 2074*ToHS1*08*ArrowEnd1*1"
+			   NAME="Copy of Connector 13"
+			   TO_STEP_NAME="DirectDebit OPT-IN Relevant"
+			   TYPE="CONNECTOR"
+			   UPDATED="06/01/2018 15:58:25"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:25"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_BRANCH>
+			<TASK_BRANCH
+			   EXPRESSION="( All Must Match(&apos;[&amp;ROWID] IS NULL&apos;))"
+			   FROM_STEP_NAME="Effectivees RP gefunden?"
+			   INACTIVE="N"
+			   LABEL="Nein"
+			   LAYOUT="@0*0*7*0*0*0*9*LineWidth1*24*FrHS1*22*P17*588 1354*NPts1*22*P07*510 1354*ToHS1*08*ArrowEnd1*1"
+			   NAME="Copy of Connector 7"
+			   TO_STEP_NAME="Task View 0"
+			   TYPE="DECISION"
+			   UPDATED="06/01/2018 15:58:26"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:26"
+			   CREATED_BY="DEMO_ADMIN">
+				<TASK_BRANCH_CRITERIA
+				   COMPARE_TO="EXPRESSION"
+				   INACTIVE="N"
+				   NAME="Criteria_2"
+				   OPERATION="EQ_ALL"
+				   PREFERRED_SEQUENCE="2"
+				   PROPERTY_NAME="Account Number"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+					<TASK_BRANCH_CRITERIA_VALUE
+					   INACTIVE="N"
+					   LO_CHAR5="[&amp;ROWID] IS NULL"
+					   NAME="Criteria Value_1"
+					   PREFERRED_SEQUENCE="1"
+					   UPDATED="06/01/2018 15:58:26"
+					   UPDATED_BY="DEMO_ADMIN"
+					   CREATED="06/01/2018 15:58:26"
+					   CREATED_BY="DEMO_ADMIN">
+					</TASK_BRANCH_CRITERIA_VALUE>
+				</TASK_BRANCH_CRITERIA>
+			</TASK_BRANCH>
+			<TASK_BRANCH
+			   EXPRESSION="(DEMO Record found Greater Than(&apos;0&apos;))"
+			   FROM_STEP_NAME="Effectivees RP gefunden?"
+			   INACTIVE="N"
+			   LABEL="Ja"
+			   LAYOUT="@0*0*7*0*0*0*9*LineWidth1*24*FrHS1*32*P17*471 2164*NPts1*22*P07*471 1624*ToHS1*18*ArrowEnd1*1"
+			   NAME="Copy of Connector 8"
+			   TO_STEP_NAME="TBC Update"
+			   TYPE="DEFAULT"
+			   UPDATED="06/01/2018 15:58:26"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:26"
+			   CREATED_BY="DEMO_ADMIN">
+				<TASK_BRANCH_CRITERIA
+				   COMPARE_TO="TASK_PROPERTY"
+				   INACTIVE="N"
+				   NAME="Criteria_1"
+				   OPERATION="GREATER_THAN"
+				   PREFERRED_SEQUENCE="0"
+				   PROPERTY_NAME="DEMO Record found"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+					<TASK_BRANCH_CRITERIA_VALUE
+					   INACTIVE="N"
+					   LO_CHAR1="0"
+					   NAME="Criteria Value_1"
+					   PREFERRED_SEQUENCE="0"
+					   UPDATED="06/01/2018 15:58:26"
+					   UPDATED_BY="DEMO_ADMIN"
+					   CREATED="06/01/2018 15:58:26"
+					   CREATED_BY="DEMO_ADMIN">
+					</TASK_BRANCH_CRITERIA_VALUE>
+				</TASK_BRANCH_CRITERIA>
+			</TASK_BRANCH>
+			<TASK_BRANCH
+			   FROM_STEP_NAME="TBC Update"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*10*0*0*0*9*LineWidth1*22*P27*407 3514*FrHS1*02*P17*407 2434*NPts1*42*P07*432 2432*P37*432 3514*ToHS1*09*LineColor3*2558*ArrowEnd1*1"
+			   NAME="Error Exception 0"
+			   TO_STEP_NAME="Task View 2"
+			   TYPE="ERROR_EXC"
+			   UPDATED="06/01/2018 15:58:26"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:26"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_BRANCH>
+			<TASK_BRANCH
+			   EXPRESSION="( All Must Match (Ignore Case)(&apos;([&amp;Payment Method] = &apos;Automatic Debit&apos; AND [&amp;DEMO Uniserv Valid] = &apos;Y&apos;)&apos;))"
+			   FROM_STEP_NAME="Validate input data"
+			   INACTIVE="N"
+			   LABEL="validation nessary"
+			   LAYOUT="@0*0*9*0*0*0*9*LineWidth1*22*P28*1178 2164*FrHS1*12*P18*1011 2164*NPts1*42*P08*1011 3122*P38*1178 3124*ToHS1*18*ArrowEnd1*1"
+			   NAME="Validation necessary"
+			   TO_STEP_NAME="Start Date &gt; Today()?"
+			   TYPE="DECISION"
+			   UPDATED="06/01/2018 15:58:26"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:26"
+			   CREATED_BY="DEMO_ADMIN">
+				<TASK_BRANCH_CRITERIA
+				   COMPARE_TO="EXPRESSION"
+				   INACTIVE="N"
+				   NAME="Criteria_1"
+				   OPERATION="EQ_ALL_NC"
+				   PREFERRED_SEQUENCE="1"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+					<TASK_BRANCH_CRITERIA_VALUE
+					   INACTIVE="N"
+					   LO_CHAR5="([&amp;Payment Method] = &apos;Automatic Debit&apos; AND [&amp;DEMO Uniserv Valid] = &apos;Y&apos;)"
+					   NAME="Criteria Value_1"
+					   PREFERRED_SEQUENCE="1"
+					   UPDATED="06/01/2018 15:58:26"
+					   UPDATED_BY="DEMO_ADMIN"
+					   CREATED="06/01/2018 15:58:26"
+					   CREATED_BY="DEMO_ADMIN">
+					</TASK_BRANCH_CRITERIA_VALUE>
+				</TASK_BRANCH_CRITERIA>
+			</TASK_BRANCH>
+			<TASK_LOCALE
+			   APPLICATION_CODE="STD"
+			   INACTIVE="N"
+			   LANGUAGE_CODE="DEU"
+			   NAME="DEU-STD"
+			   REDO="N"
+			   TRANSLATE="Y"
+			   UPDATED="06/01/2018 15:58:27"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:27"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_LOCALE>
+			<TASK_PROPERTY
+			   ACCESS_MODE="R/W"
+			   DATA_TYPE="VARCHAR"
+			   IN_OUT="INOUT"
+			   INACTIVE="N"
+			   NAME="Activity Id"
+			   UPDATED="06/01/2018 15:58:27"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:27"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_PROPERTY>
+			<TASK_PROPERTY
+			   ACCESS_MODE="R/W"
+			   DATA_TYPE="VARCHAR"
+			   IN_OUT="INOUT"
+			   INACTIVE="N"
+			   NAME="Address Id"
+			   UPDATED="06/01/2018 15:58:27"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:27"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_PROPERTY>
+			<TASK_PROPERTY
+			   ACCESS_MODE="R/W"
+			   DATA_TYPE="VARCHAR"
+			   IN_OUT="NONE"
+			   INACTIVE="N"
+			   NAME="Bank Code"
+			   UPDATED="06/01/2018 15:58:27"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:27"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_PROPERTY>
+			<TASK_PROPERTY
+			   ACCESS_MODE="R/W"
+			   DATA_TYPE="VARCHAR"
+			   IN_OUT="NONE"
+			   INACTIVE="N"
+			   NAME="Routing Code"
+			   UPDATED="06/01/2018 15:58:27"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:27"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_PROPERTY>
+			<TASK_PROPERTY
+			   ACCESS_MODE="R/W"
+			   DATA_TYPE="VARCHAR"
+			   DEFAULT="Y"
+			   IN_OUT="NONE"
+			   INACTIVE="N"
+			   NAME="ClearStartDate"
+			   UPDATED="06/01/2018 15:58:27"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:27"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_PROPERTY>
+			<TASK_PROPERTY
+			   ACCESS_MODE="R/W"
+			   DATA_TYPE="VARCHAR"
+			   IN_OUT="NONE"
+			   INACTIVE="N"
+			   NAME="Context BC Id"
+			   UPDATED="06/01/2018 15:58:27"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:27"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_PROPERTY>
+			<TASK_PROPERTY
+			   ACCESS_MODE="R/W"
+			   DATA_TYPE="VARCHAR"
+			   IN_OUT="NONE"
+			   INACTIVE="N"
+			   NAME="Context BC Name"
+			   UPDATED="06/01/2018 15:58:27"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:27"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_PROPERTY>
+			<TASK_PROPERTY
+			   ACCESS_MODE="R/W"
+			   DATA_TYPE="VARCHAR"
+			   IN_OUT="NONE"
+			   INACTIVE="N"
+			   NAME="Context BO Name"
+			   UPDATED="06/01/2018 15:58:27"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:27"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_PROPERTY>
+			<TASK_PROPERTY
+			   ACCESS_MODE="R/W"
+			   DATA_TYPE="VARCHAR"
+			   IN_OUT="NONE"
+			   INACTIVE="N"
+			   NAME="DoReport"
+			   UPDATED="06/01/2018 15:58:27"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:27"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_PROPERTY>
+			<TASK_PROPERTY
+			   ACCESS_MODE="R/W"
+			   DATA_TYPE="VARCHAR"
+			   IN_OUT="NONE"
+			   INACTIVE="N"
+			   NAME="Document Name"
+			   UPDATED="06/01/2018 15:58:27"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:27"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_PROPERTY>
+			<TASK_PROPERTY
+			   ACCESS_MODE="R/W"
+			   DATA_TYPE="VARCHAR"
+			   IN_OUT="NONE"
+			   INACTIVE="N"
+			   NAME="Collection Date"
+			   UPDATED="06/01/2018 15:58:27"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:27"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_PROPERTY>
+			<TASK_PROPERTY
+			   ACCESS_MODE="R/W"
+			   DATA_TYPE="VARCHAR"
+			   IN_OUT="NONE"
+			   INACTIVE="N"
+			   NAME="Email Addr"
+			   UPDATED="06/01/2018 15:58:27"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:27"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_PROPERTY>
+			<TASK_PROPERTY
+			   ACCESS_MODE="R/W"
+			   DATA_TYPE="VARCHAR"
+			   IN_OUT="NONE"
+			   INACTIVE="N"
+			   NAME="Error Code"
+			   UPDATED="06/01/2018 15:58:27"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:27"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_PROPERTY>
+			<TASK_PROPERTY
+			   ACCESS_MODE="R/W"
+			   DATA_TYPE="VARCHAR"
+			   IN_OUT="NONE"
+			   INACTIVE="N"
+			   NAME="Error Message"
+			   UPDATED="06/01/2018 15:58:27"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:27"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_PROPERTY>
+			<TASK_PROPERTY
+			   ACCESS_MODE="R/W"
+			   DATA_TYPE="DATE"
+			   IN_OUT="NONE"
+			   INACTIVE="N"
+			   NAME="EffectiveAb"
+			   UPDATED="06/01/2018 15:58:27"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:27"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_PROPERTY>
+			<TASK_PROPERTY
+			   ACCESS_MODE="R/W"
+			   DATA_TYPE="VARCHAR"
+			   IN_OUT="NONE"
+			   INACTIVE="N"
+			   NAME="Account Identifier"
+			   UPDATED="06/01/2018 15:58:27"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:27"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_PROPERTY>
+			<TASK_PROPERTY
+			   ACCESS_MODE="R/W"
+			   DATA_TYPE="VARCHAR"
+			   IN_OUT="NONE"
+			   INACTIVE="N"
+			   NAME="Instance Identifier"
+			   UPDATED="06/01/2018 15:58:27"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:27"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_PROPERTY>
+			<TASK_PROPERTY
+			   ACCESS_MODE="R/W"
+			   DATA_TYPE="VARCHAR"
+			   IN_OUT="NONE"
+			   INACTIVE="N"
+			   NAME="Account Holder"
+			   UPDATED="06/01/2018 15:58:27"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:27"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_PROPERTY>
+			<TASK_PROPERTY
+			   ACCESS_MODE="R/W"
+			   DATA_TYPE="VARCHAR"
+			   IN_OUT="NONE"
+			   INACTIVE="N"
+			   NAME="Account Number"
+			   UPDATED="06/01/2018 15:58:27"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:27"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_PROPERTY>
+			<TASK_PROPERTY
+			   ACCESS_MODE="R/W"
+			   DATA_TYPE="VARCHAR"
+			   IN_OUT="NONE"
+			   INACTIVE="N"
+			   NAME="DEMO Altes Profil Id"
+			   UPDATED="06/01/2018 15:58:27"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:27"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_PROPERTY>
+			<TASK_PROPERTY
+			   ACCESS_MODE="R/W"
+			   DATA_TYPE="VARCHAR"
+			   IN_OUT="NONE"
+			   INACTIVE="N"
+			   NAME="DEMO Bank Name"
+			   UPDATED="06/01/2018 15:58:27"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:27"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_PROPERTY>
+			<TASK_PROPERTY
+			   ACCESS_MODE="R/W"
+			   DATA_TYPE="VARCHAR"
+			   IN_OUT="NONE"
+			   INACTIVE="N"
+			   NAME="DEMO Date Property"
+			   UPDATED="06/01/2018 15:58:27"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:27"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_PROPERTY>
+			<TASK_PROPERTY
+			   ACCESS_MODE="R/W"
+			   DATA_TYPE="VARCHAR"
+			   IN_OUT="NONE"
+			   INACTIVE="N"
+			   NAME="DEMO Neues Profil Id"
+			   UPDATED="06/01/2018 15:58:27"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:27"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_PROPERTY>
+			<TASK_PROPERTY
+			   ACCESS_MODE="R/W"
+			   DATA_TYPE="VARCHAR"
+			   IN_OUT="NONE"
+			   INACTIVE="N"
+			   NAME="DEMO Profil gueltig ab"
+			   UPDATED="06/01/2018 15:58:27"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:27"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_PROPERTY>
+			<TASK_PROPERTY
+			   ACCESS_MODE="R/W"
+			   DATA_TYPE="NUMBER"
+			   DEFAULT="0"
+			   IN_OUT="NONE"
+			   INACTIVE="N"
+			   NAME="DEMO Record found"
+			   UPDATED="06/01/2018 15:58:27"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:27"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_PROPERTY>
+			<TASK_PROPERTY
+			   ACCESS_MODE="R/W"
+			   DATA_TYPE="VARCHAR"
+			   DEFAULT="N"
+			   IN_OUT="NONE"
+			   INACTIVE="N"
+			   NAME="DEMO Uniserv Valid"
+			   UPDATED="06/01/2018 15:58:27"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:27"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_PROPERTY>
+			<TASK_PROPERTY
+			   ACCESS_MODE="R/W"
+			   DATA_TYPE="VARCHAR"
+			   IN_OUT="NONE"
+			   INACTIVE="N"
+			   NAME="Object Id"
+			   UPDATED="06/01/2018 15:58:27"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:27"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_PROPERTY>
+			<TASK_PROPERTY
+			   ACCESS_MODE="R/W"
+			   DATA_TYPE="VARCHAR"
+			   IN_OUT="NONE"
+			   INACTIVE="N"
+			   NAME="Output Type"
+			   UPDATED="06/01/2018 15:58:27"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:27"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_PROPERTY>
+			<TASK_PROPERTY
+			   ACCESS_MODE="R/W"
+			   DATA_TYPE="VARCHAR"
+			   IN_OUT="NONE"
+			   INACTIVE="N"
+			   NAME="ROWID"
+			   UPDATED="06/01/2018 15:58:27"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:27"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_PROPERTY>
+			<TASK_PROPERTY
+			   ACCESS_MODE="R/W"
+			   DATA_TYPE="VARCHAR"
+			   IN_OUT="NONE"
+			   INACTIVE="N"
+			   NAME="Profile Name"
+			   UPDATED="06/01/2018 15:58:27"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:27"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_PROPERTY>
+			<TASK_PROPERTY
+			   ACCESS_MODE="R/W"
+			   DATA_TYPE="VARCHAR"
+			   IN_OUT="NONE"
+			   INACTIVE="N"
+			   NAME="Report Document Id"
+			   UPDATED="06/01/2018 15:58:27"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:27"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_PROPERTY>
+			<TASK_PROPERTY
+			   ACCESS_MODE="R/W"
+			   DATA_TYPE="VARCHAR"
+			   IN_OUT="NONE"
+			   INACTIVE="N"
+			   NAME="Result"
+			   UPDATED="06/01/2018 15:58:27"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:27"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_PROPERTY>
+			<TASK_PROPERTY
+			   ACCESS_MODE="R/W"
+			   DATA_TYPE="VARCHAR"
+			   DEFAULT="N"
+			   IN_OUT="NONE"
+			   INACTIVE="N"
+			   NAME="DirectDebit Consent Notice"
+			   UPDATED="06/01/2018 15:58:27"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:27"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_PROPERTY>
+			<TASK_PROPERTY
+			   ACCESS_MODE="R/W"
+			   DATA_TYPE="VARCHAR"
+			   DEFAULT="N"
+			   IN_OUT="NONE"
+			   INACTIVE="N"
+			   NAME="DirectDebit Authorization Form"
+			   UPDATED="06/01/2018 15:58:27"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:27"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_PROPERTY>
+			<TASK_PROPERTY
+			   ACCESS_MODE="R/W"
+			   DATA_TYPE="VARCHAR"
+			   IN_OUT="NONE"
+			   INACTIVE="N"
+			   NAME="Send Type"
+			   UPDATED="06/01/2018 15:58:27"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:27"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_PROPERTY>
+			<TASK_PROPERTY
+			   ACCESS_MODE="R/W"
+			   DATA_TYPE="VARCHAR"
+			   IN_OUT="NONE"
+			   INACTIVE="N"
+			   NAME="Siebel Operation Object Id"
+			   UPDATED="06/01/2018 15:58:27"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:27"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_PROPERTY>
+			<TASK_PROPERTY
+			   ACCESS_MODE="R/W"
+			   DATA_TYPE="VARCHAR"
+			   IN_OUT="NONE"
+			   INACTIVE="N"
+			   NAME="Skill found"
+			   UPDATED="06/01/2018 15:58:27"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:27"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_PROPERTY>
+			<TASK_PROPERTY
+			   ACCESS_MODE="R/W"
+			   DATA_TYPE="VARCHAR"
+			   IN_OUT="NONE"
+			   INACTIVE="N"
+			   NAME="Validation Flag"
+			   UPDATED="06/01/2018 15:58:27"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:27"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_PROPERTY>
+			<TASK_PROPERTY
+			   ACCESS_MODE="R/W"
+			   DATA_TYPE="VARCHAR"
+			   IN_OUT="NONE"
+			   INACTIVE="N"
+			   NAME="Delivery Method"
+			   UPDATED="06/01/2018 15:58:27"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:27"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_PROPERTY>
+			<TASK_PROPERTY
+			   ACCESS_MODE="R/W"
+			   DATA_TYPE="VARCHAR"
+			   IN_OUT="NONE"
+			   INACTIVE="N"
+			   NAME="Payment Method"
+			   UPDATED="06/01/2018 15:58:27"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:27"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_PROPERTY>
+			<TASK_STEP
+			   DEFER_WRITE_RECORD="N"
+			   DISABLE_CANCEL="N"
+			   DISABLE_PAUSE="N"
+			   DISABLE_PREVIOUS="N"
+			   DISPLAY_NAME_TYPE="Normal"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*3*0*0*0*1*r15*780 432 858 4869*FillBgClr8*134348798*ArrowEnd1*1"
+			   NAME="Beide ausgewählt?"
+			   REPEATABLE="Y"
+			   RETAIN_APPLET_SEARCH_SPEC="N"
+			   RETAIN_TASK_SEARCH_SPEC="Y"
+			   RETAIN_USER_SEARCH_SPEC="N"
+			   TYPE="DECISION_POINT"
+			   UPDATED="06/01/2018 15:58:26"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:26"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_STEP>
+			<TASK_STEP
+			   DEFER_WRITE_RECORD="N"
+			   DISABLE_CANCEL="N"
+			   DISABLE_PAUSE="N"
+			   DISABLE_PREVIOUS="N"
+			   DISPLAY_NAME_TYPE="Normal"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*3*0*0*0*1*r15*684 312 762 3669*FillBgClr8*134348798*ArrowEnd1*1"
+			   NAME="Besitzt Skill?"
+			   REPEATABLE="Y"
+			   RETAIN_APPLET_SEARCH_SPEC="N"
+			   RETAIN_TASK_SEARCH_SPEC="Y"
+			   RETAIN_USER_SEARCH_SPEC="N"
+			   TYPE="DECISION_POINT"
+			   UPDATED="06/01/2018 15:58:26"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:26"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_STEP>
+			<TASK_STEP
+			   BUSINESS_SERVICE_METHOD="UpsertNCAction"
+			   BUSINESS_SERVICE_NAME="Demo Record Service"
+			   DEFER_WRITE_RECORD="N"
+			   DISABLE_CANCEL="N"
+			   DISABLE_PAUSE="N"
+			   DISABLE_PREVIOUS="N"
+			   DISPLAY_NAME_TYPE="Normal"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*3*0*0*0*1*r17*1704 312 1782 3669*FillBgClr8*134217218*ArrowEnd1*1"
+			   NAME="Create dokumentation activity"
+			   REPEATABLE="Y"
+			   RETAIN_APPLET_SEARCH_SPEC="N"
+			   RETAIN_TASK_SEARCH_SPEC="Y"
+			   RETAIN_USER_SEARCH_SPEC="N"
+			   TYPE="TASK"
+			   UPDATED="06/01/2018 15:58:26"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:26"
+			   CREATED_BY="DEMO_ADMIN">
+				<TASK_STEP_IO_ARGUMENT
+				   ARGUMENT="Account Id"
+				   BUSINESS_COMPONENT="Account"
+				   BUSINESS_COMPONENT_FIELD="Id"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="I:Account Id"
+				   TYPE="Business Component"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   ARGUMENT="Comment"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="I:Comment"
+				   TYPE="Expression"
+				   VALUE="&quot;Zahlungsart: &quot; + [&amp;Payment Method] + &quot;, gültig ab: &quot; + [&amp;EffectiveAb] + &quot;, Contact Person: &quot; + [&amp;Account Holder] + &quot;, Bankverbindung: Bankname: &quot;+[&amp;DEMO Bank Name] + &quot;, Routing Code: &quot; + [&amp;Routing Code]+&quot;, Kto.-Nr: &quot; + [&amp;Account Number] + &quot; , Account Identifier: &quot; + [&amp;Account Identifier]+ &quot;,  Bank Code: &quot; + [&amp;Bank Code] + &quot;  Consent Notice zu DirectDebit erfolgt. Einzugsermächtigung liegt vor. Authorization Form an Customern versendet.&quot;"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   ARGUMENT="Description"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="I:Description"
+				   TYPE="Literal"
+				   VALUE="Billing Profile gepflegt"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   ARGUMENT="DEMO Anlass"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="I:DEMO Anlass"
+				   TYPE="Literal"
+				   VALUE="DEMOUI Customer"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   ARGUMENT="Planned"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="I:Planned"
+				   TYPE="Expression"
+				   VALUE="TimeStamp()"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   ARGUMENT="Status"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="I:Status"
+				   TYPE="Literal"
+				   VALUE="Abgeschlossen"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   ARGUMENT="Type"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="I:Type"
+				   TYPE="Expression"
+				   VALUE="LookupValue(&quot;TODO_TYPE&quot;,&quot;DEMO_DOCUMENTATION&quot;)"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+			</TASK_STEP>
+			<TASK_STEP
+			   BUSINESS_SERVICE_METHOD="UpsertNCAction"
+			   BUSINESS_SERVICE_NAME="Demo Record Service"
+			   DEFER_WRITE_RECORD="N"
+			   DISABLE_CANCEL="N"
+			   DISABLE_PAUSE="N"
+			   DISABLE_PREVIOUS="N"
+			   DISPLAY_NAME_TYPE="Normal"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*3*0*0*0*1*r17*1596 228 1674 2829*FillBgClr8*134217218*ArrowEnd1*1"
+			   NAME="Create dokumentation activity Bank Transfer"
+			   REPEATABLE="Y"
+			   RETAIN_APPLET_SEARCH_SPEC="N"
+			   RETAIN_TASK_SEARCH_SPEC="Y"
+			   RETAIN_USER_SEARCH_SPEC="N"
+			   TYPE="TASK"
+			   UPDATED="06/01/2018 15:58:26"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:26"
+			   CREATED_BY="DEMO_ADMIN">
+				<TASK_STEP_IO_ARGUMENT
+				   ARGUMENT="Account Id"
+				   BUSINESS_COMPONENT="Account"
+				   BUSINESS_COMPONENT_FIELD="Id"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="I:Account Id"
+				   TYPE="Business Component"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   ARGUMENT="Comment"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="I:Comment"
+				   TYPE="Expression"
+				   VALUE="&quot;Zahlungsart: &quot; + [&amp;Payment Method] + &quot;, gültig ab: &quot; + [&amp;EffectiveAb] + &quot;, Contact Person: &quot; + [&amp;Account Holder] + &quot;, Bankverbindung: Bankname: &quot;+[&amp;DEMO Bank Name] + &quot;, Routing Code: &quot; + [&amp;Routing Code]+&quot;, Kto.-Nr: &quot; + [&amp;Account Number] + &quot; , Account Identifier: &quot; + [&amp;Account Identifier]+ &quot;,  Bank Code: &quot; + [&amp;Bank Code]"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   ARGUMENT="Description"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="I:Description"
+				   TYPE="Literal"
+				   VALUE="Billing Profile gepflegt"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   ARGUMENT="DEMO Anlass"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="I:DEMO Anlass"
+				   TYPE="Literal"
+				   VALUE="DEMOUI Customer"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   ARGUMENT="Planned"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="I:Planned"
+				   TYPE="Expression"
+				   VALUE="TimeStamp()"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   ARGUMENT="Status"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="I:Status"
+				   TYPE="Literal"
+				   VALUE="Abgeschlossen"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   ARGUMENT="Type"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="I:Type"
+				   TYPE="Expression"
+				   VALUE="LookupValue(&quot;TODO_TYPE&quot;,&quot;DEMO_DOCUMENTATION&quot;)"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+			</TASK_STEP>
+			<TASK_STEP
+			   BUSINESS_SERVICE_METHOD="UpsertNCAction"
+			   BUSINESS_SERVICE_NAME="Demo Record Service"
+			   DEFER_WRITE_RECORD="N"
+			   DISABLE_CANCEL="N"
+			   DISABLE_PAUSE="N"
+			   DISABLE_PREVIOUS="N"
+			   DISPLAY_NAME_TYPE="Normal"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*3*0*0*0*1*r17*1812 312 1890 3669*FillBgClr8*134217218*ArrowEnd1*1"
+			   NAME="Create dokumentation activity-Mandat"
+			   REPEATABLE="Y"
+			   RETAIN_APPLET_SEARCH_SPEC="N"
+			   RETAIN_TASK_SEARCH_SPEC="Y"
+			   RETAIN_USER_SEARCH_SPEC="N"
+			   TYPE="TASK"
+			   UPDATED="06/01/2018 15:58:26"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:26"
+			   CREATED_BY="DEMO_ADMIN">
+				<TASK_STEP_IO_ARGUMENT
+				   ARGUMENT="Account Id"
+				   BUSINESS_COMPONENT="Account"
+				   BUSINESS_COMPONENT_FIELD="Id"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="I:Account Id"
+				   TYPE="Business Component"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   ARGUMENT="Comment"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="I:Comment"
+				   TYPE="Expression"
+				   VALUE="&quot;Zahlungsart: &quot; + [&amp;Payment Method] + &quot;, gültig ab: &quot; + [&amp;EffectiveAb] + &quot;, Contact Person: &quot; + [&amp;Account Holder] + &quot;, Bankverbindung: Bankname: &quot;+[&amp;DEMO Bank Name] + &quot;, Routing Code: &quot; + [&amp;Routing Code]+&quot;, Kto.-Nr: &quot; + [&amp;Account Number] + &quot; , Account Identifier: &quot; + [&amp;Account Identifier]+ &quot;,  Bank Code: &quot; + [&amp;Bank Code] + &quot; Unterschriebenes Papiermandat liegt bei Auftragserfassung bereits vor. &quot;"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   ARGUMENT="Description"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="I:Description"
+				   TYPE="Literal"
+				   VALUE="Billing Profile gepflegt"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   ARGUMENT="DEMO Anlass"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="I:DEMO Anlass"
+				   TYPE="Literal"
+				   VALUE="DEMOUI Customer"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   ARGUMENT="Planned"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="I:Planned"
+				   TYPE="Expression"
+				   VALUE="TimeStamp()"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   ARGUMENT="Status"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="I:Status"
+				   TYPE="Literal"
+				   VALUE="Abgeschlossen"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   ARGUMENT="Type"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="I:Type"
+				   TYPE="Expression"
+				   VALUE="LookupValue(&quot;TODO_TYPE&quot;,&quot;DEMO_DOCUMENTATION&quot;)"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+			</TASK_STEP>
+			<TASK_STEP
+			   BUSINESS_COMPONENT="CUT Address"
+			   DEFER_WRITE_RECORD="N"
+			   DISABLE_CANCEL="N"
+			   DISABLE_PAUSE="N"
+			   DISABLE_PREVIOUS="N"
+			   DISPLAY_NAME_TYPE="Normal"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*3*0*0*0*1*r14*36 300 114 3549*FillBgClr8*134218238*ArrowEnd1*1"
+			   NAME="Create initial address"
+			   OPERATION="INSERT"
+			   REPEATABLE="Y"
+			   RETAIN_APPLET_SEARCH_SPEC="N"
+			   RETAIN_TASK_SEARCH_SPEC="Y"
+			   RETAIN_USER_SEARCH_SPEC="N"
+			   TYPE="SIEBEL_OPER"
+			   UPDATED="06/01/2018 15:58:26"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:26"
+			   CREATED_BY="DEMO_ADMIN">
+				<TASK_STEP_IO_ARGUMENT
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="City"
+				   TYPE="Literal"
+				   VALUE="City"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="DEMO Addressart"
+				   TYPE="Literal"
+				   VALUE="Straßenadresse"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="DEMO Effective Flag"
+				   TYPE="Literal"
+				   VALUE="N"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="DEMO Type"
+				   TYPE="Literal"
+				   VALUE="DEMO Type"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   BUSINESS_COMPONENT="CUT Address"
+				   BUSINESS_COMPONENT_FIELD="Id"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Output"
+				   NAME="O:Address Id"
+				   PROPERTY_NAME="Address Id"
+				   TYPE="Business Component"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="Postal Code"
+				   TYPE="Literal"
+				   VALUE="12345"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="Start Date"
+				   TYPE="Expression"
+				   VALUE="TimeStamp()"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="Street Address"
+				   TYPE="Literal"
+				   VALUE="Test"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+			</TASK_STEP>
+			<TASK_STEP
+			   DEFER_WRITE_RECORD="N"
+			   DISABLE_CANCEL="N"
+			   DISABLE_PAUSE="N"
+			   DISABLE_PREVIOUS="N"
+			   DISPLAY_NAME_TYPE="Normal"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*3*0*0*0*1*r17*1704 228 1782 2829*FillBgClr8*167641088*ArrowEnd1*1"
+			   NAME="End"
+			   REPEATABLE="Y"
+			   RETAIN_APPLET_SEARCH_SPEC="N"
+			   RETAIN_TASK_SEARCH_SPEC="Y"
+			   RETAIN_USER_SEARCH_SPEC="N"
+			   TYPE="END"
+			   UPDATED="06/01/2018 15:58:26"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:26"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_STEP>
+			<TASK_STEP
+			   BUSINESS_SERVICE_METHOD="GetErrorMessage"
+			   BUSINESS_SERVICE_NAME="Demo Account Service"
+			   DEFER_WRITE_RECORD="N"
+			   DISABLE_CANCEL="N"
+			   DISABLE_PAUSE="N"
+			   DISABLE_PREVIOUS="N"
+			   DISPLAY_NAME_TYPE="Normal"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*3*0*0*0*1*r16*972 492 1050 5469*FillBgClr8*134217218*ArrowEnd1*1"
+			   NAME="Error: Not all data"
+			   REPEATABLE="Y"
+			   RETAIN_APPLET_SEARCH_SPEC="N"
+			   RETAIN_TASK_SEARCH_SPEC="Y"
+			   RETAIN_USER_SEARCH_SPEC="N"
+			   TYPE="TASK"
+			   UPDATED="06/01/2018 15:58:26"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:26"
+			   CREATED_BY="DEMO_ADMIN">
+				<TASK_STEP_IO_ARGUMENT
+				   ARGUMENT="Input"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="I:Input"
+				   TYPE="Literal"
+				   VALUE="Die Eingabe ist nicht vollständig / Billing Profile ist nicht valide"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+			</TASK_STEP>
+			<TASK_STEP
+			   BUSINESS_SERVICE_METHOD="GetErrorMessage"
+			   BUSINESS_SERVICE_NAME="Demo Account Service"
+			   DEFER_WRITE_RECORD="N"
+			   DISABLE_CANCEL="N"
+			   DISABLE_PAUSE="N"
+			   DISABLE_PREVIOUS="N"
+			   DISPLAY_NAME_TYPE="Normal"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*3*0*0*0*1*r15*528 432 618 4869*FillBgClr8*134217218*ArrowEnd1*1"
+			   NAME="Error: Opt-In"
+			   REPEATABLE="Y"
+			   RETAIN_APPLET_SEARCH_SPEC="N"
+			   RETAIN_TASK_SEARCH_SPEC="Y"
+			   RETAIN_USER_SEARCH_SPEC="N"
+			   TYPE="TASK"
+			   UPDATED="06/01/2018 15:58:26"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:26"
+			   CREATED_BY="DEMO_ADMIN">
+				<TASK_STEP_IO_ARGUMENT
+				   ARGUMENT="Input"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="I:Input"
+				   TYPE="Literal"
+				   VALUE="Zustimmung DirectDebit-Automatic Debiteinzug nicht erfolgt."
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+			</TASK_STEP>
+			<TASK_STEP
+			   BUSINESS_SERVICE_METHOD="GetErrorMessage"
+			   BUSINESS_SERVICE_NAME="Demo Account Service"
+			   DEFER_WRITE_RECORD="N"
+			   DISABLE_CANCEL="N"
+			   DISABLE_PAUSE="N"
+			   DISABLE_PREVIOUS="N"
+			   DISPLAY_NAME_TYPE="Normal"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*3*0*0*0*1*r15*888 432 978 4869*FillBgClr8*134217218*ArrowEnd1*1"
+			   NAME="Error: Opt-In 2"
+			   REPEATABLE="Y"
+			   RETAIN_APPLET_SEARCH_SPEC="N"
+			   RETAIN_TASK_SEARCH_SPEC="Y"
+			   RETAIN_USER_SEARCH_SPEC="N"
+			   TYPE="TASK"
+			   UPDATED="06/01/2018 15:58:26"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:26"
+			   CREATED_BY="DEMO_ADMIN">
+				<TASK_STEP_IO_ARGUMENT
+				   ARGUMENT="Input"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="I:Input"
+				   TYPE="Literal"
+				   VALUE="Bitte nur eine DirectDebit-Opt-In Option auswählen!"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+			</TASK_STEP>
+			<TASK_STEP
+			   DEFER_WRITE_RECORD="N"
+			   DISABLE_CANCEL="N"
+			   DISABLE_PAUSE="N"
+			   DISABLE_PREVIOUS="N"
+			   DISPLAY_NAME_TYPE="Normal"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*3*0*0*0*1*r17*1241 312 1319 3669*FillBgClr8*134348798*ArrowEnd1*1"
+			   NAME="Effective ab heute?"
+			   REPEATABLE="Y"
+			   RETAIN_APPLET_SEARCH_SPEC="N"
+			   RETAIN_TASK_SEARCH_SPEC="Y"
+			   RETAIN_USER_SEARCH_SPEC="N"
+			   TYPE="DECISION_POINT"
+			   UPDATED="06/01/2018 15:58:26"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:26"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_STEP>
+			<TASK_STEP
+			   DEFER_WRITE_RECORD="N"
+			   DISABLE_CANCEL="N"
+			   DISABLE_PAUSE="N"
+			   DISABLE_PREVIOUS="N"
+			   DISPLAY_NAME_TYPE="Normal"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*3*0*0*0*1*r15*432 108 510 1629*FillBgClr8*134348798*ArrowEnd1*1"
+			   NAME="Effectivees RP gefunden?"
+			   REPEATABLE="Y"
+			   RETAIN_APPLET_SEARCH_SPEC="N"
+			   RETAIN_TASK_SEARCH_SPEC="Y"
+			   RETAIN_USER_SEARCH_SPEC="N"
+			   TYPE="DECISION_POINT"
+			   UPDATED="06/01/2018 15:58:26"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:26"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_STEP>
+			<TASK_STEP
+			   DEFER_WRITE_RECORD="N"
+			   DISABLE_CANCEL="N"
+			   DISABLE_PAUSE="N"
+			   DISABLE_PREVIOUS="N"
+			   DISPLAY_NAME_TYPE="Normal"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*3*0*0*0*1*r17*1644 432 1722 4869*FillBgClr8*134348798*ArrowEnd1*1"
+			   NAME="Ipt-In-ACT"
+			   REPEATABLE="Y"
+			   RETAIN_APPLET_SEARCH_SPEC="N"
+			   RETAIN_TASK_SEARCH_SPEC="Y"
+			   RETAIN_USER_SEARCH_SPEC="N"
+			   TYPE="DECISION_POINT"
+			   UPDATED="06/01/2018 15:58:26"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:26"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_STEP>
+			<TASK_STEP
+			   BUSINESS_SERVICE_METHOD="RunProcess"
+			   BUSINESS_SERVICE_NAME="Workflow Process Manager"
+			   DEFER_WRITE_RECORD="N"
+			   DISABLE_CANCEL="N"
+			   DISABLE_PAUSE="N"
+			   DISABLE_PREVIOUS="N"
+			   DISPLAY_NAME_TYPE="Normal"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*3*0*0*0*1*r15*595 264 673 3189*FillBgClr8*134217218*ArrowEnd1*1"
+			   NAME="Demo Skill Lookup"
+			   REPEATABLE="Y"
+			   RETAIN_APPLET_SEARCH_SPEC="N"
+			   RETAIN_TASK_SEARCH_SPEC="Y"
+			   RETAIN_USER_SEARCH_SPEC="N"
+			   TYPE="TASK"
+			   UPDATED="06/01/2018 15:58:26"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:26"
+			   CREATED_BY="DEMO_ADMIN">
+				<TASK_STEP_IO_ARGUMENT
+				   ARGUMENT="ProcessName"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="I:ProcessName"
+				   TYPE="Literal"
+				   VALUE="Demo Skill Lookup"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   ARGUMENT="RowId"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="I:RowId"
+				   TYPE="Expression"
+				   VALUE="PositionId()"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   ARGUMENT="Skill"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="I:Skill"
+				   TYPE="Literal"
+				   VALUE="DirectDebit Opt-In auswählen"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   ARGUMENT="Skill Item"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Output"
+				   NAME="O:Skill found"
+				   PROPERTY_NAME="Skill found"
+				   TYPE="Output Argument"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+			</TASK_STEP>
+			<TASK_STEP
+			   BUSINESS_COMPONENT="Demo Payment Profile"
+			   DEFER_WRITE_RECORD="N"
+			   DISABLE_CANCEL="N"
+			   DISABLE_PAUSE="N"
+			   DISABLE_PREVIOUS="N"
+			   DISPLAY_NAME_TYPE="Normal"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*3*0*0*0*1*r17*1464 312 1542 3669*FillBgClr8*134218238*ArrowEnd1*1"
+			   NAME="Neues Profil Update"
+			   OPERATION="UPDATE"
+			   REPEATABLE="Y"
+			   RETAIN_APPLET_SEARCH_SPEC="N"
+			   RETAIN_TASK_SEARCH_SPEC="Y"
+			   RETAIN_USER_SEARCH_SPEC="N"
+			   TYPE="SIEBEL_OPER"
+			   UPDATED="06/01/2018 15:59:15"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:26"
+			   CREATED_BY="DEMO_ADMIN">
+				<TASK_STEP_CONTEXT
+				   EXPRESSION_BUSINESS_COMPONENT="Demo Payment Profile"
+				   FILTER_BUSINESS_COMPONENT="Demo Payment Profile"
+				   INACTIVE="N"
+				   IS_USER_SEARCH_SPEC="N"
+				   NAME="Query"
+				   SEARCH_SPECIFICATION="&quot;[Id]=&apos;&quot;+[&amp;DEMO Neues Profil Id]+&quot;&apos;&quot;"
+				   TYPE="EXPRESSION"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_CONTEXT>
+				<TASK_STEP_IO_ARGUMENT
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="Bank Account Name"
+				   PROPERTY_NAME="Account Holder"
+				   TYPE="Task Property"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   COMMENTS="DEMO-2673 21.11.2025 DEMO_USER_02"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="Bank Account Number"
+				   PROPERTY_NAME="Account Number"
+				   TYPE="Task Property"
+				   UPDATED="11/21/2025 12:24:06"
+				   UPDATED_BY="DEMO_USER_02"
+				   CREATED="11/20/2025 12:55:31"
+				   CREATED_BY="DEMO_USER_02">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="Bank Name"
+				   PROPERTY_NAME="DEMO Bank Name"
+				   TYPE="Task Property"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="Media Type"
+				   PROPERTY_NAME="Delivery Method"
+				   TYPE="Task Property"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="DEMO Bank Code"
+				   PROPERTY_NAME="Bank Code"
+				   TYPE="Task Property"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="DEMO Effective ab"
+				   PROPERTY_NAME="EffectiveAb"
+				   TYPE="Task Property"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="DEMO Account Identifier"
+				   PROPERTY_NAME="Account Identifier"
+				   TYPE="Task Property"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="DEMO CORE Account Ueberschrift GUI"
+				   PROPERTY_NAME="Profile Name"
+				   TYPE="Task Property"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="DEMO CORE Collection Date"
+				   PROPERTY_NAME="Collection Date"
+				   TYPE="Task Property"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="DEMO DirectDebit Consent Notice Flag"
+				   PROPERTY_NAME="DirectDebit Consent Notice"
+				   TYPE="Task Property"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="DEMO DirectDebit Mandat Flag"
+				   PROPERTY_NAME="DirectDebit Authorization Form"
+				   TYPE="Task Property"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="DEMO Versand für EVN"
+				   PROPERTY_NAME="Delivery Method"
+				   TYPE="Task Property"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="DEMO Versand für Kosten"
+				   PROPERTY_NAME="Delivery Method"
+				   TYPE="Task Property"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   BUSINESS_COMPONENT="Demo Billing Profile BC"
+				   BUSINESS_COMPONENT_FIELD="DEMO Effective ab"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Output"
+				   NAME="O:DEMO Profil gueltig ab"
+				   PROPERTY_NAME="DEMO Profil gueltig ab"
+				   TYPE="Business Component"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="Payment Method"
+				   PROPERTY_NAME="Payment Method"
+				   TYPE="Task Property"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+			</TASK_STEP>
+			<TASK_STEP
+			   BUSINESS_COMPONENT="Demo Payment Profile"
+			   DEFER_WRITE_RECORD="N"
+			   DISABLE_CANCEL="N"
+			   DISABLE_PAUSE="N"
+			   DISABLE_PREVIOUS="N"
+			   DISPLAY_NAME_TYPE="Normal"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*3*0*0*0*1*r15*312 108 390 1629*FillBgClr8*134218238*ArrowEnd1*1"
+			   NAME="Neues RP anlegen"
+			   OPERATION="INSERT"
+			   REPEATABLE="N"
+			   RETAIN_APPLET_SEARCH_SPEC="N"
+			   RETAIN_TASK_SEARCH_SPEC="Y"
+			   RETAIN_USER_SEARCH_SPEC="N"
+			   TYPE="SIEBEL_OPER"
+			   UPDATED="06/01/2018 15:58:26"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:26"
+			   CREATED_BY="DEMO_ADMIN">
+				<TASK_STEP_IO_ARGUMENT
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="Bank Account Name"
+				   TYPE="Literal"
+				   VALUE="Account Owner"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="Bank Account Number"
+				   TYPE="Literal"
+				   VALUE="12345"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="Bank Name"
+				   TYPE="Literal"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="Bank Routing Number"
+				   TYPE="Literal"
+				   VALUE="10000000"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="Bill Frequency"
+				   TYPE="Literal"
+				   VALUE="Monatlich"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="DEMO Bank Code"
+				   TYPE="Literal"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="DEMO Effective Flag"
+				   TYPE="Literal"
+				   VALUE="N"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="DEMO Effective ab"
+				   TYPE="Expression"
+				   VALUE="TimeStamp()"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="DEMO Account Identifier"
+				   TYPE="Literal"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="DEMO Pre Invoice Profile Id"
+				   PROPERTY_NAME="ROWID"
+				   TYPE="Task Property"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="DEMO Rechnungstermin"
+				   TYPE="Literal"
+				   VALUE="Anfang"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="DEMO DirectDebit Consent Notice Flag"
+				   TYPE="Literal"
+				   VALUE="N"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="DEMO DirectDebit Mandat Flag"
+				   TYPE="Literal"
+				   VALUE="N"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="DEMO Steuerliche Behandlung"
+				   TYPE="Literal"
+				   VALUE="steuerbar"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="DEMO Zahlungsziel"
+				   TYPE="Literal"
+				   VALUE="0"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="No Pay Form Flag"
+				   TYPE="Literal"
+				   VALUE="Y"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   BUSINESS_COMPONENT="Demo Payment Profile"
+				   BUSINESS_COMPONENT_FIELD="Id"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Output"
+				   NAME="O:DEMO Neues Profil Id"
+				   PROPERTY_NAME="DEMO Neues Profil Id"
+				   TYPE="Business Component"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+			</TASK_STEP>
+			<TASK_STEP
+			   DEFER_WRITE_RECORD="N"
+			   DISABLE_CANCEL="N"
+			   DISABLE_PAUSE="N"
+			   DISABLE_PREVIOUS="N"
+			   DISPLAY_NAME_TYPE="Normal"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*3*0*0*0*1*r15*684 432 762 4869*FillBgClr8*134348798*ArrowEnd1*1"
+			   NAME="NoOpt-In"
+			   REPEATABLE="Y"
+			   RETAIN_APPLET_SEARCH_SPEC="N"
+			   RETAIN_TASK_SEARCH_SPEC="Y"
+			   RETAIN_USER_SEARCH_SPEC="N"
+			   TYPE="DECISION_POINT"
+			   UPDATED="06/01/2018 15:58:26"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:26"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_STEP>
+			<TASK_STEP
+			   DEFER_WRITE_RECORD="N"
+			   DISABLE_CANCEL="N"
+			   DISABLE_PAUSE="N"
+			   DISABLE_PREVIOUS="N"
+			   DISPLAY_NAME_TYPE="Normal"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*3*0*0*0*1*r15*595 180 673 2349*FillBgClr8*134348798*ArrowEnd1*1"
+			   NAME="DirectDebit OPT-IN Relevant"
+			   REPEATABLE="Y"
+			   RETAIN_APPLET_SEARCH_SPEC="N"
+			   RETAIN_TASK_SEARCH_SPEC="Y"
+			   RETAIN_USER_SEARCH_SPEC="N"
+			   TYPE="DECISION_POINT"
+			   UPDATED="06/01/2018 15:58:26"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:26"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_STEP>
+			<TASK_STEP
+			   BUSINESS_SERVICE_METHOD="GetActiveBillingProfile"
+			   BUSINESS_SERVICE_NAME="Demo Customer Service"
+			   DEFER_WRITE_RECORD="N"
+			   DISABLE_CANCEL="N"
+			   DISABLE_PAUSE="N"
+			   DISABLE_PREVIOUS="N"
+			   DISPLAY_NAME_TYPE="Normal"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*3*0*0*0*1*r14*36 204 114 2589*FillBgClr8*134217218*ArrowEnd1*1"
+			   NAME="Search Active Bill Profile"
+			   REPEATABLE="Y"
+			   RETAIN_APPLET_SEARCH_SPEC="N"
+			   RETAIN_TASK_SEARCH_SPEC="Y"
+			   RETAIN_USER_SEARCH_SPEC="N"
+			   TYPE="TASK"
+			   UPDATED="06/01/2018 15:58:26"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:26"
+			   CREATED_BY="DEMO_ADMIN">
+				<TASK_STEP_IO_ARGUMENT
+				   ARGUMENT="Account_ID"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="I:Account_ID"
+				   PROPERTY_NAME="Context BC Id"
+				   TYPE="Task Property"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   ARGUMENT="Bank Code"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Output"
+				   NAME="O:Bank Code"
+				   PROPERTY_NAME="Bank Code"
+				   TYPE="Output Argument"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   ARGUMENT="Routing Code"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Output"
+				   NAME="O:Routing Code"
+				   PROPERTY_NAME="Routing Code"
+				   TYPE="Output Argument"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   ARGUMENT="Collection Date"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Output"
+				   NAME="O:Collection Date"
+				   PROPERTY_NAME="Collection Date"
+				   TYPE="Output Argument"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   BUSINESS_COMPONENT="Account"
+				   BUSINESS_COMPONENT_FIELD="DEMO Contact EMail Adresse"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Output"
+				   NAME="O:Email Addr"
+				   PROPERTY_NAME="Email Addr"
+				   TYPE="Business Component"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   ARGUMENT="EffectiveAb"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Output"
+				   NAME="O:EffectiveAb"
+				   PROPERTY_NAME="EffectiveAb"
+				   TYPE="Output Argument"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   ARGUMENT="Account Identifier"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Output"
+				   NAME="O:Account Identifier"
+				   PROPERTY_NAME="Account Identifier"
+				   TYPE="Output Argument"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   ARGUMENT="Account Owner"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Output"
+				   NAME="O:Account Holder"
+				   PROPERTY_NAME="Account Holder"
+				   TYPE="Output Argument"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   ARGUMENT="Kononummer"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Output"
+				   NAME="O:Account Number"
+				   PROPERTY_NAME="Account Number"
+				   TYPE="Output Argument"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   ARGUMENT="Account_ID"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Output"
+				   NAME="O:DEMO Altes Profil Id"
+				   PROPERTY_NAME="DEMO Altes Profil Id"
+				   TYPE="Output Argument"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   ARGUMENT="RowId"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Output"
+				   NAME="O:ROWID"
+				   PROPERTY_NAME="ROWID"
+				   TYPE="Output Argument"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   ARGUMENT="Profile Name"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Output"
+				   NAME="O:Profile Name"
+				   PROPERTY_NAME="Profile Name"
+				   TYPE="Output Argument"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   ARGUMENT="Delivery Method"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Output"
+				   NAME="O:Delivery Method"
+				   PROPERTY_NAME="Delivery Method"
+				   TYPE="Output Argument"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   ARGUMENT="Payment Method"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Output"
+				   NAME="O:Payment Method"
+				   PROPERTY_NAME="Payment Method"
+				   TYPE="Output Argument"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_LOCALE
+				   APPLICATION_CODE="STD"
+				   DISPLAY_NAME="Search Active Bill Profile"
+				   INACTIVE="N"
+				   LANGUAGE_CODE="DEU"
+				   NAME="DEU-STD"
+				   TRANSLATE="Y"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_LOCALE>
+			</TASK_STEP>
+			<TASK_STEP
+			   BUSINESS_COMPONENT="Demo Payment Profile"
+			   DEFER_WRITE_RECORD="N"
+			   DISABLE_CANCEL="N"
+			   DISABLE_PAUSE="N"
+			   DISABLE_PREVIOUS="N"
+			   DISPLAY_NAME_TYPE="Normal"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*3*0*0*0*1*r17*1241 419 1319 4739*FillBgClr8*134218238*ArrowEnd1*1"
+			   NAME="Setze alte RP = ungültig"
+			   OPERATION="UPDATE"
+			   REPEATABLE="Y"
+			   RETAIN_APPLET_SEARCH_SPEC="N"
+			   RETAIN_TASK_SEARCH_SPEC="Y"
+			   RETAIN_USER_SEARCH_SPEC="N"
+			   TYPE="SIEBEL_OPER"
+			   UPDATED="06/01/2018 15:58:26"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:26"
+			   CREATED_BY="DEMO_ADMIN">
+				<TASK_STEP_CONTEXT
+				   EXPRESSION_BUSINESS_COMPONENT="Demo Payment Profile"
+				   FILTER_BUSINESS_COMPONENT="Demo Payment Profile"
+				   INACTIVE="N"
+				   IS_USER_SEARCH_SPEC="N"
+				   NAME="Query"
+				   SEARCH_SPECIFICATION="[DEMO Effective Flag] = &apos;Y&apos;"
+				   TYPE="LITERAL"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_CONTEXT>
+				<TASK_STEP_IO_ARGUMENT
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="DEMO Effective Flag"
+				   TYPE="Literal"
+				   VALUE="N"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="No Pay Form Flag"
+				   TYPE="Literal"
+				   VALUE="Y"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+			</TASK_STEP>
+			<TASK_STEP
+			   BUSINESS_COMPONENT="Demo Payment Profile"
+			   DEFER_WRITE_RECORD="N"
+			   DISABLE_CANCEL="N"
+			   DISABLE_PAUSE="N"
+			   DISABLE_PREVIOUS="N"
+			   DISPLAY_NAME_TYPE="Normal"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*3*0*0*0*1*r17*1359 419 1437 4739*FillBgClr8*134218238*ArrowEnd1*1"
+			   NAME="Setze neues RP = gültig"
+			   OPERATION="UPDATE"
+			   REPEATABLE="Y"
+			   RETAIN_APPLET_SEARCH_SPEC="N"
+			   RETAIN_TASK_SEARCH_SPEC="Y"
+			   RETAIN_USER_SEARCH_SPEC="N"
+			   TYPE="SIEBEL_OPER"
+			   UPDATED="06/01/2018 15:58:26"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:26"
+			   CREATED_BY="DEMO_ADMIN">
+				<TASK_STEP_CONTEXT
+				   EXPRESSION_BUSINESS_COMPONENT="Demo Payment Profile"
+				   FILTER_BUSINESS_COMPONENT="Demo Payment Profile"
+				   INACTIVE="N"
+				   IS_USER_SEARCH_SPEC="N"
+				   NAME="Query"
+				   SEARCH_SPECIFICATION="&quot;[Id]=&apos;&quot;+[&amp;DEMO Neues Profil Id]+&quot;&apos;"
+				   TYPE="EXPRESSION"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_CONTEXT>
+				<TASK_STEP_IO_ARGUMENT
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="DEMO Effective Flag"
+				   TYPE="Literal"
+				   VALUE="Y"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+			</TASK_STEP>
+			<TASK_STEP
+			   DEFER_WRITE_RECORD="N"
+			   DISABLE_CANCEL="N"
+			   DISABLE_PAUSE="N"
+			   DISABLE_PREVIOUS="N"
+			   DISPLAY_NAME_TYPE="Normal"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*3*0*0*0*1*r14*36 114 114 1689*FillBgClr8*167641088*ArrowEnd1*1"
+			   NAME="Start"
+			   REPEATABLE="Y"
+			   RETAIN_APPLET_SEARCH_SPEC="N"
+			   RETAIN_TASK_SEARCH_SPEC="Y"
+			   RETAIN_USER_SEARCH_SPEC="N"
+			   TYPE="START"
+			   UPDATED="06/01/2018 15:58:26"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:26"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_STEP>
+			<TASK_STEP
+			   BUSINESS_SERVICE_METHOD="Echo"
+			   BUSINESS_SERVICE_NAME="Workflow Utilities"
+			   DEFER_WRITE_RECORD="N"
+			   DISABLE_CANCEL="N"
+			   DISABLE_PAUSE="N"
+			   DISABLE_PREVIOUS="N"
+			   DISPLAY_NAME_TYPE="Normal"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*3*0*0*0*1*r17*1139 312 1217 3669*FillBgClr8*134217218*ArrowEnd1*1"
+			   NAME="Start Date &gt; Today()?"
+			   REPEATABLE="Y"
+			   RETAIN_APPLET_SEARCH_SPEC="N"
+			   RETAIN_TASK_SEARCH_SPEC="Y"
+			   RETAIN_USER_SEARCH_SPEC="N"
+			   TYPE="TASK"
+			   UPDATED="06/01/2018 15:58:26"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:26"
+			   CREATED_BY="DEMO_ADMIN">
+				<TASK_STEP_IO_ARGUMENT
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Output"
+				   NAME="O:DEMO Date Property"
+				   PROPERTY_NAME="DEMO Date Property"
+				   TYPE="Expression"
+				   VALUE="IIF([&amp;DEMO Profil gueltig ab]&gt;(Today()+1), &quot;N&quot;, &quot;Y&quot;)"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+			</TASK_STEP>
+			<TASK_STEP
+			   DEFER_WRITE_RECORD="N"
+			   DISABLE_CANCEL="N"
+			   DISABLE_PAUSE="N"
+			   DISABLE_PREVIOUS="N"
+			   DISPLAY_NAME_TYPE="Normal"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*3*0*0*0*1*r17*1359 312 1437 3669*FillBgClr7*82516338*ArrowEnd1*1"
+			   NAME="Subtask 1"
+			   REPEATABLE="Y"
+			   RETAIN_APPLET_SEARCH_SPEC="N"
+			   RETAIN_TASK_SEARCH_SPEC="Y"
+			   RETAIN_USER_SEARCH_SPEC="N"
+			   SUBTASK_NAME="DEMO CORE DEMOUI RP Rechnungsadresse pflegen Subtask"
+			   TYPE="SUBTASK"
+			   UPDATED="06/01/2018 15:58:26"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:26"
+			   CREATED_BY="DEMO_ADMIN">
+				<TASK_STEP_IO_ARGUMENT
+				   ARGUMENT="Address Id"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="I:Address Id"
+				   PROPERTY_NAME="Address Id"
+				   TYPE="Task Property"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   ARGUMENT="Delivery Method"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="I:Delivery Method"
+				   PROPERTY_NAME="Delivery Method"
+				   TYPE="Task Property"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   ARGUMENT="Address Id"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Output"
+				   NAME="O:Address Id"
+				   PROPERTY_NAME="Address Id"
+				   TYPE="Output Argument"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+			</TASK_STEP>
+			<TASK_STEP
+			   BUSINESS_COMPONENT="Demo Billing Profile BC"
+			   DEFER_WRITE_RECORD="N"
+			   DISABLE_CANCEL="N"
+			   DISABLE_PAUSE="N"
+			   DISABLE_PREVIOUS="N"
+			   DISPLAY_NAME_TYPE="Normal"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*3*0*0*0*1*r15*432 216 510 2709*FillBgClr8*134218238*ArrowEnd1*1"
+			   NAME="TBC Update"
+			   OPERATION="UPDATE"
+			   REPEATABLE="Y"
+			   RETAIN_APPLET_SEARCH_SPEC="N"
+			   RETAIN_TASK_SEARCH_SPEC="Y"
+			   RETAIN_USER_SEARCH_SPEC="N"
+			   TYPE="SIEBEL_OPER"
+			   UPDATED="06/01/2018 15:58:46"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:26"
+			   CREATED_BY="DEMO_ADMIN">
+				<TASK_STEP_IO_ARGUMENT
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="DEMO Account Ueberschrift GUI"
+				   PROPERTY_NAME="Profile Name"
+				   TYPE="Task Property"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="DEMO Bank Code"
+				   PROPERTY_NAME="Bank Code"
+				   TYPE="Task Property"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="DEMO Bank Account Name"
+				   PROPERTY_NAME="Account Holder"
+				   TYPE="Task Property"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="DEMO Bank Name"
+				   PROPERTY_NAME="DEMO Bank Name"
+				   TYPE="Task Property"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="DEMO Collection Date"
+				   PROPERTY_NAME="Collection Date"
+				   TYPE="Task Property"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="DEMO Account Identifier"
+				   PROPERTY_NAME="Account Identifier"
+				   TYPE="Task Property"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="DEMO Media Type"
+				   PROPERTY_NAME="Delivery Method"
+				   TYPE="Task Property"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="DEMO Payment Method"
+				   PROPERTY_NAME="Payment Method"
+				   TYPE="Task Property"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+			</TASK_STEP>
+			<TASK_STEP
+			   DEFER_WRITE_RECORD="N"
+			   DISABLE_CANCEL="N"
+			   DISABLE_PAUSE="N"
+			   DISABLE_PREVIOUS="N"
+			   DISPLAY_NAME_-_STRING_REFERENCE="X_DEMO_PROFILE_CREATE"
+			   DISPLAY_NAME_TYPE="Normal"
+			   FORWARD_BUTTON_TYPE="Next"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*3*0*0*0*1*r15*588 108 666 1629*FillBgClr8*107355238*ArrowEnd1*1"
+			   NAME="Task View 0"
+			   REPEATABLE="Y"
+			   RETAIN_APPLET_SEARCH_SPEC="N"
+			   RETAIN_TASK_SEARCH_SPEC="Y"
+			   RETAIN_USER_SEARCH_SPEC="N"
+			   TASK_VIEW="DEMO CORE DEMOUI Billing Profile anlegen RO Task View"
+			   TYPE="TASK_VIEW"
+			   UPDATED="06/01/2018 15:58:26"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:26"
+			   CREATED_BY="DEMO_ADMIN">
+				<TASK_STEP_IO_ARGUMENT
+				   BUSINESS_COMPONENT="Demo Billing Profile BC"
+				   BUSINESS_COMPONENT_FIELD="DEMO Bank Code"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Output"
+				   NAME="O:Bank Code"
+				   PROPERTY_NAME="Bank Code"
+				   TYPE="Business Component"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   BUSINESS_COMPONENT="Demo Billing Profile BC"
+				   BUSINESS_COMPONENT_FIELD="DEMO Bank Routing Number"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Output"
+				   NAME="O:Routing Code"
+				   PROPERTY_NAME="Routing Code"
+				   TYPE="Business Component"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   BUSINESS_COMPONENT="Demo Billing Profile BC"
+				   BUSINESS_COMPONENT_FIELD="DEMO Collection Date"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Output"
+				   NAME="O:Collection Date"
+				   PROPERTY_NAME="Collection Date"
+				   TYPE="Business Component"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   BUSINESS_COMPONENT="Demo Billing Profile BC"
+				   BUSINESS_COMPONENT_FIELD="DEMO Effective ab"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Output"
+				   NAME="O:EffectiveAb"
+				   PROPERTY_NAME="EffectiveAb"
+				   TYPE="Business Component"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   BUSINESS_COMPONENT="Demo Billing Profile BC"
+				   BUSINESS_COMPONENT_FIELD="DEMO Account Identifier"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Output"
+				   NAME="O:Account Identifier"
+				   PROPERTY_NAME="Account Identifier"
+				   TYPE="Business Component"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   BUSINESS_COMPONENT="Demo Billing Profile BC"
+				   BUSINESS_COMPONENT_FIELD="DEMO Bank Account Name"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Output"
+				   NAME="O:Account Holder"
+				   PROPERTY_NAME="Account Holder"
+				   TYPE="Business Component"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   BUSINESS_COMPONENT="Demo Billing Profile BC"
+				   BUSINESS_COMPONENT_FIELD="DEMO Bank Account Number"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Output"
+				   NAME="O:Account Number"
+				   PROPERTY_NAME="Account Number"
+				   TYPE="Business Component"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   BUSINESS_COMPONENT="Demo Billing Profile BC"
+				   BUSINESS_COMPONENT_FIELD="DEMO Bank Name"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Output"
+				   NAME="O:DEMO Bank Name"
+				   PROPERTY_NAME="DEMO Bank Name"
+				   TYPE="Business Component"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   BUSINESS_COMPONENT="Demo Billing Profile BC"
+				   BUSINESS_COMPONENT_FIELD="DEMO Effective ab"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Output"
+				   NAME="O:DEMO Profil gueltig ab"
+				   PROPERTY_NAME="DEMO Profil gueltig ab"
+				   TYPE="Business Component"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   BUSINESS_COMPONENT="Demo Billing Profile BC"
+				   BUSINESS_COMPONENT_FIELD="DEMO Uniserv Valid"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Output"
+				   NAME="O:DEMO Uniserv Valid"
+				   PROPERTY_NAME="DEMO Uniserv Valid"
+				   TYPE="Business Component"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   BUSINESS_COMPONENT="Demo Billing Profile BC"
+				   BUSINESS_COMPONENT_FIELD="DEMO Account Ueberschrift GUI"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Output"
+				   NAME="O:Profile Name"
+				   PROPERTY_NAME="Profile Name"
+				   TYPE="Business Component"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   BUSINESS_COMPONENT="Demo Billing Profile BC"
+				   BUSINESS_COMPONENT_FIELD="DEMO DirectDebit Consent Notice Flag"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Output"
+				   NAME="O:DirectDebit Consent Notice"
+				   PROPERTY_NAME="DirectDebit Consent Notice"
+				   TYPE="Business Component"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   BUSINESS_COMPONENT="Demo Billing Profile BC"
+				   BUSINESS_COMPONENT_FIELD="DEMO DirectDebit Mandat Flag"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Output"
+				   NAME="O:DirectDebit Authorization Form"
+				   PROPERTY_NAME="DirectDebit Authorization Form"
+				   TYPE="Business Component"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   BUSINESS_COMPONENT="Demo Billing Profile BC"
+				   BUSINESS_COMPONENT_FIELD="DEMO Media Type"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Output"
+				   NAME="O:Delivery Method"
+				   PROPERTY_NAME="Delivery Method"
+				   TYPE="Business Component"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   BUSINESS_COMPONENT="Demo Billing Profile BC"
+				   BUSINESS_COMPONENT_FIELD="DEMO Payment Method"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Output"
+				   NAME="O:Payment Method"
+				   PROPERTY_NAME="Payment Method"
+				   TYPE="Business Component"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+			</TASK_STEP>
+			<TASK_STEP
+			   DEFER_WRITE_RECORD="N"
+			   DISABLE_CANCEL="N"
+			   DISABLE_PAUSE="N"
+			   DISABLE_PREVIOUS="N"
+			   DISPLAY_NAME_-_STRING_REFERENCE="X_DEMO_PROFILE_MAINTAIN"
+			   DISPLAY_NAME_TYPE="Normal"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*3*0*0*0*1*r15*432 324 498 3789*FillBgClr8*107355238*ArrowEnd1*1"
+			   NAME="Task View 2"
+			   REPEATABLE="Y"
+			   RETAIN_APPLET_SEARCH_SPEC="N"
+			   RETAIN_TASK_SEARCH_SPEC="Y"
+			   RETAIN_USER_SEARCH_SPEC="N"
+			   TASK_VIEW="DEMO CORE DEMOUI Billing Profile anlegen Task View"
+			   TYPE="TASK_VIEW"
+			   UPDATED="06/01/2018 15:58:26"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:26"
+			   CREATED_BY="DEMO_ADMIN">
+				<TASK_STEP_IO_ARGUMENT
+				   BUSINESS_COMPONENT="Demo Billing Profile BC"
+				   BUSINESS_COMPONENT_FIELD="DEMO Bank Code"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Output"
+				   NAME="O:Bank Code"
+				   PROPERTY_NAME="Bank Code"
+				   TYPE="Business Component"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   BUSINESS_COMPONENT="Demo Billing Profile BC"
+				   BUSINESS_COMPONENT_FIELD="DEMO Bank Routing Number"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Output"
+				   NAME="O:Routing Code"
+				   PROPERTY_NAME="Routing Code"
+				   TYPE="Business Component"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   BUSINESS_COMPONENT="Demo Billing Profile BC"
+				   BUSINESS_COMPONENT_FIELD="DEMO Collection Date"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Output"
+				   NAME="O:Collection Date"
+				   PROPERTY_NAME="Collection Date"
+				   TYPE="Business Component"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   BUSINESS_COMPONENT="Demo Billing Profile BC"
+				   BUSINESS_COMPONENT_FIELD="DEMO Effective ab"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Output"
+				   NAME="O:EffectiveAb"
+				   PROPERTY_NAME="EffectiveAb"
+				   TYPE="Business Component"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   BUSINESS_COMPONENT="Demo Billing Profile BC"
+				   BUSINESS_COMPONENT_FIELD="DEMO Account Identifier"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Output"
+				   NAME="O:Account Identifier"
+				   PROPERTY_NAME="Account Identifier"
+				   TYPE="Business Component"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   BUSINESS_COMPONENT="Demo Billing Profile BC"
+				   BUSINESS_COMPONENT_FIELD="DEMO Bank Account Name"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Output"
+				   NAME="O:Account Holder"
+				   PROPERTY_NAME="Account Holder"
+				   TYPE="Business Component"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   BUSINESS_COMPONENT="Demo Billing Profile BC"
+				   BUSINESS_COMPONENT_FIELD="DEMO Bank Account Number"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Output"
+				   NAME="O:Account Number"
+				   PROPERTY_NAME="Account Number"
+				   TYPE="Business Component"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   BUSINESS_COMPONENT="Demo Billing Profile BC"
+				   BUSINESS_COMPONENT_FIELD="DEMO Bank Name"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Output"
+				   NAME="O:DEMO Bank Name"
+				   PROPERTY_NAME="DEMO Bank Name"
+				   TYPE="Business Component"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   BUSINESS_COMPONENT="Demo Billing Profile BC"
+				   BUSINESS_COMPONENT_FIELD="DEMO Effective ab"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Output"
+				   NAME="O:DEMO Profil gueltig ab"
+				   PROPERTY_NAME="DEMO Profil gueltig ab"
+				   TYPE="Business Component"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   BUSINESS_COMPONENT="Demo Billing Profile BC"
+				   BUSINESS_COMPONENT_FIELD="DEMO Uniserv Valid"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Output"
+				   NAME="O:DEMO Uniserv Valid"
+				   PROPERTY_NAME="DEMO Uniserv Valid"
+				   TYPE="Business Component"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   BUSINESS_COMPONENT="Demo Billing Profile BC"
+				   BUSINESS_COMPONENT_FIELD="DEMO Account Ueberschrift GUI"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Output"
+				   NAME="O:Profile Name"
+				   PROPERTY_NAME="Profile Name"
+				   TYPE="Business Component"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   BUSINESS_COMPONENT="Demo Billing Profile BC"
+				   BUSINESS_COMPONENT_FIELD="DEMO DirectDebit Consent Notice Flag"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Output"
+				   NAME="O:DirectDebit Consent Notice"
+				   PROPERTY_NAME="DirectDebit Consent Notice"
+				   TYPE="Business Component"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   BUSINESS_COMPONENT="Demo Billing Profile BC"
+				   BUSINESS_COMPONENT_FIELD="DEMO DirectDebit Mandat Flag"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Output"
+				   NAME="O:DirectDebit Authorization Form"
+				   PROPERTY_NAME="DirectDebit Authorization Form"
+				   TYPE="Business Component"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   BUSINESS_COMPONENT="Demo Billing Profile BC"
+				   BUSINESS_COMPONENT_FIELD="DEMO Media Type"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Output"
+				   NAME="O:Delivery Method"
+				   PROPERTY_NAME="Delivery Method"
+				   TYPE="Business Component"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   BUSINESS_COMPONENT="Demo Billing Profile BC"
+				   BUSINESS_COMPONENT_FIELD="DEMO Payment Method"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Output"
+				   NAME="O:Payment Method"
+				   PROPERTY_NAME="Payment Method"
+				   TYPE="Business Component"
+				   UPDATED="06/01/2018 15:58:26"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:26"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+			</TASK_STEP>
+			<TASK_STEP
+			   BUSINESS_COMPONENT="Account"
+			   DEFER_WRITE_RECORD="N"
+			   DISABLE_CANCEL="N"
+			   DISABLE_PAUSE="N"
+			   DISABLE_PREVIOUS="N"
+			   DISPLAY_NAME_TYPE="Normal"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*3*0*0*0*1*r17*1573 312 1651 3669*FillBgClr8*134218238*ArrowEnd1*1"
+			   NAME="Update Account"
+			   OPERATION="UPDATE"
+			   REPEATABLE="Y"
+			   RETAIN_APPLET_SEARCH_SPEC="N"
+			   RETAIN_TASK_SEARCH_SPEC="Y"
+			   RETAIN_USER_SEARCH_SPEC="N"
+			   TYPE="SIEBEL_OPER"
+			   UPDATED="06/01/2018 15:58:26"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:26"
+			   CREATED_BY="DEMO_ADMIN">
+				<TASK_STEP_IO_ARGUMENT
+				   BUSINESS_COMPONENT="Demo Billing Profile BC"
+				   BUSINESS_COMPONENT_FIELD="DEMO Account Ueberschrift GUI"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="DEMO Ueberschrift"
+				   TYPE="Business Component"
+				   UPDATED="06/01/2018 15:58:27"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:27"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+			</TASK_STEP>
+			<TASK_STEP
+			   BUSINESS_COMPONENT="Account"
+			   DEFER_WRITE_RECORD="N"
+			   DISABLE_CANCEL="N"
+			   DISABLE_PAUSE="N"
+			   DISABLE_PREVIOUS="N"
+			   DISPLAY_NAME_TYPE="Normal"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*3*0*0*0*1*r17*1241 506 1319 5609*FillBgClr8*134218238*ArrowEnd1*1"
+			   NAME="Update Primary Account RP"
+			   OPERATION="UPDATE"
+			   REPEATABLE="Y"
+			   RETAIN_APPLET_SEARCH_SPEC="N"
+			   RETAIN_TASK_SEARCH_SPEC="Y"
+			   RETAIN_USER_SEARCH_SPEC="N"
+			   TYPE="SIEBEL_OPER"
+			   UPDATED="06/01/2018 15:58:27"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:27"
+			   CREATED_BY="DEMO_ADMIN">
+				<TASK_STEP_IO_ARGUMENT
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="Primary Billing Profile Id"
+				   PROPERTY_NAME="DEMO Neues Profil Id"
+				   TYPE="Task Property"
+				   UPDATED="06/01/2018 15:58:27"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:27"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+			</TASK_STEP>
+			<TASK_STEP
+			   BUSINESS_SERVICE_METHOD="SetProfileAttribute"
+			   BUSINESS_SERVICE_NAME="SiebelUserProfileService"
+			   DEFER_WRITE_RECORD="N"
+			   DISABLE_CANCEL="N"
+			   DISABLE_PAUSE="N"
+			   DISABLE_PREVIOUS="N"
+			   DISPLAY_NAME_TYPE="Normal"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*3*0*0*0*1*r15*192 108 270 1629*FillBgClr8*134217218*ArrowEnd1*1"
+			   NAME="Update profile attribute"
+			   REPEATABLE="Y"
+			   RETAIN_APPLET_SEARCH_SPEC="N"
+			   RETAIN_TASK_SEARCH_SPEC="Y"
+			   RETAIN_USER_SEARCH_SPEC="N"
+			   TYPE="TASK"
+			   UPDATED="06/01/2018 15:58:27"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:27"
+			   CREATED_BY="DEMO_ADMIN">
+				<TASK_STEP_IO_ARGUMENT
+				   ARGUMENT="Name"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="I:Name"
+				   TYPE="Literal"
+				   VALUE="DEMO_CORE_COM_INV_PROCESS_FIRST_LOAD"
+				   UPDATED="06/01/2018 15:58:27"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:27"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+				<TASK_STEP_IO_ARGUMENT
+				   ARGUMENT="Value"
+				   INACTIVE="N"
+				   INPUT_OUTPUT="Input"
+				   NAME="I:Value"
+				   TYPE="Literal"
+				   VALUE="Y"
+				   UPDATED="06/01/2018 15:58:27"
+				   UPDATED_BY="DEMO_ADMIN"
+				   CREATED="06/01/2018 15:58:27"
+				   CREATED_BY="DEMO_ADMIN">
+				</TASK_STEP_IO_ARGUMENT>
+			</TASK_STEP>
+			<TASK_STEP
+			   DEFER_WRITE_RECORD="N"
+			   DISABLE_CANCEL="N"
+			   DISABLE_PAUSE="N"
+			   DISABLE_PREVIOUS="N"
+			   DISPLAY_NAME_TYPE="Normal"
+			   INACTIVE="N"
+			   LAYOUT="@0*0*3*0*0*0*1*r16*972 312 1050 3669*FillBgClr8*134348798*ArrowEnd1*1"
+			   NAME="Validate input data"
+			   REPEATABLE="Y"
+			   RETAIN_APPLET_SEARCH_SPEC="N"
+			   RETAIN_TASK_SEARCH_SPEC="Y"
+			   RETAIN_USER_SEARCH_SPEC="N"
+			   TYPE="DECISION_POINT"
+			   UPDATED="06/01/2018 15:58:27"
+			   UPDATED_BY="DEMO_ADMIN"
+			   CREATED="06/01/2018 15:58:27"
+			   CREATED_BY="DEMO_ADMIN">
+			</TASK_STEP>
+		</TASK>
+	</PROJECT>
+</REPOSITORY>
+
+
+

@@ -181,18 +181,115 @@ document.getElementById("app").addEventListener("load", async () => {
       toggle.click();
       assert(toggle.getAttribute("aria-pressed") === "false" && !doc.querySelector(".xray-label"), "X-ray did not turn off");
     });
-    test("decision diamond toggle preserves selection and connections", () => {
+    test("Siebel shapes toggle uses native symbols independently of layout", () => {
       const doc = w.document;
-      const toggle = doc.getElementById("btnDiamonds");
+      const toggle = doc.getElementById("btnSiebelStyle");
       const decision = doc.querySelector(".node.decision");
       decision.dispatchEvent(new w.MouseEvent("click", {bubbles:true}));
       const edgeCount = doc.querySelectorAll(".edge").length;
       toggle.click();
       assert(toggle.getAttribute("aria-pressed") === "true", "toggle state not set");
-      assert(doc.querySelector(".node.decision.selected polygon"), "selected decision is not a diamond");
+      assert(doc.querySelector(".node.decision.selected polygon[data-node-shape]"), "decision is not a diamond");
+      assert(doc.querySelector(".node.start polygon[data-node-shape]"), "start is not a parallelogram");
+      assert(doc.querySelector(".node.end ellipse[data-node-shape]"), "end is not an ellipse");
       assert(doc.querySelectorAll(".edge").length === edgeCount, "connections changed");
+      assert(doc.getElementById("btnSiebelLayout").getAttribute("aria-pressed") === "false", "shape toggle changed layout state");
       toggle.click();
-      assert(toggle.getAttribute("aria-pressed") === "false" && doc.querySelector(".node.decision.selected rect"), "rectangular display not restored");
+      assert(toggle.getAttribute("aria-pressed") === "false" && doc.querySelector(".node.decision.selected rect[data-node-shape]"), "default shapes were not restored");
+    });
+    test("Siebel layout uses saved geometry and orthogonal branches independently", () => {
+      const doc = w.document;
+      const toggle = doc.getElementById("btnSiebelLayout");
+      toggle.click();
+      const wf = w.getCurrentWorkflow();
+      const start = wf.steps.find(step => step.attrs.NAME === "Start");
+      const startShape = doc.querySelector(`.node[data-id="${start.id}"] [data-node-shape]`);
+      const box = startShape.getBBox();
+      assert(box.x === 192 && box.y === 144 && box.width === 96 && box.height === 48, "saved Start geometry was not used");
+      const narrowEnd = w.parseSiebelStepLayout({attrs:{TYPE:"END", LAYOUT:"@0*0*3*0*0*0*1*r15*100 100 130 2009*FillBgClr8*1"}});
+      assert(narrowEnd.width >= 96 && narrowEnd.width >= narrowEnd.height * 1.8, "End geometry remained too narrow");
+      assert(Array.from(doc.querySelectorAll(".edge")).every(edge => edge.getAttribute("d").includes(" L ") && !edge.getAttribute("d").includes(" C ")), "branches are not orthogonal");
+      const straightBranch = wf.branches.find(branch => branch.attrs.NAME === "Go");
+      const bentBranch = wf.branches.find(branch => branch.attrs.NAME === "Connector 3");
+      assert(doc.querySelector(`.edge[data-id="${straightBranch.id}"]`).getAttribute("d") === "M 276 168 L 400 168", "saved connector points were not expanded for the label");
+      assert(doc.querySelector(`.edge[data-id="${bentBranch.id}"]`).getAttribute("d") === "M 771 300 L 998 300 L 998 192", "saved bend was not expanded with its connector column");
+      assert(toggle.getAttribute("aria-pressed") === "true", "layout toggle state not set");
+      assert(doc.getElementById("btnSiebelStyle").getAttribute("aria-pressed") === "false", "layout toggle changed shape state");
+      toggle.click();
+      assert(Array.from(doc.querySelectorAll(".edge")).every(edge => edge.getAttribute("d").includes(" C ")), "auto-layout branches were not restored");
+    });
+    test("Siebel palette types use their native symbols and colors", () => {
+      const doc = w.document;
+      const cases = [
+        ["START", "polygon", "rgb(201, 202, 255)"],
+        ["TASK_VIEW", "ellipse", "rgb(167, 223, 169)"],
+        ["SIEBEL_OPER", "rect", "rgb(255, 184, 187)"],
+        ["BUSINESS_SERVICE", "rect", "rgb(160, 212, 209)"],
+        ["DECISION_POINT", "polygon", "rgb(255, 243, 160)"],
+        ["SUBTASK", "polygon", "rgb(241, 232, 108)"],
+        ["COMMIT", "ellipse", "rgb(167, 223, 169)"],
+        ["ERROR", "polygon", "rgb(255, 192, 128)"],
+        ["END", "ellipse", "rgb(201, 202, 255)"],
+        ["SUB_PROCESS", "rect", "rgb(255, 192, 128)"],
+        ["USER_INTERACT", "rect", "rgb(143, 198, 255)"],
+        ["WAIT", "ellipse", "rgb(167, 223, 169)"],
+        ["STOP", "ellipse", "rgb(214, 215, 164)"]
+      ];
+      const toggle = doc.getElementById("btnSiebelStyle");
+      const steps = cases.map(([type], index) => ({
+        id:`palette-${index}`,
+        attrs:{NAME:type, TYPE:type},
+        branches:[],
+        ioArgs:[]
+      }));
+      const stepByName = new Map(steps.map(step => [step.attrs.NAME, [step]]));
+      try {
+        if (toggle.getAttribute("aria-pressed") !== "true") toggle.click();
+        w.renderWorkflow({steps, stepByName}, null);
+        for (const [index, [type, shapeName, fill]] of cases.entries()) {
+          const node = doc.querySelector(`.node[data-id="palette-${index}"]`);
+          const shape = node.querySelector("[data-node-shape]");
+          assert(shape.tagName.toLowerCase() === shapeName, type + " has the wrong native shape");
+          assert(w.getComputedStyle(shape).fill === fill, type + " has the wrong palette color");
+        }
+        assert(doc.querySelector('.node.native.siebel-operation .native-decoration'), "Siebel Operation header is missing");
+        assert(doc.querySelectorAll(".node.native.sub-process .native-decoration").length === 2, "Sub Process rails are missing");
+        const start = steps.find(step => step.attrs.TYPE === "START");
+        const errorBranch = {id:"palette-error", parentStepName:"START", attrs:{NAME:"Error Exception", TYPE:"ERROR_EXC", TO_STEP_NAME:"END"}, connectorAttrs:null, criteria:[]};
+        start.branches.push(errorBranch);
+        w.renderWorkflow({steps, stepByName}, null);
+        const errorEdge = doc.querySelector('.edge[data-id="palette-error"]');
+        assert(errorEdge.classList.contains("error-exception") && w.getComputedStyle(errorEdge).stroke === "rgb(238, 51, 51)", "Error Exception is not red");
+      } finally {
+        if (toggle.getAttribute("aria-pressed") === "true") toggle.click();
+        w.renderCurrent(false);
+      }
+    });
+    test("inactive nodes and branches stay hidden until enabled", () => {
+      const doc = w.document, wf = w.getCurrentWorkflow(), toggle = doc.getElementById("btnInactive");
+      const step = wf.steps.find(item => item.attrs.NAME === "Set Test Property 2 to N");
+      const nodeBranch = wf.branches.find(item => item.attrs.NAME === "N");
+      const edgeBranch = wf.branches.find(item => item.attrs.NAME === "Y");
+      const previous = [step.attrs.INACTIVE, nodeBranch.attrs.INACTIVE, edgeBranch.attrs.INACTIVE, edgeBranch.connectorAttrs?.INACTIVE];
+      step.attrs.INACTIVE = "Y";
+      nodeBranch.attrs.INACTIVE = "N";
+      edgeBranch.attrs.INACTIVE = "N";
+      if (edgeBranch.connectorAttrs) edgeBranch.connectorAttrs.INACTIVE = "Y";
+      try {
+        assert(toggle.getAttribute("aria-pressed") === "false", "inactive display is enabled by default");
+        w.renderCurrent(false);
+        assert(!doc.querySelector(`.node[data-id="${step.id}"]`), "inactive node was not hidden");
+        assert(!doc.querySelector(`.edge[data-id="${nodeBranch.id}"]`), "branch to hidden node was not hidden");
+        assert(!doc.querySelector(`.edge[data-id="${edgeBranch.id}"]`), "inactive branch was not hidden");
+        toggle.click();
+        assert(doc.querySelector(`.node.inactive[data-id="${step.id}"]`), "inactive node did not appear when enabled");
+        assert(doc.querySelector(`.edge.inactive[data-id="${edgeBranch.id}"]`), "inactive branch did not appear when enabled");
+      } finally {
+        if (toggle.getAttribute("aria-pressed") === "true") toggle.click();
+        [step.attrs.INACTIVE, nodeBranch.attrs.INACTIVE, edgeBranch.attrs.INACTIVE] = previous;
+        if (edgeBranch.connectorAttrs) edgeBranch.connectorAttrs.INACTIVE = previous[3];
+        w.renderCurrent(false);
+      }
     });
     test("branch expression tooltip is verbatim and preview selects its branch", () => {
       const expressions = Array.from(w.document.querySelectorAll(".edge-expression"));
