@@ -169,7 +169,7 @@
         stroke-width: 3px;
       }
       .edge-expression{
-        font-size: 11px;
+        font-size: 8.25px;
         fill: #dbe5ff;
         paint-order: stroke;
         stroke: #0b1020;
@@ -193,6 +193,25 @@
         stroke-linejoin: round;
         cursor: pointer;
       }
+      .xray-label.category-search { fill:#7ee4ff; }
+      .xray-label.category-service { fill:#ffc778; }
+      .xray-label.category-argument { fill:#adf3ba; }
+      .xray-label.category-more { fill:#d2c0ff; }
+      #graphPreview {
+        position:absolute; z-index:10; top:55px; right:10px;
+        width:min(520px, calc(100% - 20px)); max-height:calc(100% - 65px);
+        overflow:auto; padding:14px; border:2px solid #7ee4ff; border-radius:12px;
+        background:#101a34; color:#e7ecff; box-shadow:0 8px 32px #000c;
+        white-space:pre-wrap; overflow-wrap:anywhere;
+      }
+      #graphPreview[hidden] { display:none; }
+      #graphPreview.expression-preview { font-size:22px; line-height:1.3; }
+      #graphPreview.xray-preview { font-size:13px; line-height:1.45; }
+      #graphPreview .preview-heading { font-weight:700; margin-bottom:8px; }
+      #graphPreview .preview-category { margin-top:10px; font-weight:700; }
+      #graphPreview .category-search { color:#7ee4ff; }
+      #graphPreview .category-service { color:#ffc778; }
+      #graphPreview .category-argument { color:#adf3ba; }
       .search-halo { fill:none; stroke:#66e6ff; stroke-width:9; opacity:.65; pointer-events:none; }
       .node.search-hit { filter:drop-shadow(0 0 6px #66e6ff); }
       .search-hit-badge { fill:#071629; stroke:#66e6ff; stroke-width:1.5; }
@@ -394,6 +413,7 @@
           <button id="btnXray" aria-pressed="false" title="Show field previews; zoom in and select a step for full details">X-ray</button>
         </div>
 
+        <div id="graphPreview" role="region" aria-label="Expanded graph preview" tabindex="0" hidden></div>
         <div id="viewport">
           <svg id="svg" role="img" aria-label="Workflow graph">
             <defs>
@@ -751,20 +771,98 @@
         return mt*mt*mt*p0 + 3*mt*mt*t*p1 + 3*mt*t*t*p2 + t*t*t*p3;
       }
 
-      function xrayFields(step){
+      const XRAY_EXCLUDED = new Set(["RETAIN_APPLET_SEARCH_SPEC", "RETAIN_TASK_SEARCH_SPEC", "RETAIN_USER_SEARCH_SPEC"]);
+      function xrayEntries(step){
         const entries = [];
         const add = (path, attrs, isArgument) => {
           for (const [key, value] of Object.entries(attrs || {})) {
+            if (XRAY_EXCLUDED.has(key.toUpperCase())) continue;
             if (value !== "" && (/(SEARCH_SPEC|BUSINESS_(COMPONENT|SERVICE|OBJECT)|OPERATION|METHOD|INPUT_FLAG|INPUT_OUTPUT|PROPERTY_NAME|VALUE)/i.test(key) || (isArgument && key === "TYPE"))) {
-              const priority = /SEARCH_SPEC/i.test(key) ? 0 : /BUSINESS_|OPERATION|METHOD/i.test(key) ? 1 : 2;
-              entries.push({ priority, text:`${path}${key}: ${value}` });
+              const category = /SEARCH_SPEC/i.test(key) ? "search" : /BUSINESS_|OPERATION|METHOD/i.test(key) ? "service" : "argument";
+              const priority = {search:0, service:1, argument:2}[category];
+              entries.push({ priority, category, text:`${path}${key}: ${value}` });
             }
           }
         };
         add("", step.attrs, false);
         for (const arg of step.ioArgs) add(`${arg.attrs.NAME || "(unnamed argument)"}.`, arg.attrs, true);
-        return entries.sort((a,b)=>a.priority-b.priority).map(entry=>entry.text);
+        return entries.sort((a,b)=>a.priority-b.priority);
       }
+      function xrayFields(step){ return xrayEntries(step).map(entry => entry.text); }
+
+      let previewTimer;
+      let previewSource = null;
+      function hideGraphPreview(){
+        clearTimeout(previewTimer);
+        const preview = document.getElementById("graphPreview");
+        preview.hidden = true;
+        preview.replaceChildren();
+        previewSource = null;
+      }
+      function schedulePreviewHide(){
+        clearTimeout(previewTimer);
+        previewTimer = setTimeout(() => {
+          const preview = document.getElementById("graphPreview");
+          if (!preview.matches(":hover") && !preview.contains(document.activeElement) &&
+              !(previewSource && (previewSource.matches(":hover") || previewSource.contains(document.activeElement)))) hideGraphPreview();
+        }, 200);
+      }
+      function showGraphPreview(source, kind, heading, entries){
+        clearTimeout(previewTimer);
+        const preview = document.getElementById("graphPreview");
+        previewSource = source;
+        preview.className = `${kind}-preview`;
+        preview.replaceChildren();
+        const title = document.createElement("div");
+        title.className = "preview-heading";
+        title.textContent = heading;
+        preview.appendChild(title);
+        if (kind === "expression") {
+          const content = document.createElement("div");
+          content.textContent = entries;
+          preview.appendChild(content);
+        } else {
+          const categories = {search:"Search specifications", service:"Service / operation", argument:"Arguments / values"};
+          for (const category of Object.keys(categories)) {
+            const items = entries.filter(entry => entry.category === category);
+            if (!items.length) continue;
+            const label = document.createElement("div");
+            label.className = `preview-category category-${category}`;
+            label.textContent = categories[category];
+            preview.appendChild(label);
+            for (const item of items) {
+              const row = document.createElement("div");
+              row.className = `category-${category}`;
+              row.textContent = item.text;
+              preview.appendChild(row);
+            }
+          }
+        }
+        preview.scrollTop = 0;
+        preview.hidden = false;
+      }
+      function bindGraphPreview(source, kind, heading, entries){
+        source.setAttribute("tabindex", "0");
+        source.setAttribute("aria-label", `${heading}. Focus or hover for full preview.`);
+        source.addEventListener("pointerenter", () => showGraphPreview(source, kind, heading, entries));
+        source.addEventListener("pointerleave", schedulePreviewHide);
+        source.addEventListener("focus", () => showGraphPreview(source, kind, heading, entries));
+        source.addEventListener("blur", schedulePreviewHide);
+        source.addEventListener("keydown", event => {
+          if (event.key === "Escape") hideGraphPreview();
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            selectItem({kind:source.dataset.kind, id:source.dataset.id});
+          }
+        });
+      }
+      const graphPreview = document.getElementById("graphPreview");
+      graphPreview.addEventListener("pointerenter", () => clearTimeout(previewTimer));
+      graphPreview.addEventListener("pointerleave", schedulePreviewHide);
+      graphPreview.addEventListener("focusout", schedulePreviewHide);
+      graphPreview.addEventListener("keydown", event => {
+        if (event.key === "Escape") hideGraphPreview();
+      });
 
       // Keep labels compact, while retaining the complete value in the SVG tooltip.
       function limitEdgeText(text, value, maxWidth = 260){
@@ -821,6 +919,7 @@
       }
 
       function renderWorkflow(wf, diffStyling){
+        hideGraphPreview();
         const svg = document.getElementById("svg");
         const gEdges = document.getElementById("edges");
         const gNodes = document.getElementById("nodes");
@@ -898,6 +997,7 @@
             expression.setAttribute("y", ly + 14 * (index + 1));
             gEdges.appendChild(expression);
             limitEdgeText(expression, condition);
+            bindGraphPreview(expression, "expression", "Branch condition", condition);
             labelGroup.push(expression);
           }
         }
@@ -937,9 +1037,10 @@
           }
 
           if (state.xray) {
-            const fields = xrayFields(s);
+            const fields = xrayEntries(s);
             const lines = fields.slice(0, 5);
-            if (fields.length > 5) lines.push(`+${fields.length - 5} more (select step)`);
+            if (fields.length > 5) lines.push({category:"more", text:`+${fields.length - 5} more (hover for all)`});
+            if (fields.length) bindGraphPreview(grp, "xray", s.attrs.NAME || "(unnamed step)", fields);
             if (lines.length) {
               const card = document.createElementNS("http://www.w3.org/2000/svg", "rect");
               card.classList.add("xray-card");
@@ -951,13 +1052,13 @@
             }
             lines.forEach((line, index) => {
               const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
-              text.classList.add("xray-label");
+              text.classList.add("xray-label", `category-${line.category}`);
               text.setAttribute("x", p.x + NODE_W + 24);
               text.setAttribute("y", p.y + 17 + index * 15);
-              const preview = line.replace(/^(.{18}).*?(\.[A-Z_]+: )/, "$1…$2");
+              const preview = line.text.replace(/^(.{18}).*?(\.[A-Z_]+: )/, "$1…$2");
               text.textContent = preview.length > 52 ? preview.slice(0, 49) + "…" : preview;
               const tooltip = document.createElementNS("http://www.w3.org/2000/svg", "title");
-              tooltip.textContent = line;
+              tooltip.textContent = line.text;
               text.appendChild(tooltip);
               grp.appendChild(text);
             });
@@ -1454,6 +1555,7 @@
       // pan/zoom
       const viewport = document.getElementById("viewport");
       canvasWrap.addEventListener("wheel", (e)=>{
+        if (graphPreview.contains(e.target)) return;
         e.preventDefault();
         if (!e.deltaY) return;
         const factor = Math.sign(e.deltaY) > 0 ? 0.92 : 1.08;
