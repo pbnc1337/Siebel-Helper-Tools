@@ -237,28 +237,37 @@
         background:rgba(0,0,0,.14);
         overflow:hidden;
       }
-      .pane[open] { display:flex; flex-direction:column; flex: var(--drawer-weight, 1) 1 0px; min-height:85px; }
-      .drawer-splitter { height:8px; flex:none; cursor:row-resize; background:#24305d; touch-action:none; }
+      .pane[open] { position:relative; flex: var(--drawer-weight, 1) 1 0px; min-height:85px; }
+      .drawer-splitter { position:absolute; bottom:0; left:0; right:0; height:8px; cursor:row-resize; background:#24305d; touch-action:none; }
       .drawer-splitter[hidden] { display:none; }
       aside ::-webkit-scrollbar, aside::-webkit-scrollbar { width:10px; height:10px; }
       aside ::-webkit-scrollbar-track, aside::-webkit-scrollbar-track { background:#111a33; }
       aside ::-webkit-scrollbar-thumb, aside::-webkit-scrollbar-thumb { background:#5875b6; border:2px solid #111a33; border-radius:8px; }
       .pane > summary{
+        height:38px;
         padding:10px;
         color:var(--muted);
         font-size:13px;
+        line-height:18px;
         font-weight:700;
         text-transform:uppercase;
         cursor:pointer;
       }
       .drawer-content{
+        position:absolute;
+        top:38px;
+        bottom:8px;
+        left:0;
+        right:0;
         padding:0 10px 10px;
-        flex:1 1 auto;
+        min-width:0;
         min-height:0;
-        overflow:auto;
+        overflow-x:auto;
+        overflow-y:scroll;
         scrollbar-color:#5875b6 #111a33;
         scrollbar-width:thin;
       }
+      .drawer-content.list > * { flex-shrink:0; }
       .kv{ display:grid; grid-template-columns: 1fr; gap:8px; }
       .kv .row{
         border:1px solid var(--border);
@@ -411,26 +420,26 @@
       <aside aria-label="Workflow information">
         <details class="pane" id="paneSearch">
           <summary>Search matches</summary>
-          <div id="searchResults" class="list drawer-content" aria-live="polite"></div>
+          <div id="searchResults" class="list drawer-content" aria-live="polite" tabindex="0"></div>
         </details>
 
         <details class="pane" id="paneMeta" open>
           <summary>Metadata</summary>
-          <div id="metaContent" class="kv drawer-content">
+          <div id="metaContent" class="kv drawer-content" tabindex="0">
             <div class="row"><div class="k">Status</div><div class="v muted">Load a SIF file to begin.</div></div>
           </div>
         </details>
 
         <details class="pane" id="paneDetails" open>
           <summary>Selection</summary>
-          <div id="detailsContent" class="kv drawer-content">
+          <div id="detailsContent" class="kv drawer-content" tabindex="0">
             <div class="row"><div class="k">Nothing selected</div><div class="v muted">Click a step or branch connection.</div></div>
           </div>
         </details>
 
         <details class="pane" id="paneSupport" open>
           <summary>Warnings / Diff</summary>
-          <div id="supportContent" class="list drawer-content">
+          <div id="supportContent" class="list drawer-content" tabindex="0">
             <div class="row muted" style="border:1px solid var(--border); border-radius:10px; padding:10px; background: rgba(0,0,0,.14);">
               Drag & drop is supported. No server calls are performed.
             </div>
@@ -439,7 +448,7 @@
 
         <details class="pane" id="paneProperties" open>
           <summary>Workflow properties</summary>
-          <div id="propertiesContent" class="kv drawer-content"></div>
+          <div id="propertiesContent" class="kv drawer-content" tabindex="0"></div>
         </details>
 
       </aside>
@@ -757,6 +766,60 @@
         return entries.sort((a,b)=>a.priority-b.priority).map(entry=>entry.text);
       }
 
+      // Keep labels compact, while retaining the complete value in the SVG tooltip.
+      function limitEdgeText(text, value, maxWidth = 260){
+        text.textContent = value;
+        if (text.getComputedTextLength() > maxWidth) {
+          let low = 0, high = value.length;
+          while (low < high) {
+            const mid = Math.ceil((low + high) / 2);
+            text.textContent = value.slice(0, mid) + "…";
+            if (text.getComputedTextLength() <= maxWidth) low = mid;
+            else high = mid - 1;
+          }
+          text.textContent = value.slice(0, low) + "…";
+        }
+        const title = document.createElementNS("http://www.w3.org/2000/svg", "title");
+        title.textContent = value;
+        text.appendChild(title);
+      }
+
+      function positionEdgeLabels(groups, nodes){
+        const padding = 6;
+        const obstacles = Array.from(nodes.children, node => node.getBBox())
+          .map(box => ({x:box.x-padding, y:box.y-padding, width:box.width+2*padding, height:box.height+2*padding}));
+        const intersects = (a, b) => a.x < b.x+b.width && a.x+a.width > b.x && a.y < b.y+b.height && a.y+a.height > b.y;
+        for (const group of groups) {
+          const boxes = group.map(text => text.getBBox());
+          const left = Math.min(...boxes.map(box => box.x));
+          const top = Math.min(...boxes.map(box => box.y));
+          const right = Math.max(...boxes.map(box => box.x + box.width));
+          const bottom = Math.max(...boxes.map(box => box.y + box.height));
+          const original = {x:left-padding, y:top-padding, width:right-left+2*padding, height:bottom-top+2*padding};
+          let offset = null;
+          // Prefer positions close to the connection; use a guaranteed clear fallback.
+          for (let ring = 0; ring <= 20 && !offset; ring++) {
+            for (let x = -ring; x <= ring && !offset; x++) {
+              for (let y = -ring; y <= ring; y++) {
+                if (Math.max(Math.abs(x), Math.abs(y)) !== ring) continue;
+                const dx = x * 30, dy = y * 24;
+                const candidate = {...original, x:original.x+dx, y:original.y+dy};
+                if (!obstacles.some(box => intersects(candidate, box))) {
+                  offset = {dx, dy};
+                  break;
+                }
+              }
+            }
+          }
+          if (!offset) offset = {dx:0, dy:Math.max(...obstacles.map(box => box.y+box.height), original.y) - original.y + padding};
+          for (const text of group) {
+            text.setAttribute("x", Number(text.getAttribute("x")) + offset.dx);
+            text.setAttribute("y", Number(text.getAttribute("y")) + offset.dy);
+          }
+          obstacles.push({...original, x:original.x+offset.dx, y:original.y+offset.dy});
+        }
+      }
+
       function renderWorkflow(wf, diffStyling){
         const svg = document.getElementById("svg");
         const gEdges = document.getElementById("edges");
@@ -766,6 +829,7 @@
 
         const graph = buildGraph(wf);
         const pos = computeAutoLayout(graph, wf);
+        const edgeLabels = [];
 
         let maxX=0,maxY=0;
         for (const p of pos.values()){ maxX=Math.max(maxX,p.x+NODE_W); maxY=Math.max(maxY,p.y+NODE_H); }
@@ -811,11 +875,14 @@
           const lx = cubicAt(x1, x1+dx, x2-dx, x2, 0.5);
           const ly = cubicAt(y1, y1+dy, y2-dy, y2, 0.5) - 6;
           label.setAttribute("x", lx); label.setAttribute("y", ly);
-          label.textContent = `${st ? ({added:"+ ADDED ",removed:"− REMOVED ",modified:"~ MODIFIED "})[st] : ""}${e.branch.attrs.NAME ?? "(unnamed)"} [${e.branch.attrs.TYPE ?? "(no type)"}]`;
+          const labelText = `${st ? ({added:"+ ADDED ",removed:"− REMOVED ",modified:"~ MODIFIED "})[st] : ""}${e.branch.attrs.NAME ?? "(unnamed)"} [${e.branch.attrs.TYPE ?? "(no type)"}]`;
 
           gEdges.appendChild(path);
           gEdges.appendChild(hit);
           gEdges.appendChild(label);
+          limitEdgeText(label, labelText);
+          const labelGroup = [label];
+          edgeLabels.push(labelGroup);
           const conditionLines = [];
           if (e.branch.attrs.EXPRESSION) {
             conditionLines.push(`Expression: ${e.branch.attrs.EXPRESSION}`);
@@ -829,11 +896,9 @@
             expression.dataset.id = e.id;
             expression.setAttribute("x", lx);
             expression.setAttribute("y", ly + 14 * (index + 1));
-            expression.textContent = condition.length > 75 ? condition.slice(0, 72) + "…" : condition;
-            const fullText = document.createElementNS("http://www.w3.org/2000/svg", "title");
-            fullText.textContent = condition;
-            expression.appendChild(fullText);
             gEdges.appendChild(expression);
+            limitEdgeText(expression, condition);
+            labelGroup.push(expression);
           }
         }
 
@@ -916,6 +981,7 @@
             }
           }
         }
+        positionEdgeLabels(edgeLabels, gNodes);
         // Include labels and routed connections in the fitted bounds as well as nodes.
         const boxes = [gEdges, gNodes].filter(g => g.childElementCount).map(g => g.getBBox());
         if (boxes.length) {
