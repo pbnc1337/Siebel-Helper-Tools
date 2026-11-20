@@ -233,6 +233,8 @@
       .change-card.removed { border-left-color:var(--removed); }
       .change-card.modified { border-left-color:var(--modified); }
       .change-card small { display:block; color:var(--muted); margin-top:4px; }
+      .search-match { color:var(--text); background:#172344; border:1px solid var(--border); border-radius:8px; padding:8px; text-align:left; cursor:pointer; width:100%; overflow-wrap:anywhere; }
+      .search-match small { display:block; color:var(--muted); margin-top:4px; white-space:pre-wrap; }
       .change-controls { display:flex; flex-wrap:wrap; gap:6px; margin:8px 0; }
       .change-controls input { max-width:100%; }
       .status-text { font-weight:bold; font-size:11px; fill:#fff; paint-order:stroke; stroke:#0b1020; stroke-width:3px; }
@@ -290,7 +292,7 @@
         </div>
         <div class="control">
           <label for="searchSingle">Search</label>
-          <input id="searchSingle" type="text" placeholder="Step or branch name…" />
+          <input id="searchSingle" type="text" placeholder="Search node data…" />
         </div>
       </div>
 
@@ -313,7 +315,7 @@
         </div>
         <div class="control">
           <label for="searchCompare">Search</label>
-          <input id="searchCompare" type="text" placeholder="Step or branch name…" />
+          <input id="searchCompare" type="text" placeholder="Search node data…" />
         </div>
       </div>
     </header>
@@ -361,6 +363,11 @@
       </section>
 
       <aside>
+        <details class="pane" id="paneSearch">
+          <summary>Search matches</summary>
+          <div id="searchResults" class="list drawer-content" aria-live="polite"></div>
+        </details>
+
         <details class="pane" id="paneMeta" open>
           <summary>Metadata</summary>
           <div id="metaContent" class="kv drawer-content">
@@ -388,6 +395,7 @@
           <summary>Workflow properties</summary>
           <div id="propertiesContent" class="kv drawer-content"></div>
         </details>
+
       </aside>
     </main>
 
@@ -1516,16 +1524,69 @@
       }
 
       function applySearch(){
-        const q = (state.mode==="visual" ? document.getElementById("searchSingle").value : document.getElementById("searchCompare").value).trim().toLowerCase();
-        if (!q) return;
+        const query = (state.mode==="visual" ? document.getElementById("searchSingle").value : document.getElementById("searchCompare").value).trim().toLowerCase();
+        const results = document.getElementById("searchResults");
+        results.replaceChildren();
         const wf = getCurrentWorkflow();
-        if (!wf) return;
-        const step = wf.steps.find(s => (s.attrs.NAME||"").toLowerCase().includes(q));
-        if (step){ selectItem({kind:"node", id:step.id}); return; }
-        for (const s of wf.steps){
-          const br = s.branches.find(b => (b.attrs.NAME||"").toLowerCase().includes(q));
-          if (br){ selectItem({kind:"edge", id:br.id}); return; }
+        if (!query || !wf) {
+          results.appendChild(rowBox("Search", query ? "Load a workflow to search." : "Enter text to search node data."));
+          return;
         }
+        const matches = [];
+        function scanAttributes(attrs, path, step, branch) {
+          for (const [key, value] of Object.entries(attrs || {})) {
+            if (`${key} ${value}`.toLowerCase().includes(query))
+              matches.push({step, branch, path:`${path}.${key}`, value:String(value)});
+          }
+        }
+        function scanUnknown(item, path, step, branch) {
+          (item.unknownChildrenXml || []).forEach((xml, index) => {
+            if (xml.toLowerCase().includes(query))
+              matches.push({step, branch, path:`${path}.uninterpreted XML ${index+1}`, value:xml});
+          });
+        }
+        for (const step of wf.steps) {
+          scanAttributes(step.attrs, "Step", step);
+          scanUnknown(step, "Step", step);
+          for (const arg of step.ioArgs) {
+            const path = `I/O argument ${arg.attrs.NAME || "(unnamed)"}`;
+            scanAttributes(arg.attrs, path, step);
+            scanUnknown(arg, path, step);
+          }
+          for (const branch of step.branches) {
+            const path = `Branch ${branch.attrs.NAME || "(unnamed)"}`;
+            scanAttributes(branch.attrs, path, step, branch);
+            scanAttributes(branch.connectorAttrs, `${path}.Connector`, step, branch);
+            scanUnknown(branch, path, step, branch);
+            for (const criterion of branch.criteria) {
+              const cp = `${path}.Criteria ${criterion.attrs.NAME || "(unnamed)"}`;
+              scanAttributes(criterion.attrs, cp, step, branch);
+              scanUnknown(criterion, cp, step, branch);
+              for (const value of criterion.values) {
+                const vp = `${cp}.Value ${value.attrs.NAME || "(unnamed)"}`;
+                scanAttributes(value.attrs, vp, step, branch);
+                scanUnknown(value, vp, step, branch);
+              }
+            }
+          }
+        }
+        results.appendChild(rowBox("Matches", `${matches.length}`));
+        for (const match of matches) {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "search-match";
+          const title = document.createElement("strong");
+          title.textContent = match.step.attrs.NAME || "(unnamed step)";
+          const detail = document.createElement("small");
+          detail.textContent = `${match.path}: ${match.value}`;
+          button.append(title, detail);
+          button.addEventListener("click", () => {
+            selectItem(match.branch ? {kind:"edge", id:match.branch.id} : {kind:"node", id:match.step.id});
+            document.getElementById("paneDetails").scrollIntoView({block:"nearest"});
+          });
+          results.appendChild(button);
+        }
+        document.getElementById("paneSearch").open = true;
       }
 
       async function readFileText(file){
@@ -1605,6 +1666,7 @@
           renderWorkflow(w, null);
           if (fit) fitToScreen();
           renderDetails();
+          applySearch();
           return;
         }
 
@@ -1614,6 +1676,8 @@
           document.getElementById("edges").replaceChildren();
           document.getElementById("supportContent").replaceChildren(rowBox("Compare", "Choose a baseline and an updated SIF file."));
           document.getElementById("propertiesContent").replaceChildren();
+          state.compare.merged = null;
+          applySearch();
           return;
         }
         const baseWf = state.compare.baseWf;
@@ -1657,6 +1721,7 @@
         renderWorkflow(merged, { nodeStatus, edgeStatus });
         if (fit) fitToScreen();
         renderDetails();
+        applySearch();
       }
 
       // The demo is loaded from the same local server. Uploaded files stay in the browser.

@@ -65,6 +65,24 @@ document.getElementById("app").addEventListener("load", async () => {
       node.dispatchEvent(new w.MouseEvent("click", { bubbles: true }));
       assert(pane.open && w.document.getElementById("detailsContent").textContent.includes("Step"), "selection drawer did not open");
     });
+    test("node search finds property references in arguments and criteria", () => {
+      const input = w.document.getElementById("searchSingle");
+      input.value = "Test Property 2";
+      input.dispatchEvent(new w.Event("input", {bubbles:true}));
+      const matches = Array.from(w.document.querySelectorAll("#searchResults .search-match"));
+      assert(w.document.getElementById("paneSearch").open, "matches drawer not opened");
+      assert(matches.some(m => m.textContent.includes("I/O argument") && m.textContent.includes("PROPERTY_NAME")), "argument reference missing");
+      assert(matches.some(m => m.textContent.includes("Criteria") && m.textContent.includes("PROPERTY_NAME")), "criterion reference missing");
+      const argumentMatch = matches.find(m => m.textContent.includes("I/O argument"));
+      argumentMatch.click();
+      assert(w.document.querySelector(".node.selected") && w.document.getElementById("detailsContent").textContent.includes("Set Test Properties"), "match did not select its node");
+      input.value = "no-such-reference-xyz";
+      input.dispatchEvent(new w.Event("input", {bubbles:true}));
+      assert(w.document.querySelectorAll("#searchResults .search-match").length === 0, "stale matches remained");
+      assert(w.document.getElementById("searchResults").textContent.includes("0"), "zero count missing");
+      input.value = "";
+      input.dispatchEvent(new w.Event("input", {bubbles:true}));
+    });
     test("zoom supports large diagrams and anchors the chosen point", () => {
       const viewport = w.document.getElementById("viewport");
       w.fitToScreen();
