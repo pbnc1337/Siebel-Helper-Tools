@@ -99,7 +99,7 @@
         flex: 1;
         min-height: 0;
         display:grid;
-        grid-template-columns: 1fr 360px;
+        grid-template-columns: minmax(0, 1fr) 8px var(--sidebar-width, 360px);
       }
 
       #canvasWrap{
@@ -211,21 +211,34 @@
       .node.removed :is(rect, polygon):not(.xray-card){ stroke: var(--removed); stroke-width:2.6; stroke-dasharray: 6 4; }
       .node.modified :is(rect, polygon):not(.xray-card){ stroke: var(--modified); stroke-width:2.6; stroke-dasharray: 3 3; }
 
+      #sidebarSplitter { cursor: col-resize; background: #24305d; touch-action: none; }
+      #sidebarSplitter:hover, #sidebarSplitter:focus-visible, .drawer-splitter:hover, .drawer-splitter:focus-visible { background: #6497eb; outline: 2px solid #a8c8ff; }
       aside{
         display:flex;
         flex-direction:column;
         gap:6px;
         padding:8px;
         overflow:auto;
+        min-width:0;
+        min-height:0;
         background: rgba(17,26,51,.90);
+        scrollbar-color: #5875b6 #111a33;
+        scrollbar-width: thin;
       }
       .pane{
         flex:none;
+        min-height: 0;
         border:1px solid var(--border);
         border-radius:8px;
         background:rgba(0,0,0,.14);
         overflow:hidden;
       }
+      .pane[open] { display:flex; flex-direction:column; flex: var(--drawer-weight, 1) 1 0px; min-height:85px; }
+      .drawer-splitter { height:8px; flex:none; cursor:row-resize; background:#24305d; touch-action:none; }
+      .drawer-splitter[hidden] { display:none; }
+      aside ::-webkit-scrollbar, aside::-webkit-scrollbar { width:10px; height:10px; }
+      aside ::-webkit-scrollbar-track, aside::-webkit-scrollbar-track { background:#111a33; }
+      aside ::-webkit-scrollbar-thumb, aside::-webkit-scrollbar-thumb { background:#5875b6; border:2px solid #111a33; border-radius:8px; }
       .pane > summary{
         padding:10px;
         color:var(--muted);
@@ -236,14 +249,12 @@
       }
       .drawer-content{
         padding:0 10px 10px;
-        height:160px;
-        min-height:70px;
-        max-height:70vh;
-        resize:vertical;
+        flex:1 1 auto;
+        min-height:0;
         overflow:auto;
+        scrollbar-color:#5875b6 #111a33;
+        scrollbar-width:thin;
       }
-      #detailsContent { height:220px; }
-      #supportContent { height:220px; }
       .kv{ display:grid; grid-template-columns: 1fr; gap:8px; }
       .kv .row{
         border:1px solid var(--border);
@@ -295,7 +306,7 @@
         line-height:1.35;
       }
       @media (max-width: 980px){
-        main{ grid-template-columns: minmax(0, 1fr) 300px; }
+        main{ --sidebar-width: 300px; }
         header{ flex-wrap: wrap; }
       }
     </style>
@@ -392,7 +403,8 @@
         </div>
       </section>
 
-      <aside>
+      <div id="sidebarSplitter" role="separator" aria-label="Resize sidebar" aria-orientation="vertical" tabindex="0"></div>
+      <aside aria-label="Workflow information">
         <details class="pane" id="paneSearch">
           <summary>Search matches</summary>
           <div id="searchResults" class="list drawer-content" aria-live="polite"></div>
@@ -1248,6 +1260,71 @@
 
       const dropOverlay = document.getElementById("dropOverlay");
       const canvasWrap = document.getElementById("canvasWrap");
+      const sidebar = document.querySelector("aside");
+      const mainArea = document.querySelector("main");
+      const sidebarSplitter = document.getElementById("sidebarSplitter");
+      function resizeSidebar(width) {
+        const max = Math.max(120, mainArea.clientWidth - 160);
+        mainArea.style.setProperty("--sidebar-width", `${Math.min(max, Math.max(120, width))}px`);
+      }
+      sidebarSplitter.addEventListener("pointerdown", event => {
+        if (event.button !== 0) return;
+        event.preventDefault();
+        sidebarSplitter.setPointerCapture(event.pointerId);
+      });
+      sidebarSplitter.addEventListener("pointermove", event => {
+        if (sidebarSplitter.hasPointerCapture(event.pointerId))
+          resizeSidebar(mainArea.getBoundingClientRect().right - event.clientX);
+      });
+      sidebarSplitter.addEventListener("keydown", event => {
+        if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+        event.preventDefault();
+        resizeSidebar(sidebar.getBoundingClientRect().width + (event.key === "ArrowLeft" ? 20 : -20));
+      });
+      const drawers = Array.from(sidebar.querySelectorAll(".pane"));
+      function refreshDrawerSplitters() {
+        const open = drawers.filter(pane => pane.open);
+        for (const pane of drawers) pane.querySelector(".drawer-splitter").hidden = !pane.open || pane === open[open.length - 1];
+      }
+      function resizeDrawers(pane, delta) {
+        const open = drawers.filter(item => item.open);
+        const next = open[open.indexOf(pane) + 1];
+        if (!next) return;
+        const a = pane.getBoundingClientRect().height, b = next.getBoundingClientRect().height;
+        const amount = Math.max(85 - a, Math.min(b - 85, delta));
+        // Set all open weights from their current heights to preserve the other drawers.
+        for (const item of open) item.style.setProperty("--drawer-weight", String(item.getBoundingClientRect().height));
+        pane.style.setProperty("--drawer-weight", String(a + amount));
+        next.style.setProperty("--drawer-weight", String(b - amount));
+      }
+      for (const pane of drawers) {
+        const handle = document.createElement("div");
+        handle.className = "drawer-splitter";
+        handle.setAttribute("role", "separator");
+        handle.setAttribute("aria-orientation", "horizontal");
+        handle.setAttribute("aria-label", `Resize ${pane.querySelector("summary").textContent} drawer`);
+        handle.tabIndex = 0;
+        pane.appendChild(handle);
+        let lastY;
+        handle.addEventListener("pointerdown", event => {
+          if (event.button !== 0) return;
+          event.preventDefault();
+          lastY = event.clientY;
+          handle.setPointerCapture(event.pointerId);
+        });
+        handle.addEventListener("pointermove", event => {
+          if (!handle.hasPointerCapture(event.pointerId)) return;
+          resizeDrawers(pane, event.clientY - lastY);
+          lastY = event.clientY;
+        });
+        handle.addEventListener("keydown", event => {
+          if (event.key !== "ArrowUp" && event.key !== "ArrowDown") return;
+          event.preventDefault();
+          resizeDrawers(pane, event.key === "ArrowDown" ? 20 : -20);
+        });
+        pane.addEventListener("toggle", refreshDrawerSplitters);
+      }
+      refreshDrawerSplitters();
       ["dragenter","dragover"].forEach(ev=>canvasWrap.addEventListener(ev, e=>{ e.preventDefault(); dropOverlay.classList.add("show"); }));
       ["dragleave","drop"].forEach(ev=>canvasWrap.addEventListener(ev, e=>{ e.preventDefault(); dropOverlay.classList.remove("show"); }));
 

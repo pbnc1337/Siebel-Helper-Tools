@@ -43,15 +43,56 @@ document.getElementById("app").addEventListener("load", async () => {
       assert(base.steps.length === 5 && base.branches.length === 5 && base.props.length === 7, "incorrect sample counts");
     });
     await w.loadSingleFile(new w.File([baseline], "baseline.sif"));
-    test("sidebar drawers collapse independently and have resizable content", () => {
-      for (const id of ["paneMeta", "paneDetails", "paneSupport", "paneProperties"]) {
-        const pane = w.document.getElementById(id);
-        const content = pane.querySelector(".drawer-content");
-        assert(pane.open && content && w.getComputedStyle(content).resize === "vertical", id + " is not resizable");
-        pane.querySelector("summary").click();
-        assert(!pane.open, id + " did not collapse");
-        pane.querySelector("summary").click();
-        assert(pane.open, id + " did not expand");
+    test("sidebar and drawer splitters resize and single drawer fills space", () => {
+      const frame = document.getElementById("app");
+      frame.style.height = "900px";
+      const doc = w.document, aside = doc.querySelector("aside");
+      const width = aside.getBoundingClientRect().width;
+      doc.getElementById("sidebarSplitter").dispatchEvent(new w.KeyboardEvent("keydown", {key:"ArrowLeft", bubbles:true}));
+      assert(aside.getBoundingClientRect().width > width, "sidebar did not widen");
+      const meta = doc.getElementById("paneMeta"), details = doc.getElementById("paneDetails");
+      const before = meta.getBoundingClientRect().height;
+      meta.querySelector(".drawer-splitter").dispatchEvent(new w.KeyboardEvent("keydown", {key:"ArrowDown", bubbles:true}));
+      assert(meta.getBoundingClientRect().height > before, "drawer did not expand");
+      for (const pane of doc.querySelectorAll("aside .pane")) pane.open = pane === details;
+      assert(details.open && details.getBoundingClientRect().height > aside.clientHeight * 0.5, "single drawer did not fill sidebar");
+      assert(details.getBoundingClientRect().width >= aside.clientWidth - 20, "drawer did not fill sidebar width");
+      for (const id of ["paneMeta", "paneDetails", "paneSupport", "paneProperties"]) doc.getElementById(id).open = true;
+      frame.style.height = "350px";
+    });
+    test("pointer drag handlers resize sidebar and adjacent drawers", () => {
+      const frame = document.getElementById("app");
+      const doc = w.document, aside = doc.querySelector("aside");
+      const widthHandle = doc.getElementById("sidebarSplitter");
+      const meta = doc.getElementById("paneMeta");
+      const heightHandle = meta.querySelector(".drawer-splitter");
+      const originalHeight = frame.style.height;
+      frame.style.height = "900px";
+      function drag(handle, startX, startY, endX, endY) {
+        const oldSet = handle.setPointerCapture, oldHas = handle.hasPointerCapture;
+        let captured = false;
+        handle.setPointerCapture = () => { captured = true; };
+        handle.hasPointerCapture = () => captured;
+        try {
+          handle.dispatchEvent(new w.PointerEvent("pointerdown", {bubbles:true, button:0, pointerId:1, clientX:startX, clientY:startY}));
+          handle.dispatchEvent(new w.PointerEvent("pointermove", {bubbles:true, pointerId:1, clientX:endX, clientY:endY}));
+          assert(captured, "pointer was not captured");
+        } finally {
+          handle.setPointerCapture = oldSet;
+          handle.hasPointerCapture = oldHas;
+        }
+      }
+      try {
+        const width = aside.getBoundingClientRect().width;
+        const rect = widthHandle.getBoundingClientRect();
+        drag(widthHandle, rect.left, rect.top, rect.left - 40, rect.top);
+        assert(aside.getBoundingClientRect().width > width + 20, "pointer drag did not widen sidebar");
+        const height = meta.getBoundingClientRect().height;
+        const handleRect = heightHandle.getBoundingClientRect();
+        drag(heightHandle, handleRect.left, handleRect.top, handleRect.left, handleRect.top + 30);
+        assert(meta.getBoundingClientRect().height > height + 10, "pointer drag did not increase drawer height");
+      } finally {
+        frame.style.height = originalHeight;
       }
     });
     test("workflow properties show attributes", () => {
