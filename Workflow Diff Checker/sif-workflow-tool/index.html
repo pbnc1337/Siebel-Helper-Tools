@@ -164,6 +164,15 @@
         stroke: rgba(11,16,32,.8);
         stroke-width: 3px;
       }
+      .edge-expression{
+        font-size: 11px;
+        fill: #dbe5ff;
+        paint-order: stroke;
+        stroke: #0b1020;
+        stroke-width: 4px;
+        stroke-linejoin: round;
+        cursor: pointer;
+      }
 
       .node{ cursor:pointer; }
       .node :is(rect, polygon){
@@ -740,6 +749,25 @@
           gEdges.appendChild(path);
           gEdges.appendChild(hit);
           gEdges.appendChild(label);
+          const conditionLines = [];
+          if (e.branch.attrs.EXPRESSION) {
+            conditionLines.push(`Expression: ${e.branch.attrs.EXPRESSION}`);
+          } else if (e.branch.criteria.length) {
+            conditionLines.push(`Criteria: ${e.branch.criteria.length} (select for details)`);
+          }
+          for (const [index, condition] of conditionLines.entries()) {
+            const expression = document.createElementNS("http://www.w3.org/2000/svg","text");
+            expression.classList.add("edge-expression");
+            expression.dataset.kind = "edge";
+            expression.dataset.id = e.id;
+            expression.setAttribute("x", lx);
+            expression.setAttribute("y", ly + 14 * (index + 1));
+            expression.textContent = condition.length > 75 ? condition.slice(0, 72) + "…" : condition;
+            const fullText = document.createElementNS("http://www.w3.org/2000/svg", "title");
+            fullText.textContent = condition;
+            expression.appendChild(fullText);
+            gEdges.appendChild(expression);
+          }
         }
 
         for (const s of graph.steps){
@@ -794,6 +822,15 @@
               }
             }
           }
+        }
+        // Include labels and routed connections in the fitted bounds as well as nodes.
+        const boxes = [gEdges, gNodes].filter(g => g.childElementCount).map(g => g.getBBox());
+        if (boxes.length) {
+          const minX = Math.min(0, ...boxes.map(b => b.x - 40));
+          const minY = Math.min(0, ...boxes.map(b => b.y - 40));
+          const right = Math.max(300, ...boxes.map(b => b.x + b.width + 40));
+          const bottom = Math.max(300, ...boxes.map(b => b.y + b.height + 50));
+          svg.setAttribute("viewBox", `${minX} ${minY} ${right-minX} ${bottom-minY}`);
         }
       }
 

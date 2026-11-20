@@ -96,6 +96,25 @@ document.getElementById("app").addEventListener("load", async () => {
       toggle.click();
       assert(toggle.getAttribute("aria-pressed") === "false" && doc.querySelector(".node.decision.selected rect"), "rectangular display not restored");
     });
+    test("branch expression is displayed verbatim and selects its branch", () => {
+      const expressions = Array.from(w.document.querySelectorAll(".edge-expression"));
+      const branch = base.branches.find(b => b.attrs.NAME === "N");
+      assert(expressions.length === 1, "expected one condition preview");
+      assert(expressions[0].querySelector("title").textContent === `Expression: ${branch.attrs.EXPRESSION}`, "full expression differs from XML");
+      assert(expressions[0].firstChild.nodeValue.includes("'Y'"), "sample Y value missing");
+      expressions[0].dispatchEvent(new w.MouseEvent("click", {bubbles:true}));
+      const details = w.document.getElementById("detailsContent").textContent;
+      assert(details.includes(branch.attrs.EXPRESSION), "branch selection failed");
+      assert(details.includes("Test Property 2") && details.includes("LO_CHAR1"), "criterion details missing");
+    });
+    test("criteria-only branch still displays its criteria", () => {
+      const wf = w.parseSif(baseline).workflows[0];
+      delete wf.branches.find(b => b.attrs.NAME === "N").attrs.EXPRESSION;
+      w.renderWorkflow(wf, null);
+      const conditions = Array.from(w.document.querySelectorAll(".edge-expression"));
+      assert(conditions.length === 1 && conditions[0].firstChild.nodeValue.includes("Criteria: 1"), "criteria-only branch not displayed");
+      w.renderWorkflow(w.parseSif(baseline).workflows[0], null);
+    });
     test("zoom supports large diagrams and anchors the chosen point", () => {
       const viewport = w.document.getElementById("viewport");
       w.fitToScreen();
