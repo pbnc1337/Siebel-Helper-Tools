@@ -40,11 +40,13 @@
         background: rgba(17,26,51,.92);
         backdrop-filter: blur(6px);
       }
-      header h1{
-        font-size: 16px;
-        margin: 0 10px 0 0;
-        letter-spacing:.2px;
-        white-space:nowrap;
+      .brand-logo{
+        flex: 0 0 220px;
+        width:220px;
+        height:64px;
+        object-fit:cover;
+        object-position:center;
+        mix-blend-mode:screen;
       }
       .mode-toggle{
         display:flex;
@@ -384,7 +386,7 @@
   </head>
   <body>
     <header>
-      <h1>Siebel SIF Diagram Visualiser & Diff Checker</h1>
+      <img class="brand-logo" src="logo.png" alt="Siebel SIF Diagram Visualiser & Diff Checker" />
 
       <div class="mode-toggle" role="group" aria-label="Mode">
         <button id="modeVisual" aria-pressed="true" title="Visualise one SIF">Visualise</button>
